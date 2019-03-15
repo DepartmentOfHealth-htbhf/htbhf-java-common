@@ -40,6 +40,4 @@ script:
 env:
   global:
     - APP_NAME=htbhf-java-common
-    - CF_DOMAIN=apps.internal
-    - SMOKE_TESTS=./ci_scripts/smoke_tests.sh
     - BIN_DIR=./bin
