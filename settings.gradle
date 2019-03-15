@@ -1,0 +1,4 @@
+rootProject.name = 'htbhf-java-common-parent'
+include "htbhf-request-context"
+
+project(":htbhf-request-context").projectDir = file("request_context")
