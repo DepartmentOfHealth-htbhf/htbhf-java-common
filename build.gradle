@@ -1,5 +1,9 @@
 buildscript {
 
+    ext {
+        springVersion = '5.1.5.RELEASE'
+    }
+
     repositories {
         jcenter()
         mavenCentral()
