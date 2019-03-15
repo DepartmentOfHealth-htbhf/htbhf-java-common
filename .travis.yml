@@ -25,7 +25,6 @@ deploy:
 
 after_success:
 - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && ./gradlew jacocoTestReport testReport copyReports && bash <(curl -s https://codecov.io/bash)
-- test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && ./${BIN_DIR}/deployment-scripts/trigger_java_cd_build.sh
 
 #don't build tags
 branches:
@@ -35,7 +34,7 @@ branches:
 #Build and perform release (if needed)
 # note that we can't restart failed builds in Travis as the shipkit publishing step will fail if it has already run for that version. Must create a new commit.
 script:
-- ./gradlew clean build check -s && ./ci_scripts/ci_deploy.sh && ./gradlew ciPerformRelease -s
+- ./gradlew clean build check -s && ./gradlew ciPerformRelease -s
 
 
 env:

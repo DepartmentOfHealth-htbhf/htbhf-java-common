@@ -1,3 +1,0 @@
-// you can override these properties locally by adding them to gradle.properties
-ext {
-}

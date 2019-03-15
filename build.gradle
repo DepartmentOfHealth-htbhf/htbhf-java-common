@@ -1,7 +1,5 @@
 buildscript {
 
-    apply from: "default-properties.gradle"
-
     repositories {
         jcenter()
         mavenCentral()
@@ -87,23 +85,5 @@ allprojects {
             testCounter += testResult.testCount
         }
     }
-}
-
-task copyApiReports(type: Copy) {
-    from(file('api/build/reports'))
-    into(file('build/reports'))
-    outputs.upToDateWhen { false }
-}
-task copyAdditionalDocumentation(type: Copy) {
-    from(file('src/documentation/gh-pages'))
-    into(file('build/reports'))
-}
-task copySmokeTestReports(type: Copy) {
-    from(file('smoke_tests/build/reports/tests/test'))
-    into(file('build/reports/smoke_tests'))
-}
-
-task copyReports() {
-    dependsOn copyApiReports, copyAdditionalDocumentation, copySmokeTestReports
 }
 
