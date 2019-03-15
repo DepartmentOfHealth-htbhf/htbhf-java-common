@@ -11,6 +11,9 @@ import java.io.IOException;
 import static uk.gov.dhsc.htbhf.requestcontext.RequestIdFilter.REQUEST_ID_HEADER;
 import static uk.gov.dhsc.htbhf.requestcontext.RequestIdFilter.SESSION_ID_HEADER;
 
+/**
+ * Interceptor that automatically adds the request and session id to outgoing requests.
+ */
 @AllArgsConstructor
 public class HeaderInterceptor implements ClientHttpRequestInterceptor {
 

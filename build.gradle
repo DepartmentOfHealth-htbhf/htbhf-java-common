@@ -91,3 +91,16 @@ allprojects {
     }
 }
 
+task copyApiReports(type: Copy) {
+    from(file('api/build/reports'))
+    into(file('build/reports'))
+    outputs.upToDateWhen { false }
+}
+task copyAdditionalDocumentation(type: Copy) {
+    from(file('src/documentation/gh-pages'))
+    into(file('build/reports'))
+}
+
+task copyReports() {
+    dependsOn copyApiReports, copyAdditionalDocumentation
+}

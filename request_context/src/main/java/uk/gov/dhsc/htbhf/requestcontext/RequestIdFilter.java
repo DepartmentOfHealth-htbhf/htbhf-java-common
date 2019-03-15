@@ -1,7 +1,6 @@
 package uk.gov.dhsc.htbhf.requestcontext;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -13,7 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import static org.springframework.util.StringUtils.isEmpty;
 
-@Component
+/**
+ * Filter to be used on incoming requests to add request id and session id to the MDC
+ * for logging.
+ */
 @RequiredArgsConstructor
 public class RequestIdFilter extends OncePerRequestFilter {
 
