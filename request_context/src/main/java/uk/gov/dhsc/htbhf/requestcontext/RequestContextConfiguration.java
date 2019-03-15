@@ -31,7 +31,7 @@ public class RequestContextConfiguration {
     }
 
     @Bean
-    public RestTemplate restTemplate() {
+    public RestTemplate restTemplateWithIdHeaders() {
         var restTemplate = new RestTemplate();
         var interceptors = restTemplate.getInterceptors();
         interceptors.add(headerInterceptor());

@@ -10,6 +10,7 @@ repositories {
 ```
 
 ## Request Context Module
-This sub-module contains all the code that is needed to add the request id and session id
-to the MDC for logging purposes, plus the interceptor will add the request id and session id
-to any outgoing requests from any `RestTemplate` that it is added to.
+
+- Provides rest template with request context headers
+
+[See README for more information](./request_context/README.md)
