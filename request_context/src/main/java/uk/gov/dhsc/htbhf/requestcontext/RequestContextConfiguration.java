@@ -30,7 +30,7 @@ public class RequestContextConfiguration {
         return new RequestIdFilter(requestContext(), mdcWrapper());
     }
 
-    @Bean
+    @Bean(name = "restTemplateWithIdHeaders")
     public RestTemplate restTemplateWithIdHeaders() {
         var restTemplate = new RestTemplate();
         var interceptors = restTemplate.getInterceptors();
