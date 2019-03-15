@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
@@ -27,5 +28,18 @@ public class RequestContextConfiguration {
     @Bean
     public RequestIdFilter requestIdFilter() {
         return new RequestIdFilter(requestContext(), mdcWrapper());
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        var restTemplate = new RestTemplate();
+        var interceptors = restTemplate.getInterceptors();
+        interceptors.add(headerInterceptor());
+        return restTemplate;
+    }
+
+    @Bean
+    public HeaderInterceptor headerInterceptor() {
+        return new HeaderInterceptor(requestContext());
     }
 }
