@@ -24,3 +24,4 @@ public class ErrorHandlerConfiguration {
         return new ErrorHandler(requestContext);
     }
 }
+

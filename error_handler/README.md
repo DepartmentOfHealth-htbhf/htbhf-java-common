@@ -1,4 +1,4 @@
-# Request Context Module
+# Error Handler Module
 
 This sub-module contains all the code that is needed to return formatted error responses. 
 
