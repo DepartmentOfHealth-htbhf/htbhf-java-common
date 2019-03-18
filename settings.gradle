@@ -1,6 +1,4 @@
 rootProject.name = 'htbhf-java-common-parent'
-include "htbhf-request-context"
-include "htbhf-error-handler"
+include "htbhf-common-rest"
 
-project(":htbhf-request-context").projectDir = file("request_context")
-project(":htbhf-error-handler").projectDir = file("error_handler")
+project(":htbhf-common-rest").projectDir = file("common_rest")

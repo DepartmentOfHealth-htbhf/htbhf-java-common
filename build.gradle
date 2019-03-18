@@ -91,14 +91,8 @@ allprojects {
     }
 }
 
-task copyRequestContextReports(type: Copy) {
-    from(file('request_context/build/reports'))
-    into(file('build/reports'))
-    outputs.upToDateWhen { false }
-}
-
-task copyErrorHandlerReports(type: Copy) {
-    from(file('error_handler/build/reports'))
+task copyCommonResteports(type: Copy) {
+    from(file('common_rest/build/reports'))
     into(file('build/reports'))
     outputs.upToDateWhen { false }
 }
@@ -109,5 +103,5 @@ task copyAdditionalDocumentation(type: Copy) {
 }
 
 task copyReports() {
-    dependsOn copyRequestContextReports, copyErrorHandlerReports, copyAdditionalDocumentation
+    dependsOn copyCommonResteports, copyAdditionalDocumentation
 }
