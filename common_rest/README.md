@@ -1,6 +1,6 @@
-# Error Handler Module
+# Common Rest Module
 
-This sub-module contains all the code that is needed to return formatted error responses. 
+This sub-module contains all the code that is needed to return formatted error responses and add the request id and session id to the MDC for logging purposes. 
 
 Adding `ErrorHandlerConfiguration` to your application context will provide you with the following bean:
 
