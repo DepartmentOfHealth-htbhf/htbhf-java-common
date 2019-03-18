@@ -4,7 +4,7 @@ This sub-module contains all the code that is needed to return formatted error r
 
 Adding `ErrorHandlerConfiguration` to your application context will provide you with the following bean:
 
-- `errorHnalder`: Controller advice that captures validation exceptions and returns an error response with field information, timestamp and request id. e.g.
+- `errorHandler`: Controller advice that captures validation exceptions and returns an error response with field information, timestamp and request id. e.g.
 ```
 {
     "fieldErrors": [
