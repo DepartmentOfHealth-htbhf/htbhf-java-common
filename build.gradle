@@ -96,11 +96,18 @@ task copyRequestContextReports(type: Copy) {
     into(file('build/reports'))
     outputs.upToDateWhen { false }
 }
+
+task copyErrorHandlerReports(type: Copy) {
+    from(file('error_handler/build/reports'))
+    into(file('build/reports'))
+    outputs.upToDateWhen { false }
+}
+
 task copyAdditionalDocumentation(type: Copy) {
     from(file('src/documentation/gh-pages'))
     into(file('build/reports'))
 }
 
 task copyReports() {
-    dependsOn copyRequestContextReports, copyAdditionalDocumentation
+    dependsOn copyRequestContextReports, copyErrorHandlerReports, copyAdditionalDocumentation
 }
