@@ -26,6 +26,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static uk.gov.dhsc.htbhf.errorhandler.ErrorHandler.UNREADABLE_ERROR_MESSAGE;
 import static uk.gov.dhsc.htbhf.errorhandler.ErrorHandler.VALIDATION_ERROR_MESSAGE;
@@ -100,7 +101,7 @@ class ErrorHandlerTest {
         // Given
         InvalidFormatException cause = mock(InvalidFormatException.class);
         given(cause.getPath()).willReturn(asList(new Reference(null, "myComponent"), new Reference(null, "myProperty")));
-        given(cause.getTargetType()).willReturn((Class) LocalDate.class);
+        doReturn(LocalDate.class).when(cause).getTargetType();
         given(cause.getValue()).willReturn("my invalid date");
         HttpMessageNotReadableException ex = new HttpMessageNotReadableException("myMessage",
                 cause,
