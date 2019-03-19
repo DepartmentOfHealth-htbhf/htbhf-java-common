@@ -34,6 +34,7 @@ dependencies {
     implementation "com.google.code.findbugs:annotations:3.0.1"
     implementation "org.slf4j:slf4j-api:1.7.25"
     implementation "org.apache.tomcat.embed:tomcat-embed-core:9.0.12"
+    implementation "com.google.guava:guava:27.1-jre"
 
     testImplementation "org.mockito:mockito-junit-jupiter:2.23.4"
     testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
