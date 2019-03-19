@@ -91,16 +91,17 @@ allprojects {
     }
 }
 
-task copyRequestContextReports(type: Copy) {
-    from(file('request_context/build/reports'))
+task copyCommonResteports(type: Copy) {
+    from(file('common_rest/build/reports'))
     into(file('build/reports'))
     outputs.upToDateWhen { false }
 }
+
 task copyAdditionalDocumentation(type: Copy) {
     from(file('src/documentation/gh-pages'))
     into(file('build/reports'))
 }
 
 task copyReports() {
-    dependsOn copyRequestContextReports, copyAdditionalDocumentation
+    dependsOn copyCommonResteports, copyAdditionalDocumentation
 }
