@@ -2,7 +2,7 @@
 
 This sub-module contains all the code that is needed to return formatted error responses and add the request id and session id to the MDC for logging purposes. 
 
-Adding `ErrorHandlerConfiguration` to your application context will provide you with the following beans:
+Adding `CommonRestConfiguration` to your application context will provide you with the following beans:
 
 - `headerInterceptor`: Interceptor added to the provided `RestTemplate` which adds the request ID and session ID to all outgoing requests. 
 - `mdcWrapper`: A component wrapper around MDC
