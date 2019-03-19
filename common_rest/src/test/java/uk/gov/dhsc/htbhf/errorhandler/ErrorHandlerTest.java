@@ -68,10 +68,8 @@ class ErrorHandlerTest {
         assertThat(errorResponse.getMessage()).isEqualTo(VALIDATION_ERROR_MESSAGE);
         List<ErrorResponse.FieldError> fieldErrors = errorResponse.getFieldErrors();
         assertThat(fieldErrors.size()).isEqualTo(2);
-        assertThat(fieldErrors.get(0).getField()).isEqualTo("field1");
-        assertThat(fieldErrors.get(0).getMessage()).isEqualTo(ERROR_MESSAGE_1);
-        assertThat(fieldErrors.get(1).getField()).isEqualTo("field2");
-        assertThat(fieldErrors.get(1).getMessage()).isEqualTo(ERROR_MESSAGE_2);
+        assertFieldError(fieldErrors.get(0), "field1", ERROR_MESSAGE_1);
+        assertFieldError(fieldErrors.get(1), "field2", ERROR_MESSAGE_2);
     }
 
     @Test
@@ -93,10 +91,8 @@ class ErrorHandlerTest {
         assertThat(errorResponse.getMessage()).isEqualTo(VALIDATION_ERROR_MESSAGE);
         List<ErrorResponse.FieldError> fieldErrors = errorResponse.getFieldErrors();
         assertThat(fieldErrors.size()).isEqualTo(2);
-        assertThat(fieldErrors.get(0).getField()).isEqualTo("object1");
-        assertThat(fieldErrors.get(0).getMessage()).isEqualTo(ERROR_MESSAGE_1);
-        assertThat(fieldErrors.get(1).getField()).isEqualTo("object2");
-        assertThat(fieldErrors.get(1).getMessage()).isEqualTo(ERROR_MESSAGE_2);
+        assertFieldError(fieldErrors.get(0), "object1", ERROR_MESSAGE_1);
+        assertFieldError(fieldErrors.get(1), "object2", ERROR_MESSAGE_2);
     }
 
     @Test
@@ -122,8 +118,7 @@ class ErrorHandlerTest {
         assertThat(errorResponse.getMessage()).isEqualTo(UNREADABLE_ERROR_MESSAGE);
         List<ErrorResponse.FieldError> fieldErrors = errorResponse.getFieldErrors();
         assertThat(fieldErrors.size()).isEqualTo(1);
-        assertThat(fieldErrors.get(0).getField()).isEqualTo("myComponent.myProperty");
-        assertThat(fieldErrors.get(0).getMessage()).isEqualTo("'my invalid date' could not be parsed as a LocalDate");
+        assertFieldError(fieldErrors.get(0), "myComponent.myProperty", "'my invalid date' could not be parsed as a LocalDate");
     }
 
     @Test
@@ -143,6 +138,11 @@ class ErrorHandlerTest {
         ErrorResponse errorResponse = (ErrorResponse) responseEntity.getBody();
         assertThat(errorResponse.getRequestId()).isEqualTo(REQUEST_ID);
         assertThat(errorResponse.getFieldErrors()).isNull();
+    }
+
+    private void assertFieldError(ErrorResponse.FieldError fieldError, String field, String errorMessage) {
+        assertThat(fieldError.getField()).isEqualTo(field);
+        assertThat(fieldError.getMessage()).isEqualTo(errorMessage);
     }
 
 }
