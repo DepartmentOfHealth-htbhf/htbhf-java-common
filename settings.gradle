@@ -1,4 +1,6 @@
 rootProject.name = 'htbhf-java-common-parent'
 include "htbhf-common-rest"
+include "htbhf-common-test"
 
 project(":htbhf-common-rest").projectDir = file("common_rest")
+project(":htbhf-common-test").projectDir = file("common_test")
