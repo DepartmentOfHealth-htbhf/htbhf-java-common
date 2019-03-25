@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Can be used to check that the Swagger spec is available to the running application
- * on the given port ans then saves it in the root project directory as swagger.yml.
+ * on the given port and then saves it in the root project directory as swagger.yml.
  */
 public class SwaggerGenerationUtil {
 

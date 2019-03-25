@@ -42,7 +42,7 @@ public final class ConstraintViolationAssert<T> extends AbstractAssert<Constrain
      * Tests that the single constraint violation provided matches the one found in the set.
      *
      * @param message The message to use
-     * @param path The path
+     * @param path    The path
      * @return The assert for chaining.
      */
     public ConstraintViolationAssert hasSingleConstraintViolation(String message, String path) {
@@ -83,7 +83,7 @@ public final class ConstraintViolationAssert<T> extends AbstractAssert<Constrain
                         && constraintViolation.getPropertyPath().toString().equals(path))
                 .findFirst();
 
-        if (!foundViolation.isPresent()) {
+        if (foundViolation.isEmpty()) {
             failWithMessage("No ConstraintViolation found matching path: <%s> and message: <%s>, violations present are: <%s>",
                     path, message, listConstraintViolations());
         }

@@ -18,4 +18,5 @@ manifest/src
 *.iml
 *.ipr
 /out/
-request_context/out/
+common_rest/out/
+common_test/out/
