@@ -27,3 +27,11 @@ implementation 'uk.gov.dhsc.htbhf:htbhf-common-rest:n.n.n'
 Provides rest template with request context headers
 
 [See README for more information](./request_context/README.md)
+
+
+## Common Test Module
+
+Contains common test utilities which include:
+
+- The ability to test and download Swagger for a project
+- Common assertions for checking validation `ConstraintViolation`s.
