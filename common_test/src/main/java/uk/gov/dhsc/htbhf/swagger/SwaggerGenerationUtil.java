@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class SwaggerGenerationUtil {
 
-    public static void swaggerDocumentationRetrieved(TestRestTemplate testRestTemplate, int applicationPort) throws IOException {
+    public static void assertSwaggerDocumentationRetrieved(TestRestTemplate testRestTemplate, int applicationPort) throws IOException {
         String response = testRestTemplate.getForObject(buildUrl(applicationPort), String.class);
 
         String jsonAsYaml = convertJsonToYaml(response);
