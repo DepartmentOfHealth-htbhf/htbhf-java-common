@@ -61,7 +61,10 @@ public final class ConstraintViolationAssert<T> extends AbstractAssert<Constrain
 
         // check that there the correct number of elements
         if (actual.size() != expectedSize) {
-            failWithMessage("Expected <%s> Constraint Violations, there are actually <%s>.", expectedSize, actual.size());
+            failWithMessage("Expected <%s> Constraint Violations, but found <%s>. Constraint violations are: <%s>",
+                    expectedSize,
+                    actual.size(),
+                    listConstraintViolations());
         }
 
         return this;
