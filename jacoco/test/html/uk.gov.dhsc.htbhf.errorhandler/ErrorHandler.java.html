@@ -66,7 +66,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
 <span class="fc" id="L66">                        .field(error.getObjectName())</span>
 <span class="fc" id="L67">                        .build()));</span>
 
-<span class="fc" id="L69">        log.warn(&quot;Binding error(s) during {} request to {}: {}&quot;, requestContext.getMethod(), requestContext.getServletPath(), errors);</span>
+<span class="fc" id="L69">        log.warn(&quot;Binding error(s) during incoming {} request to {}: {}&quot;, requestContext.getMethod(), requestContext.getServletPath(), errors);</span>
 
 <span class="fc" id="L71">        return ErrorResponse.builder()</span>
 <span class="fc" id="L72">                .fieldErrors(errors)</span>
@@ -103,7 +103,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity&lt;Object&gt; handleOthers(Exception exception, WebRequest request) {
-<span class="nc" id="L106">        log.error(&quot;An error occurred during {} request to {}:&quot;, requestContext.getMethod(), requestContext.getServletPath(), exception);</span>
+<span class="nc" id="L106">        log.error(&quot;An error occurred during incoming {} request to {}:&quot;, requestContext.getMethod(), requestContext.getServletPath(), exception);</span>
 
 <span class="nc" id="L108">        ErrorResponse body = ErrorResponse.builder()</span>
 <span class="nc" id="L109">                .requestId(requestContext.getRequestId())</span>
@@ -119,7 +119,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity&lt;Object&gt; handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
 <span class="fc" id="L120">        Object response = body;</span>
 <span class="fc bfc" id="L121" title="All 2 branches covered.">        if (response == null) {</span>
-<span class="fc" id="L122">            log.warn(&quot;Handling {} during {} request to {}: {}&quot;,</span>
+<span class="fc" id="L122">            log.warn(&quot;Handling {} during incoming {} request to {}: {}&quot;,</span>
 <span class="fc" id="L123">                    ex.getClass().getSimpleName(), requestContext.getMethod(), requestContext.getServletPath(), ex.getMessage());</span>
 <span class="fc" id="L124">            response = ErrorResponse.builder()</span>
 <span class="fc" id="L125">                    .requestId(requestContext.getRequestId())</span>
