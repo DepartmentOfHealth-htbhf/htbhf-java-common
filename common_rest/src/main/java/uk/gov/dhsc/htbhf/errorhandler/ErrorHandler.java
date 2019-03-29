@@ -66,7 +66,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
                         .field(error.getObjectName())
                         .build()));
 
-        log.warn("Binding error(s) during {} request to {}: {}", requestContext.getMethod(), requestContext.getServletPath(), errors);
+        log.warn("Binding error(s) during incoming {} request to {}: {}", requestContext.getMethod(), requestContext.getServletPath(), errors);
 
         return ErrorResponse.builder()
                 .fieldErrors(errors)
@@ -103,7 +103,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleOthers(Exception exception, WebRequest request) {
-        log.error("An error occurred during {} request to {}:", requestContext.getMethod(), requestContext.getServletPath(), exception);
+        log.error("An error occurred during incoming {} request to {}:", requestContext.getMethod(), requestContext.getServletPath(), exception);
 
         ErrorResponse body = ErrorResponse.builder()
                 .requestId(requestContext.getRequestId())
@@ -119,7 +119,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
         Object response = body;
         if (response == null) {
-            log.warn("Handling {} during {} request to {}: {}",
+            log.warn("Handling {} during incoming {} request to {}: {}",
                     ex.getClass().getSimpleName(), requestContext.getMethod(), requestContext.getServletPath(), ex.getMessage());
             response = ErrorResponse.builder()
                     .requestId(requestContext.getRequestId())
