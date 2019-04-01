@@ -103,32 +103,33 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity&lt;Object&gt; handleOthers(Exception exception, WebRequest request) {
-<span class="nc" id="L106">        log.error(&quot;An error occurred during incoming {} request to {}:&quot;, requestContext.getMethod(), requestContext.getServletPath(), exception);</span>
+<span class="nc" id="L106">        log.error(&quot;An error occurred during incoming {} request to {}: {}&quot;,</span>
+<span class="nc" id="L107">                requestContext.getMethod(), requestContext.getServletPath(), exception.getMessage(), exception);</span>
 
-<span class="nc" id="L108">        ErrorResponse body = ErrorResponse.builder()</span>
-<span class="nc" id="L109">                .requestId(requestContext.getRequestId())</span>
-<span class="nc" id="L110">                .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))</span>
-<span class="nc" id="L111">                .status(INTERNAL_SERVER_ERROR.value())</span>
-<span class="nc" id="L112">                .message(&quot;An internal server error occurred&quot;)</span>
-<span class="nc" id="L113">                .build();</span>
+<span class="nc" id="L109">        ErrorResponse body = ErrorResponse.builder()</span>
+<span class="nc" id="L110">                .requestId(requestContext.getRequestId())</span>
+<span class="nc" id="L111">                .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))</span>
+<span class="nc" id="L112">                .status(INTERNAL_SERVER_ERROR.value())</span>
+<span class="nc" id="L113">                .message(&quot;An internal server error occurred&quot;)</span>
+<span class="nc" id="L114">                .build();</span>
 
-<span class="nc" id="L115">        return handleExceptionInternal(exception, body, new HttpHeaders(), INTERNAL_SERVER_ERROR, request);</span>
+<span class="nc" id="L116">        return handleExceptionInternal(exception, body, new HttpHeaders(), INTERNAL_SERVER_ERROR, request);</span>
     }
 
     @Override
     protected ResponseEntity&lt;Object&gt; handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
-<span class="fc" id="L120">        Object response = body;</span>
-<span class="fc bfc" id="L121" title="All 2 branches covered.">        if (response == null) {</span>
-<span class="fc" id="L122">            log.warn(&quot;Handling {} during incoming {} request to {}: {}&quot;,</span>
-<span class="fc" id="L123">                    ex.getClass().getSimpleName(), requestContext.getMethod(), requestContext.getServletPath(), ex.getMessage());</span>
-<span class="fc" id="L124">            response = ErrorResponse.builder()</span>
-<span class="fc" id="L125">                    .requestId(requestContext.getRequestId())</span>
-<span class="fc" id="L126">                    .status(status.value())</span>
-<span class="fc" id="L127">                    .message(status.getReasonPhrase())</span>
-<span class="fc" id="L128">                    .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))</span>
-<span class="fc" id="L129">                    .build();</span>
+<span class="fc" id="L121">        Object response = body;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        if (response == null) {</span>
+<span class="fc" id="L123">            log.warn(&quot;Handling {} during incoming {} request to {}: {}&quot;,</span>
+<span class="fc" id="L124">                    ex.getClass().getSimpleName(), requestContext.getMethod(), requestContext.getServletPath(), ex.getMessage());</span>
+<span class="fc" id="L125">            response = ErrorResponse.builder()</span>
+<span class="fc" id="L126">                    .requestId(requestContext.getRequestId())</span>
+<span class="fc" id="L127">                    .status(status.value())</span>
+<span class="fc" id="L128">                    .message(status.getReasonPhrase())</span>
+<span class="fc" id="L129">                    .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))</span>
+<span class="fc" id="L130">                    .build();</span>
         }
-<span class="fc" id="L131">        return super.handleExceptionInternal(ex, response, headers, status, request);</span>
+<span class="fc" id="L132">        return super.handleExceptionInternal(ex, response, headers, status, request);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
