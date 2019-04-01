@@ -103,7 +103,8 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleOthers(Exception exception, WebRequest request) {
-        log.error("An error occurred during incoming {} request to {}:", requestContext.getMethod(), requestContext.getServletPath(), exception);
+        log.error("An error occurred during incoming {} request to {}: {}",
+                requestContext.getMethod(), requestContext.getServletPath(), exception.getMessage(), exception);
 
         ErrorResponse body = ErrorResponse.builder()
                 .requestId(requestContext.getRequestId())
