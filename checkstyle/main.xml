@@ -2,6 +2,8 @@
 <checkstyle version="8.15">
 <file name="/home/travis/build/DepartmentOfHealth-htbhf/htbhf-java-common/common_rest/src/main/java/uk/gov/dhsc/htbhf/CommonRestConfiguration.java">
 </file>
+<file name="/home/travis/build/DepartmentOfHealth-htbhf/htbhf-java-common/common_rest/src/main/java/uk/gov/dhsc/htbhf/eligibility/model/EligibilityStatus.java">
+</file>
 <file name="/home/travis/build/DepartmentOfHealth-htbhf/htbhf-java-common/common_rest/src/main/java/uk/gov/dhsc/htbhf/errorhandler/ErrorHandler.java">
 </file>
 <file name="/home/travis/build/DepartmentOfHealth-htbhf/htbhf-java-common/common_rest/src/main/java/uk/gov/dhsc/htbhf/errorhandler/ErrorResponse.java">
