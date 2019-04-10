@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Configuration that can be used to setup the {@link EventLogger}. The {@link ObjectMapper} created in this configuration
- * is specifically created as a private instance so that it doesn't clash with any ObjectMapper is the application context
+ * is specifically created as a private instance so that it doesn't clash with any ObjectMapper in the application context
  * this configuration is used in.
  */
 @Configuration

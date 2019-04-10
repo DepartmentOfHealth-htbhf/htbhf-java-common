@@ -2,27 +2,59 @@ package uk.gov.dhsc.htbhf.logging;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import static org.slf4j.event.Level.INFO;
 import static uk.gov.dhsc.htbhf.logging.TestConstants.EVENT;
-import static uk.gov.dhsc.htbhf.logging.TestConstants.EVENT_AS_STRING;
+import static uk.gov.dhsc.htbhf.logging.TestEventType.NEW_CLAIM;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {LoggingConfiguration.class})
 class EventLoggerSpringConfigTest extends AbstractLoggingTest {
 
+    private static final String EVENT_AS_STRING =
+            "{\"eventType\":\"NEW_CLAIM\",\"timestamp\":\"2019-04-10T09:29:09.917131\",\"description\":\"A new claim has been submitted\"}";
+    private static final String EVENT_AS_STRING_WITH_NO_METADATA =
+            "{\"eventType\":\"NEW_CLAIM\",\"timestamp\":\"2019-04-10T09:29:09.917131\"}";
+    private static final String EVENT_AS_STRING_WITH_ORDERED_METADATA =
+            "{\"eventType\":\"NEW_CLAIM\",\"timestamp\":\"2019-04-10T09:29:09.917131\",\"aardvark\":\"no\",\"zoo\":\"yes\"}";
     @Autowired
     private EventLogger eventLogger;
 
     @Test
-    void testLoggingEvent() {
+    void shouldLogEvent() {
         //When
         eventLogger.logEvent(EVENT);
         //Then
-        assertCorrectLoggingMessage(EVENT_AS_STRING, Level.INFO);
+        assertCorrectLoggingMessage(EVENT_AS_STRING, INFO);
+    }
+
+    @Test
+    void shouldLogEventWithNoMetadata() {
+        //Given
+        Event event = new Event(NEW_CLAIM, TestConstants.CREATED_TIME, null);
+        //When
+        eventLogger.logEvent(event);
+        //Then
+        assertCorrectLoggingMessage(EVENT_AS_STRING_WITH_NO_METADATA, INFO);
+    }
+
+    @Test
+    void shouldLogMetadataInOrderGivenDataNotInOrder() {
+        //Given
+        Map<String, Object> metadataNotInOrder = new LinkedHashMap<>();
+        metadataNotInOrder.put("zoo", "yes");
+        metadataNotInOrder.put("aardvark", "no");
+        Event event = new Event(NEW_CLAIM, TestConstants.CREATED_TIME, metadataNotInOrder);
+        //When
+        eventLogger.logEvent(event);
+        //Then
+        assertCorrectLoggingMessage(EVENT_AS_STRING_WITH_ORDERED_METADATA, INFO);
     }
 
 }

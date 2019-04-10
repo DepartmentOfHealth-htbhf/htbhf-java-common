@@ -11,7 +11,5 @@ public class TestConstants {
             CREATED_TIME,
             Map.of("description", "A new claim has been submitted")
     );
-    public static final String EVENT_AS_STRING =
-            "{\"eventType\":\"NEW_CLAIM\",\"timestamp\":\"2019-04-10T09:29:09.917131\",\"description\":\"A new claim has been submitted\"}";
 
 }

@@ -8,10 +8,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.slf4j.event.Level;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.slf4j.event.Level.WARN;
 import static uk.gov.dhsc.htbhf.logging.TestConstants.EVENT;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,7 +30,7 @@ class EventLoggerMockObjectMapperTest extends AbstractLoggingTest {
         //When
         eventLogger.logEvent(EVENT);
         //Then
-        assertCorrectLoggingMessage("Unable to write event as JSON, reverting to standard toString(): " + EVENT.toString(), Level.WARN);
+        assertCorrectLoggingMessage("Unable to write event as JSON, reverting to standard toString(): " + EVENT.toString(), WARN);
     }
 
 }
