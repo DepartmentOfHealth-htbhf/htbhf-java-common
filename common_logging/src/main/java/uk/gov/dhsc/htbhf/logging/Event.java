@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -18,10 +19,6 @@ public class Event {
     //This is here to make sure that the field "eventMetadata" isn't shown in the logs
     @JsonAnyGetter
     public Map<String, Object> getEventMetadata() {
-        Map<String, Object> metadata = new TreeMap<>();
-        if (eventMetadata != null) {
-            metadata.putAll(eventMetadata);
-        }
-        return metadata;
+        return eventMetadata == null ? Collections.emptyMap() : new TreeMap<>(eventMetadata);
     }
 }
