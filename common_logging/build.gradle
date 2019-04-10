@@ -1,6 +1,5 @@
 buildscript {
     ext {
-        springFoxVersion = '2.9.2'
         jacksonVersion = '2.9.8'
     }
 }
@@ -33,16 +32,9 @@ repositories {
 
 
 dependencies {
-    implementation "org.springframework:spring-web:${springVersion}"
-    implementation "org.springframework:spring-webmvc:${springVersion}"
+    implementation "org.slf4j:slf4j-api:1.7.25"
     implementation "org.springframework:spring-context:${springVersion}"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
-    implementation "com.google.code.findbugs:annotations:3.0.1"
-    implementation "org.slf4j:slf4j-api:1.7.25"
-    implementation "org.apache.tomcat.embed:tomcat-embed-core:9.0.12"
-    implementation "io.springfox:springfox-swagger2:${springFoxVersion}"
-    implementation "io.springfox:springfox-bean-validators:${springFoxVersion}"
-    implementation "com.google.guava:guava:27.1-jre"
 
     testImplementation "org.springframework:spring-test:${springVersion}"
     testImplementation "org.mockito:mockito-junit-jupiter:2.23.4"
@@ -51,6 +43,10 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
     testImplementation "org.junit.vintage:junit-vintage-engine:${junitVersion}"
     testImplementation "org.assertj:assertj-core:3.11.1"
+    testImplementation "ch.qos.logback:logback-classic:1.2.3"
+    testImplementation "org.mockito:mockito-junit-jupiter:2.23.4"
+
+
 }
 
 test {
