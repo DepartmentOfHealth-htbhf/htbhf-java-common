@@ -20,3 +20,4 @@ manifest/src
 /out/
 common_rest/out/
 common_test/out/
+common_logging/out/
