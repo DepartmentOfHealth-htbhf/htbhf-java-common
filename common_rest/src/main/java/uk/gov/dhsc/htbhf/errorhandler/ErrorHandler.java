@@ -27,6 +27,10 @@ import java.util.stream.Collectors;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
+/**
+ * Global error handler used to provide centralized exception handling for Spring MVC exceptions
+ * and return more contextual responses in the form of {@link ErrorResponse} objects.
+ */
 @ControllerAdvice
 @Slf4j
 @RequiredArgsConstructor
