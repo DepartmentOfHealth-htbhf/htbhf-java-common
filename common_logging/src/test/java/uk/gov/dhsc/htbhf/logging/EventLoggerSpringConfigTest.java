@@ -12,7 +12,6 @@ import uk.gov.dhsc.htbhf.logging.event.Event;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.slf4j.event.Level.INFO;
 import static uk.gov.dhsc.htbhf.logging.TestConstants.EVENT;
 import static uk.gov.dhsc.htbhf.logging.TestEventType.NEW_CLAIM;
@@ -73,9 +72,8 @@ class EventLoggerSpringConfigTest extends AbstractLoggingTest {
         eventLogger.logEvent(applicationStartedEvent);
 
         //Then
-        String message = getSingleMessageContent(INFO);
-        assertThat(message).startsWith("{\"eventType\":\"" + CommonEventType.APPLICATION_STARTED + "\",\"timestamp\":");
-        assertThat(message).endsWith("\"applicationId\":\"myApp\",\"applicationVersion\":\"1.0.1\",\"instanceIndex\":\"1\"}");
+        assertSingleLogMessageContainsText("{\"eventType\":\"" + CommonEventType.APPLICATION_STARTED + "\",\"timestamp\":", INFO);
+        assertSingleLogMessageContainsText("\"applicationId\":\"myApp\",\"applicationVersion\":\"1.0.1\",\"instanceIndex\":\"1\"}", INFO);
     }
 
 }
