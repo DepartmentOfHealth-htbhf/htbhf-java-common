@@ -5,10 +5,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import uk.gov.dhsc.htbhf.logging.event.ApplicationStartedEvent;
+import uk.gov.dhsc.htbhf.logging.event.CommonEventType;
+import uk.gov.dhsc.htbhf.logging.event.Event;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.slf4j.event.Level.INFO;
 import static uk.gov.dhsc.htbhf.logging.TestConstants.EVENT;
 import static uk.gov.dhsc.htbhf.logging.TestEventType.NEW_CLAIM;
@@ -55,6 +59,23 @@ class EventLoggerSpringConfigTest extends AbstractLoggingTest {
         eventLogger.logEvent(event);
         //Then
         assertCorrectLoggingMessage(EVENT_AS_STRING_WITH_ORDERED_METADATA, INFO);
+    }
+
+    @Test
+    void shouldLogEventSubclass() {
+        //Given
+        ApplicationStartedEvent applicationStartedEvent = ApplicationStartedEvent.builder()
+                .applicationId("myApp")
+                .applicationVersion("1.0.1")
+                .instanceIndex("1")
+                .build();
+        //When
+        eventLogger.logEvent(applicationStartedEvent);
+
+        //Then
+        String message = getSingleMessageContent(INFO);
+        assertThat(message).startsWith("{\"eventType\":\"" + CommonEventType.APPLICATION_STARTED + "\",\"timestamp\":");
+        assertThat(message).endsWith("\"applicationId\":\"myApp\",\"applicationVersion\":\"1.0.1\",\"instanceIndex\":\"1\"}");
     }
 
 }
