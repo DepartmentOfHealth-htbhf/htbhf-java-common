@@ -15,11 +15,21 @@ abstract class AbstractLoggingTest {
         TestAppender.clearAllEvents();
     }
 
-    void assertCorrectLoggingMessage(String expectedMessage, Level expectedLevel) {
+    void assertSingleLogMessageHasText(String expectedMessage, Level expectedLevel) {
+        ILoggingEvent loggingEvent = assertSingleLoggingEvent(expectedLevel);
+        assertThat(loggingEvent.getMessage()).isEqualTo(expectedMessage);
+    }
+
+    void assertSingleLogMessageContainsText(String messageSubstring, Level expectedLevel) {
+        ILoggingEvent loggingEvent = assertSingleLoggingEvent(expectedLevel);
+        assertThat(loggingEvent.getMessage()).containsSequence(messageSubstring);
+    }
+
+    private ILoggingEvent assertSingleLoggingEvent(Level expectedLevel) {
         List<ILoggingEvent> loggingEvents = TestAppender.events;
         assertThat(loggingEvents).hasSize(1);
         ILoggingEvent loggingEvent = loggingEvents.get(0);
-        assertThat(loggingEvent.getMessage()).isEqualTo(expectedMessage);
         assertThat(loggingEvent.getLevel().toString()).isEqualTo(expectedLevel.toString());
+        return loggingEvent;
     }
 }

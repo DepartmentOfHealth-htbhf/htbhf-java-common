@@ -1,5 +1,7 @@
 package uk.gov.dhsc.htbhf.logging;
 
+import uk.gov.dhsc.htbhf.logging.event.Event;
+
 import java.time.LocalDateTime;
 import java.util.Map;
 

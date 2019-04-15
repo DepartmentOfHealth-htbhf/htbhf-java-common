@@ -5,6 +5,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import uk.gov.dhsc.htbhf.logging.event.ApplicationStartedEvent;
+import uk.gov.dhsc.htbhf.logging.event.CommonEventType;
+import uk.gov.dhsc.htbhf.logging.event.Event;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -31,7 +34,7 @@ class EventLoggerSpringConfigTest extends AbstractLoggingTest {
         //When
         eventLogger.logEvent(EVENT);
         //Then
-        assertCorrectLoggingMessage(EVENT_AS_STRING, INFO);
+        assertSingleLogMessageHasText(EVENT_AS_STRING, INFO);
     }
 
     @Test
@@ -41,7 +44,7 @@ class EventLoggerSpringConfigTest extends AbstractLoggingTest {
         //When
         eventLogger.logEvent(event);
         //Then
-        assertCorrectLoggingMessage(EVENT_AS_STRING_WITH_NO_METADATA, INFO);
+        assertSingleLogMessageHasText(EVENT_AS_STRING_WITH_NO_METADATA, INFO);
     }
 
     @Test
@@ -54,7 +57,23 @@ class EventLoggerSpringConfigTest extends AbstractLoggingTest {
         //When
         eventLogger.logEvent(event);
         //Then
-        assertCorrectLoggingMessage(EVENT_AS_STRING_WITH_ORDERED_METADATA, INFO);
+        assertSingleLogMessageHasText(EVENT_AS_STRING_WITH_ORDERED_METADATA, INFO);
+    }
+
+    @Test
+    void shouldLogEventSubclass() {
+        //Given
+        ApplicationStartedEvent applicationStartedEvent = ApplicationStartedEvent.builder()
+                .applicationId("myApp")
+                .applicationVersion("1.0.1")
+                .instanceIndex("1")
+                .build();
+        //When
+        eventLogger.logEvent(applicationStartedEvent);
+
+        //Then
+        assertSingleLogMessageContainsText("{\"eventType\":\"" + CommonEventType.APPLICATION_STARTED + "\",\"timestamp\":", INFO);
+        assertSingleLogMessageContainsText("\"applicationId\":\"myApp\",\"applicationVersion\":\"1.0.1\",\"instanceIndex\":\"1\"}", INFO);
     }
 
 }
