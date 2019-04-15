@@ -15,7 +15,7 @@ abstract class AbstractLoggingTest {
         TestAppender.clearAllEvents();
     }
 
-    void assertCorrectLoggingMessage(String expectedMessage, Level expectedLevel) {
+    void assertSingleLogMessageHasText(String expectedMessage, Level expectedLevel) {
         ILoggingEvent loggingEvent = assertSingleLoggingEvent(expectedLevel);
         assertThat(loggingEvent.getMessage()).isEqualTo(expectedMessage);
     }

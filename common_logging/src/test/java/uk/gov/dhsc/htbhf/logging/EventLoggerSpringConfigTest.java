@@ -34,7 +34,7 @@ class EventLoggerSpringConfigTest extends AbstractLoggingTest {
         //When
         eventLogger.logEvent(EVENT);
         //Then
-        assertCorrectLoggingMessage(EVENT_AS_STRING, INFO);
+        assertSingleLogMessageHasText(EVENT_AS_STRING, INFO);
     }
 
     @Test
@@ -44,7 +44,7 @@ class EventLoggerSpringConfigTest extends AbstractLoggingTest {
         //When
         eventLogger.logEvent(event);
         //Then
-        assertCorrectLoggingMessage(EVENT_AS_STRING_WITH_NO_METADATA, INFO);
+        assertSingleLogMessageHasText(EVENT_AS_STRING_WITH_NO_METADATA, INFO);
     }
 
     @Test
@@ -57,7 +57,7 @@ class EventLoggerSpringConfigTest extends AbstractLoggingTest {
         //When
         eventLogger.logEvent(event);
         //Then
-        assertCorrectLoggingMessage(EVENT_AS_STRING_WITH_ORDERED_METADATA, INFO);
+        assertSingleLogMessageHasText(EVENT_AS_STRING_WITH_ORDERED_METADATA, INFO);
     }
 
     @Test

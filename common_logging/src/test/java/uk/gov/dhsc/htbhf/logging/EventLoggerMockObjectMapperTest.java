@@ -30,7 +30,7 @@ class EventLoggerMockObjectMapperTest extends AbstractLoggingTest {
         //When
         eventLogger.logEvent(EVENT);
         //Then
-        assertCorrectLoggingMessage("Unable to write event as JSON, reverting to standard toString(): " + EVENT.toString(), WARN);
+        assertSingleLogMessageHasText("Unable to write event as JSON, reverting to standard toString(): " + EVENT.toString(), WARN);
     }
 
 }
