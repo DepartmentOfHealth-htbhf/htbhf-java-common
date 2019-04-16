@@ -14,6 +14,8 @@ import org.springframework.web.context.WebApplicationContext;
 @Configuration
 public class RequestContextConfiguration {
 
+    public static final String REST_TEMPLATE_WITH_ID_HEADERS_QUALIFIER = "restTemplateWithIdHeaders";
+
     @Bean
     public MDCWrapper mdcWrapper() {
         return new MDCWrapper();
@@ -30,7 +32,7 @@ public class RequestContextConfiguration {
         return new RequestIdFilter(requestContext(), mdcWrapper());
     }
 
-    @Bean(name = "restTemplateWithIdHeaders")
+    @Bean(name = REST_TEMPLATE_WITH_ID_HEADERS_QUALIFIER)
     public RestTemplate restTemplateWithIdHeaders() {
         var restTemplate = new RestTemplate();
         var interceptors = restTemplate.getInterceptors();
