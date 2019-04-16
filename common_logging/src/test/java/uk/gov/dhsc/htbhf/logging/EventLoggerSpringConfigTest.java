@@ -26,6 +26,9 @@ class EventLoggerSpringConfigTest extends AbstractLoggingTest {
             "{\"eventType\":\"NEW_CLAIM\",\"timestamp\":\"2019-04-10T09:29:09.917131\"}";
     private static final String EVENT_AS_STRING_WITH_ORDERED_METADATA =
             "{\"eventType\":\"NEW_CLAIM\",\"timestamp\":\"2019-04-10T09:29:09.917131\",\"aardvark\":\"no\",\"zoo\":\"yes\"}";
+    private static final String EVENT_AS_STRING_WITHOUT_NEWLINES =
+            "{\"eventType\":\"NEW_CLAIM\",\"timestamp\":\"2019-04-10T09:29:09.917131\",\"multiline\":\"a\\nb\"}";
+
     @Autowired
     private EventLogger eventLogger;
 
@@ -45,6 +48,26 @@ class EventLoggerSpringConfigTest extends AbstractLoggingTest {
         eventLogger.logEvent(event);
         //Then
         assertSingleLogMessageHasText(EVENT_AS_STRING_WITH_NO_METADATA, INFO);
+    }
+
+    @Test
+    void shouldLogNullEvent() {
+        //Given
+        Event event = null;
+        //When
+        eventLogger.logEvent(event);
+        //Then
+        assertSingleLogMessageHasText("null", INFO);
+    }
+
+    @Test
+    void shouldReplaceNewLinesWhenLogging() {
+        //Given
+        Event event = new Event(NEW_CLAIM, TestConstants.CREATED_TIME, Map.of("multiline", "a\nb"));
+        //When
+        eventLogger.logEvent(event);
+        //Then
+        assertSingleLogMessageHasText(EVENT_AS_STRING_WITHOUT_NEWLINES, INFO);
     }
 
     @Test
