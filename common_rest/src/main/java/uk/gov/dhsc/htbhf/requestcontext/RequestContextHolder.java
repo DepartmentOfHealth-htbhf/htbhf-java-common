@@ -1,7 +1,7 @@
 package uk.gov.dhsc.htbhf.requestcontext;
 
 /**
- * Wraps a {@link RequestContextHolder} in a {@link ThreadLocal} field.
+ * Wraps a {@link RequestContext} in a {@link ThreadLocal} field.
  */
 public class RequestContextHolder {
 

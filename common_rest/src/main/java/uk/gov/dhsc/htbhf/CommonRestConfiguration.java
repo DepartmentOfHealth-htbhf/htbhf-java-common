@@ -11,14 +11,8 @@ import uk.gov.dhsc.htbhf.requestcontext.RequestContextHolder;
 @Import(RequestContextConfiguration.class)
 public class CommonRestConfiguration {
 
-    private final RequestContextHolder requestContextHolder;
-
-    public CommonRestConfiguration(RequestContextHolder requestContextHolder) {
-        this.requestContextHolder = requestContextHolder;
-    }
-
     @Bean
-    public ErrorHandler errorHandler() {
+    public ErrorHandler errorHandler(RequestContextHolder requestContextHolder) {
         return new ErrorHandler(requestContextHolder);
     }
 }

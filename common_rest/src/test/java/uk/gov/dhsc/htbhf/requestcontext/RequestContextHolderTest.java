@@ -26,12 +26,12 @@ class RequestContextHolderTest {
 
         holder.clear();
 
-        assertThat(holder.get()).isNotNull();
         RequestContext newRequestContext = holder.get();
+        assertThat(newRequestContext).isNotNull();
         assertThat(newRequestContext.getSessionId()).isNull();
-        assertThat(newRequestContext.getSessionId()).isNull();
-        assertThat(newRequestContext.getSessionId()).isNull();
-        assertThat(newRequestContext.getSessionId()).isNull();
+        assertThat(newRequestContext.getMethod()).isNull();
+        assertThat(newRequestContext.getRequestId()).isNull();
+        assertThat(newRequestContext.getServletPath()).isNull();
     }
 
 }
