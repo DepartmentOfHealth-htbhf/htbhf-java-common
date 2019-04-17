@@ -2,20 +2,29 @@ package uk.gov.dhsc.htbhf.logging.event;
 
 import lombok.Builder;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Represents an event that has failed.
  */
-public class EventFailedEvent extends Event {
+public class FailureEvent extends Event {
 
     public static final String FAILED_EVENT_KEY = "failedEvent";
     public static final String FAILURE_DESCRIPTION_KEY = "failureDescription";
 
     @Builder
-    public EventFailedEvent(String failureDescription, Event failedEvent) {
-        super(CommonEventType.FAILED_EVENT, failedEvent.getTimestamp(), constructMetadata(failureDescription, failedEvent));
+    public FailureEvent(String failureDescription, Event failedEvent) {
+        super(
+                CommonEventType.FAILURE,
+                notNullEvent(failedEvent).getTimestamp(),
+                constructMetadata(failureDescription, notNullEvent(failedEvent))
+        );
+    }
+
+    private static Event notNullEvent(Event failedEvent) {
+        return failedEvent == null ? new Event(null, LocalDateTime.now(), null) : failedEvent;
     }
 
     private static Map<String, Object> constructMetadata(String failureDescription, Event failedEvent) {
