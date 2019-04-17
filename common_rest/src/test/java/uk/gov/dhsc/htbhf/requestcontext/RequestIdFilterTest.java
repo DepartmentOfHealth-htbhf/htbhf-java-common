@@ -18,6 +18,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willReturn;
 import static org.mockito.BDDMockito.willThrow;
+import static org.mockito.Mockito.verify;
 import static uk.gov.dhsc.htbhf.requestcontext.RequestIdFilter.REQUEST_ID_HEADER;
 import static uk.gov.dhsc.htbhf.requestcontext.RequestIdFilter.REQUEST_ID_MDC_KEY;
 import static uk.gov.dhsc.htbhf.requestcontext.RequestIdFilter.SESSION_ID_HEADER;
@@ -27,7 +28,7 @@ import static uk.gov.dhsc.htbhf.requestcontext.RequestIdFilter.SESSION_ID_MDC_KE
 class RequestIdFilterTest {
 
     @Mock
-    RequestContext requestContext;
+    RequestContextHolder requestContextHolder;
     @Mock
     HttpServletRequest request;
     @Mock
@@ -36,6 +37,8 @@ class RequestIdFilterTest {
     FilterChain filterChain;
     @Mock
     MDCWrapper mdcWrapper;
+    @Mock
+    RequestContext requestContext;
 
     @InjectMocks
     RequestIdFilter filter;
@@ -45,17 +48,19 @@ class RequestIdFilterTest {
         // Given
         String requestId = "MyRequestId";
         given(request.getHeader(REQUEST_ID_HEADER)).willReturn(requestId);
+        given(requestContextHolder.get()).willReturn(requestContext);
 
         // When
         filter.doFilterInternal(request, response, filterChain);
 
         // Then
-        InOrder inOrder = Mockito.inOrder(mdcWrapper, requestContext, filterChain);
+        InOrder inOrder = Mockito.inOrder(mdcWrapper, requestContextHolder, filterChain, requestContext);
 
         inOrder.verify(mdcWrapper).put(REQUEST_ID_MDC_KEY, requestId);
         inOrder.verify(requestContext).setRequestId(requestId);
         inOrder.verify(filterChain).doFilter(request, response);
         inOrder.verify(mdcWrapper).remove(REQUEST_ID_MDC_KEY);
+        inOrder.verify(requestContextHolder).clear();
     }
 
     @Test
@@ -64,33 +69,37 @@ class RequestIdFilterTest {
         String sessionId = "MySessionId";
         willReturn("stop mockito reporting strict stubbing argument mismatch.").given(request).getHeader(ArgumentMatchers.anyString());
         willReturn(sessionId).given(request).getHeader(SESSION_ID_HEADER);
+        given(requestContextHolder.get()).willReturn(requestContext);
 
         // When
         filter.doFilterInternal(request, response, filterChain);
 
         // Then
-        InOrder inOrder = Mockito.inOrder(mdcWrapper, requestContext, filterChain);
+        InOrder inOrder = Mockito.inOrder(mdcWrapper, requestContextHolder, filterChain, requestContext);
 
         inOrder.verify(mdcWrapper).put(SESSION_ID_MDC_KEY, sessionId);
         inOrder.verify(requestContext).setSessionId(sessionId);
         inOrder.verify(filterChain).doFilter(request, response);
         inOrder.verify(mdcWrapper).remove(SESSION_ID_MDC_KEY);
+        inOrder.verify(requestContextHolder).clear();
     }
 
     @Test
     void shouldCreateRequestIdWhenNoneProvided() throws Exception {
         // Given
+        given(requestContextHolder.get()).willReturn(requestContext);
 
         // When
         filter.doFilterInternal(request, response, filterChain);
 
         // Then
-        InOrder inOrder = Mockito.inOrder(mdcWrapper, requestContext, filterChain);
+        InOrder inOrder = Mockito.inOrder(mdcWrapper, requestContextHolder, filterChain, requestContext);
 
         inOrder.verify(mdcWrapper).put(ArgumentMatchers.eq(REQUEST_ID_MDC_KEY), ArgumentMatchers.anyString());
         inOrder.verify(requestContext).setRequestId(ArgumentMatchers.anyString());
         inOrder.verify(filterChain).doFilter(request, response);
         inOrder.verify(mdcWrapper).remove(REQUEST_ID_MDC_KEY);
+        inOrder.verify(requestContextHolder).clear();
     }
 
     @Test
@@ -100,21 +109,23 @@ class RequestIdFilterTest {
         given(request.getMethod()).willReturn(method);
         String servletPath = "/my/path";
         given(request.getServletPath()).willReturn(servletPath);
+        given(requestContextHolder.get()).willReturn(requestContext);
 
         // When
         filter.doFilterInternal(request, response, filterChain);
 
         // Then
 
-        Mockito.verify(requestContext).setMethod(method);
-        Mockito.verify(requestContext).setServletPath(servletPath);
+        verify(requestContext).setMethod(method);
+        verify(requestContext).setServletPath(servletPath);
     }
 
     @Test
-    void shouldClearMDCAfterException() throws Exception {
+    void shouldClearMDCAndRequestContextAfterException() throws Exception {
         // Given
         RuntimeException exception = new RuntimeException("Unexpected Error");
         willThrow(exception).given(filterChain).doFilter(request, response);
+        given(requestContextHolder.get()).willReturn(requestContext);
 
         // When
         Throwable thrown = catchThrowable(() -> filter.doFilterInternal(request, response, filterChain));
@@ -122,11 +133,12 @@ class RequestIdFilterTest {
         // Then
         assertThat(thrown).isEqualTo(exception);
 
-        InOrder inOrder = Mockito.inOrder(mdcWrapper, requestContext, filterChain);
+        InOrder inOrder = Mockito.inOrder(mdcWrapper, requestContextHolder, filterChain, requestContext);
         inOrder.verify(mdcWrapper).put(ArgumentMatchers.eq(REQUEST_ID_MDC_KEY), ArgumentMatchers.anyString());
         inOrder.verify(requestContext).setRequestId(ArgumentMatchers.anyString());
         inOrder.verify(filterChain).doFilter(request, response);
         inOrder.verify(mdcWrapper).remove(REQUEST_ID_MDC_KEY);
+        inOrder.verify(requestContextHolder).clear();
     }
 
 }
