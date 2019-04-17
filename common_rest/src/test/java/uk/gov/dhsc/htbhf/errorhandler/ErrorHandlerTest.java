@@ -18,6 +18,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.context.request.WebRequest;
 import uk.gov.dhsc.htbhf.requestcontext.RequestContext;
+import uk.gov.dhsc.htbhf.requestcontext.RequestContextHolder;
 
 import java.nio.charset.Charset;
 import java.time.LocalDate;
@@ -45,6 +46,8 @@ class ErrorHandlerTest {
     @Mock
     WebRequest webRequest;
     @Mock
+    RequestContextHolder requestContextHolder;
+    @Mock
     RequestContext requestContext;
 
     @InjectMocks
@@ -56,6 +59,7 @@ class ErrorHandlerTest {
         FieldError fieldError1 = new FieldError("objectName", "field1", ERROR_MESSAGE_1);
         FieldError fieldError2 = new FieldError("objectName", "field2", ERROR_MESSAGE_2);
         given(bindingResult.getFieldErrors()).willReturn(asList(fieldError1, fieldError2));
+        given(requestContextHolder.get()).willReturn(requestContext);
         given(requestContext.getRequestId()).willReturn(REQUEST_ID);
 
         // When
@@ -79,6 +83,7 @@ class ErrorHandlerTest {
         ObjectError globalError1 = new ObjectError("object1", ERROR_MESSAGE_1);
         ObjectError globalError2 = new ObjectError("object2", ERROR_MESSAGE_2);
         given(bindingResult.getGlobalErrors()).willReturn(asList(globalError1, globalError2));
+        given(requestContextHolder.get()).willReturn(requestContext);
         given(requestContext.getRequestId()).willReturn(REQUEST_ID);
 
         // When
@@ -106,6 +111,7 @@ class ErrorHandlerTest {
         HttpMessageNotReadableException ex = new HttpMessageNotReadableException("myMessage",
                 cause,
                 new MockHttpInputMessage("This is an error".getBytes(Charset.defaultCharset())));
+        given(requestContextHolder.get()).willReturn(requestContext);
         given(requestContext.getRequestId()).willReturn(REQUEST_ID);
 
         // When
@@ -128,6 +134,7 @@ class ErrorHandlerTest {
         HttpMessageNotReadableException ex = new HttpMessageNotReadableException("myMessage",
                 new RuntimeException(),
                 new MockHttpInputMessage("This is an error".getBytes(Charset.defaultCharset())));
+        given(requestContextHolder.get()).willReturn(requestContext);
         given(requestContext.getRequestId()).willReturn(REQUEST_ID);
 
         // When

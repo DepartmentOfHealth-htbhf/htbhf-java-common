@@ -37,7 +37,7 @@ public class RequestIdFilter extends OncePerRequestFilter {
      */
     public static final String SESSION_ID_HEADER = "X-SESSION-ID";
 
-    private final RequestContext requestContext;
+    private final RequestContextHolder requestContextHolder;
     private final MDCWrapper mdcWrapper;
 
     @Override
@@ -48,6 +48,7 @@ public class RequestIdFilter extends OncePerRequestFilter {
                 requestId = UUID.randomUUID().toString();
             }
             mdcWrapper.put(REQUEST_ID_MDC_KEY, requestId);
+            RequestContext requestContext = requestContextHolder.get();
             requestContext.setRequestId(requestId);
 
             String sessionId = request.getHeader(SESSION_ID_HEADER);
@@ -61,6 +62,7 @@ public class RequestIdFilter extends OncePerRequestFilter {
         } finally {
             mdcWrapper.remove(REQUEST_ID_MDC_KEY);
             mdcWrapper.remove(SESSION_ID_MDC_KEY);
+            requestContextHolder.clear();
         }
 
     }

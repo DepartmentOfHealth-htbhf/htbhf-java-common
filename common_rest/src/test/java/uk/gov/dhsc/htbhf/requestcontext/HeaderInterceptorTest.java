@@ -22,12 +22,13 @@ public class HeaderInterceptorTest {
 
     private static final String SESSION_ID = UUID.randomUUID().toString();
     private static final String REQUEST_ID = UUID.randomUUID().toString();
-    private final RequestContext requestContext = new RequestContext();
+    private final RequestContextHolder requestContextHolder = new RequestContextHolder();
 
-    private HeaderInterceptor headerInterceptor = new HeaderInterceptor(requestContext);
+    private HeaderInterceptor headerInterceptor = new HeaderInterceptor(requestContextHolder);
 
     @BeforeEach
     public void setUp() {
+        RequestContext requestContext = requestContextHolder.get();
         requestContext.setRequestId(REQUEST_ID);
         requestContext.setSessionId(SESSION_ID);
     }

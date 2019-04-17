@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import uk.gov.dhsc.htbhf.requestcontext.RequestContext;
+import uk.gov.dhsc.htbhf.requestcontext.RequestContextHolder;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -39,7 +40,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     public static final String VALIDATION_ERROR_MESSAGE = "There were validation issues with the request.";
     public static final String UNREADABLE_ERROR_MESSAGE = "The request could not be parsed.";
 
-    private final RequestContext requestContext;
+    private final RequestContextHolder requestContextHolder;
 
     @Override
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
@@ -70,6 +71,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
                         .field(error.getObjectName())
                         .build()));
 
+        RequestContext requestContext = requestContextHolder.get();
         log.warn("Binding error(s) during incoming {} request to {}: {}", requestContext.getMethod(), requestContext.getServletPath(), errors);
 
         return ErrorResponse.builder()
@@ -93,6 +95,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
                     .message(String.format("'%s' could not be parsed as a %s", cause.getValue(), cause.getTargetType().getSimpleName()))
                     .field(path)
                     .build();
+            RequestContext requestContext = requestContextHolder.get();
             ErrorResponse response = ErrorResponse.builder()
                     .fieldErrors(Collections.singletonList(fieldError))
                     .requestId(requestContext.getRequestId())
@@ -107,6 +110,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleOthers(Exception exception, WebRequest request) {
+        RequestContext requestContext = requestContextHolder.get();
         log.error("An error occurred during incoming {} request to {}: {}",
                 requestContext.getMethod(), requestContext.getServletPath(), exception.getMessage(), exception);
 
@@ -124,6 +128,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
         Object response = body;
         if (response == null) {
+            RequestContext requestContext = requestContextHolder.get();
             log.warn("Handling {} during incoming {} request to {}: {}",
                     ex.getClass().getSimpleName(), requestContext.getMethod(), requestContext.getServletPath(), ex.getMessage());
             response = ErrorResponse.builder()

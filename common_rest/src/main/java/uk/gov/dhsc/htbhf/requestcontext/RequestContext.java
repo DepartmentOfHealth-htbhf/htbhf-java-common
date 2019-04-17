@@ -3,7 +3,7 @@ package uk.gov.dhsc.htbhf.requestcontext;
 import lombok.Data;
 
 /**
- * A container for request-scoped context, such as the id of the current request.
+ * A container for context values such as the id of the current request.
  */
 @Data
 public class RequestContext {
