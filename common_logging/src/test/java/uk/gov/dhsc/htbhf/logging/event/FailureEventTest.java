@@ -46,7 +46,7 @@ class FailureEventTest {
         assertThat(failedEvent.getTimestamp()).isNotNull();
         Map<String, Object> metadata = failedEvent.getEventMetadata();
         assertThat(metadata).isNotNull();
-        assertThat(metadata.get(FAILED_EVENT_KEY)).isNull();
+        assertThat(metadata.get(FAILED_EVENT_KEY)).isEqualTo(CommonEventType.UNKNOWN);
         assertThat(metadata.get(FAILURE_DESCRIPTION_KEY)).isEqualTo("something went wrong!");
 
     }
