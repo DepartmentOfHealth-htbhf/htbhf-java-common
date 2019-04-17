@@ -5,7 +5,7 @@ package uk.gov.dhsc.htbhf.requestcontext;
  */
 public class RequestContextHolder {
 
-    private ThreadLocal<RequestContext> requestContext = ThreadLocal.withInitial(RequestContext::new);
+    private final ThreadLocal<RequestContext> requestContext = ThreadLocal.withInitial(RequestContext::new);
 
     public RequestContext get() {
         return this.requestContext.get();
