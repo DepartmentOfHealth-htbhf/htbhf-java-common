@@ -36,12 +36,12 @@ class RequestContextHolderTest {
 
     @Test
     void shouldSetRequestContext() {
-        RequestContextHolder holder = new RequestContextHolder();
         RequestContext requestContext = new RequestContext();
         requestContext.setServletPath("servletPath");
         requestContext.setMethod("method");
         requestContext.setRequestId("requestId");
         requestContext.setSessionId("sessionId");
+        RequestContextHolder holder = new RequestContextHolder();
 
         holder.set(requestContext);
 
