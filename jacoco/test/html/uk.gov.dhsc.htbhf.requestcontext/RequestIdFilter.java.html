@@ -37,7 +37,7 @@ public class RequestIdFilter extends OncePerRequestFilter {
      */
     public static final String SESSION_ID_HEADER = &quot;X-SESSION-ID&quot;;
 
-    private final RequestContext requestContext;
+    private final RequestContextHolder requestContextHolder;
     private final MDCWrapper mdcWrapper;
 
     @Override
@@ -48,21 +48,23 @@ public class RequestIdFilter extends OncePerRequestFilter {
 <span class="fc" id="L48">                requestId = UUID.randomUUID().toString();</span>
             }
 <span class="fc" id="L50">            mdcWrapper.put(REQUEST_ID_MDC_KEY, requestId);</span>
-<span class="fc" id="L51">            requestContext.setRequestId(requestId);</span>
+<span class="fc" id="L51">            RequestContext requestContext = requestContextHolder.get();</span>
+<span class="fc" id="L52">            requestContext.setRequestId(requestId);</span>
 
-<span class="fc" id="L53">            String sessionId = request.getHeader(SESSION_ID_HEADER);</span>
-<span class="fc" id="L54">            mdcWrapper.put(SESSION_ID_MDC_KEY, sessionId);</span>
-<span class="fc" id="L55">            requestContext.setSessionId(sessionId);</span>
+<span class="fc" id="L54">            String sessionId = request.getHeader(SESSION_ID_HEADER);</span>
+<span class="fc" id="L55">            mdcWrapper.put(SESSION_ID_MDC_KEY, sessionId);</span>
+<span class="fc" id="L56">            requestContext.setSessionId(sessionId);</span>
 
-<span class="fc" id="L57">            requestContext.setMethod(request.getMethod());</span>
-<span class="fc" id="L58">            requestContext.setServletPath(request.getServletPath());</span>
+<span class="fc" id="L58">            requestContext.setMethod(request.getMethod());</span>
+<span class="fc" id="L59">            requestContext.setServletPath(request.getServletPath());</span>
 
-<span class="fc" id="L60">            filterChain.doFilter(request, response);</span>
+<span class="fc" id="L61">            filterChain.doFilter(request, response);</span>
         } finally {
-<span class="fc" id="L62">            mdcWrapper.remove(REQUEST_ID_MDC_KEY);</span>
-<span class="fc" id="L63">            mdcWrapper.remove(SESSION_ID_MDC_KEY);</span>
+<span class="fc" id="L63">            mdcWrapper.remove(REQUEST_ID_MDC_KEY);</span>
+<span class="fc" id="L64">            mdcWrapper.remove(SESSION_ID_MDC_KEY);</span>
+<span class="fc" id="L65">            requestContextHolder.clear();</span>
         }
 
-<span class="fc" id="L66">    }</span>
+<span class="fc" id="L68">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -17,14 +17,15 @@ import static uk.gov.dhsc.htbhf.requestcontext.RequestIdFilter.SESSION_ID_HEADER
 @AllArgsConstructor
 public class HeaderInterceptor implements ClientHttpRequestInterceptor {
 
-    private final RequestContext requestContext;
+    private final RequestContextHolder requestContextHolder;
 
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
 <span class="fc" id="L24">        var headers = request.getHeaders();</span>
-<span class="fc" id="L25">        headers.add(REQUEST_ID_HEADER, requestContext.getRequestId());</span>
-<span class="fc" id="L26">        headers.add(SESSION_ID_HEADER, requestContext.getSessionId());</span>
-<span class="fc" id="L27">        return execution.execute(request, body);</span>
+<span class="fc" id="L25">        RequestContext requestContext = requestContextHolder.get();</span>
+<span class="fc" id="L26">        headers.add(REQUEST_ID_HEADER, requestContext.getRequestId());</span>
+<span class="fc" id="L27">        headers.add(SESSION_ID_HEADER, requestContext.getSessionId());</span>
+<span class="fc" id="L28">        return execution.execute(request, body);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

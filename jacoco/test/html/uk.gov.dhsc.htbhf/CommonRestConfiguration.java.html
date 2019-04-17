@@ -4,22 +4,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import uk.gov.dhsc.htbhf.errorhandler.ErrorHandler;
-import uk.gov.dhsc.htbhf.requestcontext.RequestContext;
 import uk.gov.dhsc.htbhf.requestcontext.RequestContextConfiguration;
+import uk.gov.dhsc.htbhf.requestcontext.RequestContextHolder;
 
 @Configuration
 @Import(RequestContextConfiguration.class)
-public class CommonRestConfiguration {
-
-    private final RequestContext requestContext;
-
-<span class="nc" id="L16">    public CommonRestConfiguration(RequestContext requestContext) {</span>
-<span class="nc" id="L17">        this.requestContext = requestContext;</span>
-<span class="nc" id="L18">    }</span>
+<span class="nc" id="L12">public class CommonRestConfiguration {</span>
 
     @Bean
-    public ErrorHandler errorHandler() {
-<span class="nc" id="L22">        return new ErrorHandler(requestContext);</span>
+    public ErrorHandler errorHandler(RequestContextHolder requestContextHolder) {
+<span class="nc" id="L16">        return new ErrorHandler(requestContextHolder);</span>
     }
 }
 

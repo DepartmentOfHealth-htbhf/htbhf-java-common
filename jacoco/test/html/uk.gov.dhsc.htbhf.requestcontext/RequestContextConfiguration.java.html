@@ -2,45 +2,41 @@
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Configuration class to be used to setup the required beans to setup the request scoped
  * request context and the filter to be used to add those values to the MDC for logging.
  */
 @Configuration
-<span class="nc" id="L15">public class RequestContextConfiguration {</span>
+<span class="nc" id="L12">public class RequestContextConfiguration {</span>
 
     @Bean
     public MDCWrapper mdcWrapper() {
-<span class="nc" id="L19">        return new MDCWrapper();</span>
+<span class="nc" id="L16">        return new MDCWrapper();</span>
     }
 
     @Bean
-    @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
-    public RequestContext requestContext() {
-<span class="nc" id="L25">        return new RequestContext();</span>
+    public RequestContextHolder requestContextHolder() {
+<span class="nc" id="L21">        return new RequestContextHolder();</span>
     }
 
     @Bean
     public RequestIdFilter requestIdFilter() {
-<span class="nc" id="L30">        return new RequestIdFilter(requestContext(), mdcWrapper());</span>
+<span class="nc" id="L26">        return new RequestIdFilter(requestContextHolder(), mdcWrapper());</span>
     }
 
     @Bean(name = &quot;restTemplateWithIdHeaders&quot;)
     public RestTemplate restTemplateWithIdHeaders() {
-<span class="nc" id="L35">        var restTemplate = new RestTemplate();</span>
-<span class="nc" id="L36">        var interceptors = restTemplate.getInterceptors();</span>
-<span class="nc" id="L37">        interceptors.add(headerInterceptor());</span>
-<span class="nc" id="L38">        return restTemplate;</span>
+<span class="nc" id="L31">        var restTemplate = new RestTemplate();</span>
+<span class="nc" id="L32">        var interceptors = restTemplate.getInterceptors();</span>
+<span class="nc" id="L33">        interceptors.add(headerInterceptor());</span>
+<span class="nc" id="L34">        return restTemplate;</span>
     }
 
     @Bean
     public HeaderInterceptor headerInterceptor() {
-<span class="nc" id="L43">        return new HeaderInterceptor(requestContext());</span>
+<span class="nc" id="L39">        return new HeaderInterceptor(requestContextHolder());</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
