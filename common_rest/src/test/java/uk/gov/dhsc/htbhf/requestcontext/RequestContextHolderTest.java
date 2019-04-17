@@ -34,4 +34,18 @@ class RequestContextHolderTest {
         assertThat(newRequestContext.getServletPath()).isNull();
     }
 
+    @Test
+    void shouldSetRequestContext() {
+        RequestContextHolder holder = new RequestContextHolder();
+        RequestContext requestContext = new RequestContext();
+        requestContext.setServletPath("servletPath");
+        requestContext.setMethod("method");
+        requestContext.setRequestId("requestId");
+        requestContext.setSessionId("sessionId");
+
+        holder.set(requestContext);
+
+        assertThat(holder.get()).isEqualTo(requestContext);
+    }
+
 }
