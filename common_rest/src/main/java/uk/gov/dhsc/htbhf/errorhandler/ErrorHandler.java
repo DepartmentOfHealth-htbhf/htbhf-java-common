@@ -112,7 +112,10 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleOthers(Exception exception, WebRequest request) {
         RequestContext requestContext = requestContextHolder.get();
         log.error("An error occurred during incoming {} request to {}: {}",
-                requestContext.getMethod(), requestContext.getServletPath(), exception.getMessage(), exception);
+                requestContext.getMethod(),
+                requestContext.getServletPath(),
+                constructExceptionDetail(exception),
+                exception);
 
         ErrorResponse body = ErrorResponse.builder()
                 .requestId(requestContext.getRequestId())
@@ -139,5 +142,27 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
                     .build();
         }
         return super.handleExceptionInternal(ex, response, headers, status, request);
+    }
+
+    protected String constructExceptionDetail(Exception exception) {
+        StringBuilder detail = new StringBuilder();
+        Throwable ex = exception;
+        detail.append(getThrowableDetail(ex));
+        while (ex.getCause() != null && ex.getCause() != ex) {
+            ex = ex.getCause();
+            detail.append(", wraps: ");
+            detail.append(getThrowableDetail(ex));
+        }
+        return detail.toString().replace("\n", " ");
+    }
+
+    private String getThrowableDetail(Throwable t) {
+        StringBuilder detail = new StringBuilder();
+        detail.append(t.getMessage());
+        StackTraceElement[] trace = t.getStackTrace();
+        if (trace != null && trace.length > 0) {
+            detail.append(" (at " + trace[0] + ")");
+        }
+        return detail.toString();
     }
 }
