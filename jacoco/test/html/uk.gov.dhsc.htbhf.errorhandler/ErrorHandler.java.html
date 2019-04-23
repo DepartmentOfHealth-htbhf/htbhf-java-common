@@ -112,33 +112,58 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity&lt;Object&gt; handleOthers(Exception exception, WebRequest request) {
 <span class="nc" id="L113">        RequestContext requestContext = requestContextHolder.get();</span>
 <span class="nc" id="L114">        log.error(&quot;An error occurred during incoming {} request to {}: {}&quot;,</span>
-<span class="nc" id="L115">                requestContext.getMethod(), requestContext.getServletPath(), exception.getMessage(), exception);</span>
+<span class="nc" id="L115">                requestContext.getMethod(),</span>
+<span class="nc" id="L116">                requestContext.getServletPath(),</span>
+<span class="nc" id="L117">                constructExceptionDetail(exception),</span>
+                exception);
 
-<span class="nc" id="L117">        ErrorResponse body = ErrorResponse.builder()</span>
-<span class="nc" id="L118">                .requestId(requestContext.getRequestId())</span>
-<span class="nc" id="L119">                .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))</span>
-<span class="nc" id="L120">                .status(INTERNAL_SERVER_ERROR.value())</span>
-<span class="nc" id="L121">                .message(&quot;An internal server error occurred&quot;)</span>
-<span class="nc" id="L122">                .build();</span>
+<span class="nc" id="L120">        ErrorResponse body = ErrorResponse.builder()</span>
+<span class="nc" id="L121">                .requestId(requestContext.getRequestId())</span>
+<span class="nc" id="L122">                .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))</span>
+<span class="nc" id="L123">                .status(INTERNAL_SERVER_ERROR.value())</span>
+<span class="nc" id="L124">                .message(&quot;An internal server error occurred&quot;)</span>
+<span class="nc" id="L125">                .build();</span>
 
-<span class="nc" id="L124">        return handleExceptionInternal(exception, body, new HttpHeaders(), INTERNAL_SERVER_ERROR, request);</span>
+<span class="nc" id="L127">        return handleExceptionInternal(exception, body, new HttpHeaders(), INTERNAL_SERVER_ERROR, request);</span>
     }
 
     @Override
     protected ResponseEntity&lt;Object&gt; handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
-<span class="fc" id="L129">        Object response = body;</span>
-<span class="fc bfc" id="L130" title="All 2 branches covered.">        if (response == null) {</span>
-<span class="fc" id="L131">            RequestContext requestContext = requestContextHolder.get();</span>
-<span class="fc" id="L132">            log.warn(&quot;Handling {} during incoming {} request to {}: {}&quot;,</span>
-<span class="fc" id="L133">                    ex.getClass().getSimpleName(), requestContext.getMethod(), requestContext.getServletPath(), ex.getMessage());</span>
-<span class="fc" id="L134">            response = ErrorResponse.builder()</span>
-<span class="fc" id="L135">                    .requestId(requestContext.getRequestId())</span>
-<span class="fc" id="L136">                    .status(status.value())</span>
-<span class="fc" id="L137">                    .message(status.getReasonPhrase())</span>
-<span class="fc" id="L138">                    .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))</span>
-<span class="fc" id="L139">                    .build();</span>
+<span class="fc" id="L132">        Object response = body;</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        if (response == null) {</span>
+<span class="fc" id="L134">            RequestContext requestContext = requestContextHolder.get();</span>
+<span class="fc" id="L135">            log.warn(&quot;Handling {} during incoming {} request to {}: {}&quot;,</span>
+<span class="fc" id="L136">                    ex.getClass().getSimpleName(), requestContext.getMethod(), requestContext.getServletPath(), ex.getMessage());</span>
+<span class="fc" id="L137">            response = ErrorResponse.builder()</span>
+<span class="fc" id="L138">                    .requestId(requestContext.getRequestId())</span>
+<span class="fc" id="L139">                    .status(status.value())</span>
+<span class="fc" id="L140">                    .message(status.getReasonPhrase())</span>
+<span class="fc" id="L141">                    .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))</span>
+<span class="fc" id="L142">                    .build();</span>
         }
-<span class="fc" id="L141">        return super.handleExceptionInternal(ex, response, headers, status, request);</span>
+<span class="fc" id="L144">        return super.handleExceptionInternal(ex, response, headers, status, request);</span>
+    }
+
+    protected String constructExceptionDetail(Exception exception) {
+<span class="fc" id="L148">        StringBuilder detail = new StringBuilder();</span>
+<span class="fc" id="L149">        Throwable ex = exception;</span>
+<span class="fc" id="L150">        detail.append(getThrowableDetail(ex));</span>
+<span class="fc bfc" id="L151" title="All 4 branches covered.">        while (ex.getCause() != null &amp;&amp; ex.getCause() != ex) {</span>
+<span class="fc" id="L152">            ex = ex.getCause();</span>
+<span class="fc" id="L153">            detail.append(&quot;, wraps: &quot;);</span>
+<span class="fc" id="L154">            detail.append(getThrowableDetail(ex));</span>
+        }
+<span class="fc" id="L156">        return detail.toString().replace(&quot;\n&quot;, &quot; &quot;);</span>
+    }
+
+    private String getThrowableDetail(Throwable t) {
+<span class="fc" id="L160">        StringBuilder detail = new StringBuilder();</span>
+<span class="fc" id="L161">        detail.append(t.getMessage());</span>
+<span class="fc" id="L162">        StackTraceElement[] trace = t.getStackTrace();</span>
+<span class="fc bfc" id="L163" title="All 4 branches covered.">        if (trace != null &amp;&amp; trace.length &gt; 0) {</span>
+<span class="fc" id="L164">            detail.append(&quot; (at &quot; + trace[0] + &quot;)&quot;);</span>
+        }
+<span class="fc" id="L166">        return detail.toString();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
