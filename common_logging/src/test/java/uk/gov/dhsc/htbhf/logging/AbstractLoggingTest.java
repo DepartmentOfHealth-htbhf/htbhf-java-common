@@ -26,7 +26,7 @@ abstract class AbstractLoggingTest {
     }
 
     private ILoggingEvent assertSingleLoggingEvent(Level expectedLevel) {
-        List<ILoggingEvent> loggingEvents = TestAppender.events;
+        List<ILoggingEvent> loggingEvents = TestAppender.getEvents();
         assertThat(loggingEvents).hasSize(1);
         ILoggingEvent loggingEvent = loggingEvents.get(0);
         assertThat(loggingEvent.getLevel().toString()).isEqualTo(expectedLevel.toString());
