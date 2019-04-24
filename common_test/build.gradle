@@ -41,6 +41,7 @@ dependencies {
     implementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
     implementation "org.junit.vintage:junit-vintage-engine:${junitVersion}"
     implementation "com.github.spotbugs:spotbugs-annotations:3.1.12"
+    implementation "ch.qos.logback:logback-classic:1.2.3"
     implementation project(":htbhf-common-rest")
 }
 
