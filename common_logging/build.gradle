@@ -46,8 +46,7 @@ dependencies {
     testImplementation "org.assertj:assertj-core:3.11.1"
     testImplementation "ch.qos.logback:logback-classic:1.2.3"
     testImplementation "org.mockito:mockito-junit-jupiter:2.23.4"
-
-
+    testImplementation project(":htbhf-common-test")
 }
 
 test {
