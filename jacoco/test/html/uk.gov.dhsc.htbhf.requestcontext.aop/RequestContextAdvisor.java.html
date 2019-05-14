@@ -3,6 +3,7 @@
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import uk.gov.dhsc.htbhf.requestcontext.MDCWrapper;
 import uk.gov.dhsc.htbhf.requestcontext.RequestContext;
@@ -16,6 +17,7 @@ import static uk.gov.dhsc.htbhf.requestcontext.MDCWrapper.SESSION_ID_MDC_KEY;
 /**
  * Implements AOP advice around annotated methods to correctly populate the RequestContext and MDC.
  */
+@Aspect
 @RequiredArgsConstructor
 public class RequestContextAdvisor {
 
@@ -28,28 +30,28 @@ public class RequestContextAdvisor {
     @Around(&quot;@annotation(NewRequestContextWithSessionId)&quot;)
     public Object updateRequestContext(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
-<span class="fc" id="L31">            String sessionId = getSessionIdFromMethodAnnotation(joinPoint);</span>
-<span class="fc" id="L32">            String requestId = EMPTY_REQUEST_ID;</span>
+<span class="fc" id="L33">            String sessionId = getSessionIdFromMethodAnnotation(joinPoint);</span>
+<span class="fc" id="L34">            String requestId = EMPTY_REQUEST_ID;</span>
 
-<span class="fc" id="L34">            RequestContext requestContext = requestContextHolder.get();</span>
-<span class="fc" id="L35">            requestContext.setRequestId(requestId);</span>
-<span class="fc" id="L36">            requestContext.setSessionId(sessionId);</span>
-<span class="fc" id="L37">            mdcWrapper.put(REQUEST_ID_MDC_KEY, requestId);</span>
-<span class="fc" id="L38">            mdcWrapper.put(SESSION_ID_MDC_KEY, sessionId);</span>
+<span class="fc" id="L36">            RequestContext requestContext = requestContextHolder.get();</span>
+<span class="fc" id="L37">            requestContext.setRequestId(requestId);</span>
+<span class="fc" id="L38">            requestContext.setSessionId(sessionId);</span>
+<span class="fc" id="L39">            mdcWrapper.put(REQUEST_ID_MDC_KEY, requestId);</span>
+<span class="fc" id="L40">            mdcWrapper.put(SESSION_ID_MDC_KEY, sessionId);</span>
 
-<span class="fc" id="L40">            return joinPoint.proceed();</span>
+<span class="fc" id="L42">            return joinPoint.proceed();</span>
         } finally {
-<span class="fc" id="L42">            requestContextHolder.clear();</span>
-<span class="fc" id="L43">            mdcWrapper.clear();</span>
+<span class="fc" id="L44">            requestContextHolder.clear();</span>
+<span class="fc" id="L45">            mdcWrapper.clear();</span>
         }
     }
 
     private String getSessionIdFromMethodAnnotation(ProceedingJoinPoint joinPoint) {
-<span class="fc" id="L48">        MethodSignature signature = (MethodSignature) joinPoint.getSignature();</span>
-<span class="fc" id="L49">        Method method = signature.getMethod();</span>
+<span class="fc" id="L50">        MethodSignature signature = (MethodSignature) joinPoint.getSignature();</span>
+<span class="fc" id="L51">        Method method = signature.getMethod();</span>
 
-<span class="fc" id="L51">        NewRequestContextWithSessionId annotation = method.getAnnotation(NewRequestContextWithSessionId.class);</span>
-<span class="fc" id="L52">        return annotation.sessionId();</span>
+<span class="fc" id="L53">        NewRequestContextWithSessionId annotation = method.getAnnotation(NewRequestContextWithSessionId.class);</span>
+<span class="fc" id="L54">        return annotation.sessionId();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
