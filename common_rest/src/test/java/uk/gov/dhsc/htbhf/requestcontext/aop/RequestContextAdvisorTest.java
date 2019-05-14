@@ -18,12 +18,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.inOrder;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @ExtendWith(MockitoExtension.class)
 class RequestContextAdvisorTest {
 
     private static final Object RETURN_VALUE = new Object();
     private static final String SESSION_ID = "mySessionId";
+    public static final String REQUEST_ID = "";
 
     @Mock
     RequestContextHolder requestContextHolder;
@@ -42,7 +44,7 @@ class RequestContextAdvisorTest {
     RequestContextAdvisor advisor;
 
     @Test
-    void shouldPopulateRequestContextWithSessionId() throws Throwable {
+    void shouldPopulateRequestContextWithEmptyRequestIdAndSessionId() throws Throwable {
         givenJoinPointHasMethodSignature();
         given(requestContextHolder.get()).willReturn(requestContext);
 
@@ -50,27 +52,17 @@ class RequestContextAdvisorTest {
 
         assertThat(result).isEqualTo(RETURN_VALUE);
         InOrder inOrder = inOrder(joinPoint, requestContext, mdcWrapper, requestContextHolder);
+        inOrder.verify(requestContextHolder).get();
+        inOrder.verify(requestContext).setRequestId(REQUEST_ID);
         inOrder.verify(requestContext).setSessionId(SESSION_ID);
+        inOrder.verify(mdcWrapper).put(MDCWrapper.REQUEST_ID_MDC_KEY, REQUEST_ID);
         inOrder.verify(mdcWrapper).put(MDCWrapper.SESSION_ID_MDC_KEY, SESSION_ID);
+
         inOrder.verify(joinPoint).proceed();
+
         inOrder.verify(requestContextHolder).clear();
-        inOrder.verify(mdcWrapper).remove(MDCWrapper.SESSION_ID_MDC_KEY);
-    }
-
-    @Test
-    void shouldPopulateRequestContextWithEmptyRequestId() throws Throwable {
-        givenJoinPointHasMethodSignature();
-        given(requestContextHolder.get()).willReturn(requestContext);
-
-        Object result = advisor.updateRequestContext(joinPoint);
-
-        assertThat(result).isEqualTo(RETURN_VALUE);
-        InOrder inOrder = inOrder(joinPoint, requestContext, mdcWrapper, requestContextHolder);
-        inOrder.verify(requestContext).setSessionId(SESSION_ID);
-        inOrder.verify(mdcWrapper).put(MDCWrapper.REQUEST_ID_MDC_KEY, "");
-        inOrder.verify(joinPoint).proceed();
-        inOrder.verify(requestContextHolder).clear();
-        inOrder.verify(mdcWrapper).remove(MDCWrapper.REQUEST_ID_MDC_KEY);
+        inOrder.verify(mdcWrapper).clear();
+        verifyNoMoreInteractions(requestContextHolder, requestContext, mdcWrapper, joinPoint);
     }
 
     @Test
@@ -83,11 +75,10 @@ class RequestContextAdvisorTest {
         Throwable thrown = catchThrowable(() -> advisor.updateRequestContext(joinPoint));
 
         assertThat(thrown).isEqualTo(exception);
-        InOrder inOrder = inOrder(joinPoint, requestContext, mdcWrapper, requestContextHolder);
+        InOrder inOrder = inOrder(joinPoint, mdcWrapper, requestContextHolder);
         inOrder.verify(joinPoint).proceed();
         inOrder.verify(requestContextHolder).clear();
-        inOrder.verify(mdcWrapper).remove(MDCWrapper.REQUEST_ID_MDC_KEY);
-        inOrder.verify(mdcWrapper).remove(MDCWrapper.SESSION_ID_MDC_KEY);
+        inOrder.verify(mdcWrapper).clear();
     }
 
     private void givenJoinPointHasMethodSignature() throws Throwable {

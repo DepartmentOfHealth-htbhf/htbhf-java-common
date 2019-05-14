@@ -23,4 +23,12 @@ public class MDCWrapper {
     public void remove(String key) {
         MDC.remove(key);
     }
+
+    /**
+     * Remove both request and session id from the MDC context.
+     */
+    public void clear() {
+        this.remove(REQUEST_ID_MDC_KEY);
+        this.remove(SESSION_ID_MDC_KEY);
+    }
 }

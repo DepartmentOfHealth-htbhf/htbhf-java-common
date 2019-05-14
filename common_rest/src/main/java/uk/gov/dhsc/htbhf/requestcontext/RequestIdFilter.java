@@ -54,8 +54,7 @@ public class RequestIdFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } finally {
-            mdcWrapper.remove(REQUEST_ID_MDC_KEY);
-            mdcWrapper.remove(SESSION_ID_MDC_KEY);
+            mdcWrapper.clear();
             requestContextHolder.clear();
         }
 

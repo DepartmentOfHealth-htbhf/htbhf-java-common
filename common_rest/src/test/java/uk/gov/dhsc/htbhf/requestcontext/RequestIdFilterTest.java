@@ -55,7 +55,7 @@ class RequestIdFilterTest {
         inOrder.verify(mdcWrapper).put(REQUEST_ID_MDC_KEY, requestId);
         inOrder.verify(requestContext).setRequestId(requestId);
         inOrder.verify(filterChain).doFilter(request, response);
-        inOrder.verify(mdcWrapper).remove(REQUEST_ID_MDC_KEY);
+        inOrder.verify(mdcWrapper).clear();
         inOrder.verify(requestContextHolder).clear();
     }
 
@@ -76,7 +76,7 @@ class RequestIdFilterTest {
         inOrder.verify(mdcWrapper).put(SESSION_ID_MDC_KEY, sessionId);
         inOrder.verify(requestContext).setSessionId(sessionId);
         inOrder.verify(filterChain).doFilter(request, response);
-        inOrder.verify(mdcWrapper).remove(SESSION_ID_MDC_KEY);
+        inOrder.verify(mdcWrapper).clear();
         inOrder.verify(requestContextHolder).clear();
     }
 
@@ -94,7 +94,7 @@ class RequestIdFilterTest {
         inOrder.verify(mdcWrapper).put(ArgumentMatchers.eq(REQUEST_ID_MDC_KEY), ArgumentMatchers.anyString());
         inOrder.verify(requestContext).setRequestId(ArgumentMatchers.anyString());
         inOrder.verify(filterChain).doFilter(request, response);
-        inOrder.verify(mdcWrapper).remove(REQUEST_ID_MDC_KEY);
+        inOrder.verify(mdcWrapper).clear();
         inOrder.verify(requestContextHolder).clear();
     }
 
@@ -111,7 +111,6 @@ class RequestIdFilterTest {
         filter.doFilterInternal(request, response, filterChain);
 
         // Then
-
         verify(requestContext).setMethod(method);
         verify(requestContext).setServletPath(servletPath);
     }
@@ -133,7 +132,7 @@ class RequestIdFilterTest {
         inOrder.verify(mdcWrapper).put(ArgumentMatchers.eq(REQUEST_ID_MDC_KEY), ArgumentMatchers.anyString());
         inOrder.verify(requestContext).setRequestId(ArgumentMatchers.anyString());
         inOrder.verify(filterChain).doFilter(request, response);
-        inOrder.verify(mdcWrapper).remove(REQUEST_ID_MDC_KEY);
+        inOrder.verify(mdcWrapper).clear();
         inOrder.verify(requestContextHolder).clear();
     }
 

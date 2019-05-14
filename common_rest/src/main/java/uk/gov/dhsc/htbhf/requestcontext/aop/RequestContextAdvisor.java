@@ -13,8 +13,14 @@ import java.lang.reflect.Method;
 import static uk.gov.dhsc.htbhf.requestcontext.MDCWrapper.REQUEST_ID_MDC_KEY;
 import static uk.gov.dhsc.htbhf.requestcontext.MDCWrapper.SESSION_ID_MDC_KEY;
 
+/**
+ * Implements AOP advice around annotated methods to correctly populate the RequestContext and MDC.
+ */
 @RequiredArgsConstructor
 public class RequestContextAdvisor {
+
+    // Use an empty request ID so that downstream components can generate their own request id
+    private static final String EMPTY_REQUEST_ID = "";
 
     private final RequestContextHolder requestContextHolder;
     private final MDCWrapper mdcWrapper;
@@ -23,7 +29,7 @@ public class RequestContextAdvisor {
     public Object updateRequestContext(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
             String sessionId = getSessionIdFromMethodAnnotation(joinPoint);
-            String requestId = "";
+            String requestId = EMPTY_REQUEST_ID;
 
             RequestContext requestContext = requestContextHolder.get();
             requestContext.setRequestId(requestId);
@@ -34,8 +40,7 @@ public class RequestContextAdvisor {
             return joinPoint.proceed();
         } finally {
             requestContextHolder.clear();
-            mdcWrapper.remove(REQUEST_ID_MDC_KEY);
-            mdcWrapper.remove(SESSION_ID_MDC_KEY);
+            mdcWrapper.clear();
         }
     }
 
