@@ -3,6 +3,7 @@ package uk.gov.dhsc.htbhf.requestcontext.aop;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import uk.gov.dhsc.htbhf.requestcontext.MDCWrapper;
 import uk.gov.dhsc.htbhf.requestcontext.RequestContext;
@@ -16,6 +17,7 @@ import static uk.gov.dhsc.htbhf.requestcontext.MDCWrapper.SESSION_ID_MDC_KEY;
 /**
  * Implements AOP advice around annotated methods to correctly populate the RequestContext and MDC.
  */
+@Aspect
 @RequiredArgsConstructor
 public class RequestContextAdvisor {
 
