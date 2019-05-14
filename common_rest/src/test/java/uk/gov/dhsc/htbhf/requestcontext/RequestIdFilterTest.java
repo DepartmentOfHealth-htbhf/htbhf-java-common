@@ -2,11 +2,7 @@ package uk.gov.dhsc.htbhf.requestcontext;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
-import org.mockito.InOrder;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.servlet.FilterChain;
@@ -19,10 +15,10 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willReturn;
 import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.verify;
+import static uk.gov.dhsc.htbhf.requestcontext.MDCWrapper.REQUEST_ID_MDC_KEY;
+import static uk.gov.dhsc.htbhf.requestcontext.MDCWrapper.SESSION_ID_MDC_KEY;
 import static uk.gov.dhsc.htbhf.requestcontext.RequestIdFilter.REQUEST_ID_HEADER;
-import static uk.gov.dhsc.htbhf.requestcontext.RequestIdFilter.REQUEST_ID_MDC_KEY;
 import static uk.gov.dhsc.htbhf.requestcontext.RequestIdFilter.SESSION_ID_HEADER;
-import static uk.gov.dhsc.htbhf.requestcontext.RequestIdFilter.SESSION_ID_MDC_KEY;
 
 @ExtendWith(MockitoExtension.class)
 class RequestIdFilterTest {

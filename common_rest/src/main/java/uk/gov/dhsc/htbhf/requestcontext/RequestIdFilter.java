@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static org.springframework.util.StringUtils.isEmpty;
+import static uk.gov.dhsc.htbhf.requestcontext.MDCWrapper.REQUEST_ID_MDC_KEY;
+import static uk.gov.dhsc.htbhf.requestcontext.MDCWrapper.SESSION_ID_MDC_KEY;
 
 /**
  * Filter to be used on incoming requests to add request id and session id to the MDC
@@ -20,18 +22,10 @@ import static org.springframework.util.StringUtils.isEmpty;
 public class RequestIdFilter extends OncePerRequestFilter {
 
     /**
-     * The name of the request ID in the MDC context. Must match the name in logback configuration.
-     */
-    public static final String REQUEST_ID_MDC_KEY = "request.id";
-    /**
      * The name of the request id header.
      */
     public static final String REQUEST_ID_HEADER = "X-REQUEST-ID";
 
-    /**
-     * The name of the session ID in the MDC context. Must match the name in logback configuration.
-     */
-    public static final String SESSION_ID_MDC_KEY = "session.id";
     /**
      * The name of the session id header.
      */
