@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static org.springframework.util.StringUtils.isEmpty;
+import static uk.gov.dhsc.htbhf.requestcontext.MDCWrapper.REQUEST_ID_MDC_KEY;
+import static uk.gov.dhsc.htbhf.requestcontext.MDCWrapper.SESSION_ID_MDC_KEY;
 
 /**
  * Filter to be used on incoming requests to add request id and session id to the MDC
@@ -20,18 +22,10 @@ import static org.springframework.util.StringUtils.isEmpty;
 public class RequestIdFilter extends OncePerRequestFilter {
 
     /**
-     * The name of the request ID in the MDC context. Must match the name in logback configuration.
-     */
-    public static final String REQUEST_ID_MDC_KEY = &quot;request.id&quot;;
-    /**
      * The name of the request id header.
      */
     public static final String REQUEST_ID_HEADER = &quot;X-REQUEST-ID&quot;;
 
-    /**
-     * The name of the session ID in the MDC context. Must match the name in logback configuration.
-     */
-    public static final String SESSION_ID_MDC_KEY = &quot;session.id&quot;;
     /**
      * The name of the session id header.
      */
@@ -43,28 +37,27 @@ public class RequestIdFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-<span class="fc" id="L46">            String requestId = request.getHeader(REQUEST_ID_HEADER);</span>
-<span class="fc bfc" id="L47" title="All 2 branches covered.">            if (isEmpty(requestId)) {</span>
-<span class="fc" id="L48">                requestId = UUID.randomUUID().toString();</span>
+<span class="fc" id="L40">            String requestId = request.getHeader(REQUEST_ID_HEADER);</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">            if (isEmpty(requestId)) {</span>
+<span class="fc" id="L42">                requestId = UUID.randomUUID().toString();</span>
             }
-<span class="fc" id="L50">            mdcWrapper.put(REQUEST_ID_MDC_KEY, requestId);</span>
-<span class="fc" id="L51">            RequestContext requestContext = requestContextHolder.get();</span>
-<span class="fc" id="L52">            requestContext.setRequestId(requestId);</span>
+<span class="fc" id="L44">            mdcWrapper.put(REQUEST_ID_MDC_KEY, requestId);</span>
+<span class="fc" id="L45">            RequestContext requestContext = requestContextHolder.get();</span>
+<span class="fc" id="L46">            requestContext.setRequestId(requestId);</span>
 
-<span class="fc" id="L54">            String sessionId = request.getHeader(SESSION_ID_HEADER);</span>
-<span class="fc" id="L55">            mdcWrapper.put(SESSION_ID_MDC_KEY, sessionId);</span>
-<span class="fc" id="L56">            requestContext.setSessionId(sessionId);</span>
+<span class="fc" id="L48">            String sessionId = request.getHeader(SESSION_ID_HEADER);</span>
+<span class="fc" id="L49">            mdcWrapper.put(SESSION_ID_MDC_KEY, sessionId);</span>
+<span class="fc" id="L50">            requestContext.setSessionId(sessionId);</span>
 
-<span class="fc" id="L58">            requestContext.setMethod(request.getMethod());</span>
-<span class="fc" id="L59">            requestContext.setServletPath(request.getServletPath());</span>
+<span class="fc" id="L52">            requestContext.setMethod(request.getMethod());</span>
+<span class="fc" id="L53">            requestContext.setServletPath(request.getServletPath());</span>
 
-<span class="fc" id="L61">            filterChain.doFilter(request, response);</span>
+<span class="fc" id="L55">            filterChain.doFilter(request, response);</span>
         } finally {
-<span class="fc" id="L63">            mdcWrapper.remove(REQUEST_ID_MDC_KEY);</span>
-<span class="fc" id="L64">            mdcWrapper.remove(SESSION_ID_MDC_KEY);</span>
-<span class="fc" id="L65">            requestContextHolder.clear();</span>
+<span class="fc" id="L57">            mdcWrapper.clear();</span>
+<span class="fc" id="L58">            requestContextHolder.clear();</span>
         }
 
-<span class="fc" id="L68">    }</span>
+<span class="fc" id="L61">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

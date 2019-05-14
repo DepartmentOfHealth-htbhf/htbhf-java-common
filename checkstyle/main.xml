@@ -20,4 +20,8 @@
 </file>
 <file name="/home/travis/build/DepartmentOfHealth-htbhf/htbhf-java-common/common_rest/src/main/java/uk/gov/dhsc/htbhf/requestcontext/RequestIdFilter.java">
 </file>
+<file name="/home/travis/build/DepartmentOfHealth-htbhf/htbhf-java-common/common_rest/src/main/java/uk/gov/dhsc/htbhf/requestcontext/aop/NewRequestContextWithSessionId.java">
+</file>
+<file name="/home/travis/build/DepartmentOfHealth-htbhf/htbhf-java-common/common_rest/src/main/java/uk/gov/dhsc/htbhf/requestcontext/aop/RequestContextAdvisor.java">
+</file>
 </checkstyle>

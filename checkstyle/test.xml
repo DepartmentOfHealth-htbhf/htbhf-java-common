@@ -8,4 +8,6 @@
 </file>
 <file name="/home/travis/build/DepartmentOfHealth-htbhf/htbhf-java-common/common_rest/src/test/java/uk/gov/dhsc/htbhf/requestcontext/RequestIdFilterTest.java">
 </file>
+<file name="/home/travis/build/DepartmentOfHealth-htbhf/htbhf-java-common/common_rest/src/test/java/uk/gov/dhsc/htbhf/requestcontext/aop/RequestContextAdvisorTest.java">
+</file>
 </checkstyle>

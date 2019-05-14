@@ -7,12 +7,29 @@ import org.slf4j.MDC;
  */
 <span class="nc" id="L8">public class MDCWrapper {</span>
 
+    /**
+     * The name of the request ID in the MDC context. Must match the name in logback configuration.
+     */
+    public static final String REQUEST_ID_MDC_KEY = &quot;request.id&quot;;
+    /**
+     * The name of the session ID in the MDC context. Must match the name in logback configuration.
+     */
+    public static final String SESSION_ID_MDC_KEY = &quot;session.id&quot;;
+
     public void put(String key, String value) {
-<span class="nc" id="L11">        MDC.put(key, value);</span>
-<span class="nc" id="L12">    }</span>
+<span class="nc" id="L20">        MDC.put(key, value);</span>
+<span class="nc" id="L21">    }</span>
 
     public void remove(String key) {
-<span class="nc" id="L15">        MDC.remove(key);</span>
-<span class="nc" id="L16">    }</span>
+<span class="nc" id="L24">        MDC.remove(key);</span>
+<span class="nc" id="L25">    }</span>
+
+    /**
+     * Remove both request and session id from the MDC context.
+     */
+    public void clear() {
+<span class="nc" id="L31">        this.remove(REQUEST_ID_MDC_KEY);</span>
+<span class="nc" id="L32">        this.remove(SESSION_ID_MDC_KEY);</span>
+<span class="nc" id="L33">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
