@@ -101,7 +101,6 @@ class RequestContextAdvisorTest {
         // nothing to do :)
     }
 
-    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     private Method getAnnotatedMethod() {
         try {
             return this.getClass().getMethod("annotatedMethod");
