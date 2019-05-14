@@ -3,6 +3,7 @@ package uk.gov.dhsc.htbhf.requestcontext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
+import uk.gov.dhsc.htbhf.requestcontext.aop.RequestContextAdvisor;
 
 /**
  * Configuration class to be used to setup the required beans to setup the request scoped
@@ -37,5 +38,10 @@ public class RequestContextConfiguration {
     @Bean
     public HeaderInterceptor headerInterceptor() {
         return new HeaderInterceptor(requestContextHolder());
+    }
+
+    @Bean
+    public RequestContextAdvisor requestContextAdvisor() {
+        return new RequestContextAdvisor(requestContextHolder(), mdcWrapper());
     }
 }
