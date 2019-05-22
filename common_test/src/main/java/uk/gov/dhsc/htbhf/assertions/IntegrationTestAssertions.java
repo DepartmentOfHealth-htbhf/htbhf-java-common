@@ -9,6 +9,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static uk.gov.dhsc.htbhf.errorhandler.ErrorMessage.INTERNAL_SERVER_ERROR_MESSAGE;
+import static uk.gov.dhsc.htbhf.errorhandler.ErrorMessage.UNREADABLE_ERROR_MESSAGE;
+import static uk.gov.dhsc.htbhf.errorhandler.ErrorMessage.VALIDATION_ERROR_MESSAGE;
 
 /**
  * Contains common assertions that are used by integration tests.
@@ -24,7 +27,7 @@ public class IntegrationTestAssertions {
      * @param fieldErrorMessage The error message we are expecting for the field.
      */
     public static void assertValidationErrorInResponse(ResponseEntity<ErrorResponse> errorResponse, String field, String fieldErrorMessage) {
-        assertErrorInResponse(errorResponse, BAD_REQUEST, "There were validation issues with the request.");
+        assertErrorInResponse(errorResponse, BAD_REQUEST, VALIDATION_ERROR_MESSAGE);
         assertFieldErrorInResponse(errorResponse, field, fieldErrorMessage);
     }
 
@@ -34,7 +37,7 @@ public class IntegrationTestAssertions {
      * @param errorResponse The response to check
      */
     public static void assertInternalServerErrorResponse(ResponseEntity<ErrorResponse> errorResponse) {
-        assertErrorInResponse(errorResponse, INTERNAL_SERVER_ERROR, "An internal server error occurred");
+        assertErrorInResponse(errorResponse, INTERNAL_SERVER_ERROR, INTERNAL_SERVER_ERROR_MESSAGE);
     }
 
     /**
@@ -47,8 +50,37 @@ public class IntegrationTestAssertions {
      * @param fieldErrorMessage The error message we are expecting for the field.
      */
     public static void assertRequestCouldNotBeParsedErrorResponse(ResponseEntity<ErrorResponse> errorResponse, String field, String fieldErrorMessage) {
-        assertErrorInResponse(errorResponse, BAD_REQUEST,"The request could not be parsed.");
+        assertErrorInResponse(errorResponse, BAD_REQUEST, UNREADABLE_ERROR_MESSAGE);
         assertFieldErrorInResponse(errorResponse, field, fieldErrorMessage);
+    }
+
+    /**
+     * Assert that the given status and error message is in the given error response.
+     *
+     * @param errorResponse    The error response to check
+     * @param status           The status to check for
+     * @param mainErrorMessage The error message to check for
+     */
+    public static void assertErrorInResponse(ResponseEntity<ErrorResponse> errorResponse, HttpStatus status, String mainErrorMessage) {
+        assertThat(errorResponse.getStatusCode()).isEqualTo(status);
+        ErrorResponse responseBody = errorResponse.getBody();
+        assertThat(responseBody).isNotNull();
+        assertThat(responseBody.getRequestId()).isNotNull();
+        assertThat(responseBody.getTimestamp()).isNotNull();
+        assertThat(responseBody.getMessage()).isEqualTo(mainErrorMessage);
+        assertThat(responseBody.getStatus()).isEqualTo(status.value());
+    }
+
+    /**
+     * Asserts that the field error matches the given field and message.
+     *
+     * @param fieldError   The error to check
+     * @param field        The field in the FieldError
+     * @param errorMessage The error message to check for
+     */
+    public static void assertFieldError(ErrorResponse.FieldError fieldError, String field, String errorMessage) {
+        assertThat(fieldError.getField()).isEqualTo(field);
+        assertThat(fieldError.getMessage()).isEqualTo(errorMessage);
     }
 
     //Have to suppress SpotBugs warnings because it doesn't understand that fail() will stop the possible NPE being thrown on line 61.
@@ -59,17 +91,7 @@ public class IntegrationTestAssertions {
             fail("ErrorResponse body is null, no response body has been returned so cannot verify field error for field: " + field);
         }
         assertThat(responseBody.getFieldErrors()).hasSize(1);
-        assertThat(responseBody.getFieldErrors().get(0).getField()).isEqualTo(field);
-        assertThat(responseBody.getFieldErrors().get(0).getMessage()).isEqualTo(fieldErrorMessage);
+        assertFieldError(responseBody.getFieldErrors().get(0), field, fieldErrorMessage);
     }
 
-    private static void assertErrorInResponse(ResponseEntity<ErrorResponse> errorResponse, HttpStatus status, String mainErrorMessage) {
-        assertThat(errorResponse.getStatusCode()).isEqualTo(status);
-        ErrorResponse responseBody = errorResponse.getBody();
-        assertThat(responseBody).isNotNull();
-        assertThat(responseBody.getRequestId()).isNotNull();
-        assertThat(responseBody.getTimestamp()).isNotNull();
-        assertThat(responseBody.getMessage()).isEqualTo(mainErrorMessage);
-        assertThat(responseBody.getStatus()).isEqualTo(status.value());
-    }
 }

@@ -8,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.mock.http.MockHttpInputMessage;
@@ -29,8 +28,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static uk.gov.dhsc.htbhf.errorhandler.ErrorHandler.UNREADABLE_ERROR_MESSAGE;
-import static uk.gov.dhsc.htbhf.errorhandler.ErrorHandler.VALIDATION_ERROR_MESSAGE;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static uk.gov.dhsc.htbhf.assertions.IntegrationTestAssertions.assertErrorInResponse;
+import static uk.gov.dhsc.htbhf.assertions.IntegrationTestAssertions.assertFieldError;
+import static uk.gov.dhsc.htbhf.assertions.IntegrationTestAssertions.assertRequestCouldNotBeParsedErrorResponse;
+import static uk.gov.dhsc.htbhf.errorhandler.ErrorMessage.VALIDATION_ERROR_MESSAGE;
 
 @ExtendWith(MockitoExtension.class)
 class ErrorHandlerTest {
@@ -54,6 +56,7 @@ class ErrorHandlerTest {
     ErrorHandler handler;
 
     @Test
+    @SuppressWarnings("unchecked")
     void shouldExtractFieldErrorsFromBindException() {
         // Given
         FieldError fieldError1 = new FieldError("objectName", "field1", ERROR_MESSAGE_1);
@@ -63,14 +66,12 @@ class ErrorHandlerTest {
         given(requestContext.getRequestId()).willReturn(REQUEST_ID);
 
         // When
-        ResponseEntity<Object> responseEntity = handler.handleBindException(new BindException(bindingResult), httpHeaders, HttpStatus.BAD_REQUEST, webRequest);
+        ResponseEntity<Object> responseEntity = handler.handleBindException(new BindException(bindingResult), httpHeaders, BAD_REQUEST, webRequest);
 
         // Then
-        assertThat(responseEntity).isNotNull();
-        assertThat(responseEntity.getBody()).isInstanceOf(ErrorResponse.class);
+        assertErrorInResponse((ResponseEntity) responseEntity, BAD_REQUEST, VALIDATION_ERROR_MESSAGE);
         ErrorResponse errorResponse = (ErrorResponse) responseEntity.getBody();
         assertThat(errorResponse.getRequestId()).isEqualTo(REQUEST_ID);
-        assertThat(errorResponse.getMessage()).isEqualTo(VALIDATION_ERROR_MESSAGE);
         List<ErrorResponse.FieldError> fieldErrors = errorResponse.getFieldErrors();
         assertThat(fieldErrors.size()).isEqualTo(2);
         assertFieldError(fieldErrors.get(0), "field1", ERROR_MESSAGE_1);
@@ -78,6 +79,7 @@ class ErrorHandlerTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void shouldExtractGlobalErrorsFromBindException() {
         // Given
         ObjectError globalError1 = new ObjectError("object1", ERROR_MESSAGE_1);
@@ -87,14 +89,12 @@ class ErrorHandlerTest {
         given(requestContext.getRequestId()).willReturn(REQUEST_ID);
 
         // When
-        ResponseEntity<Object> responseEntity = handler.handleBindException(new BindException(bindingResult), httpHeaders, HttpStatus.BAD_REQUEST, webRequest);
+        ResponseEntity<Object> responseEntity = handler.handleBindException(new BindException(bindingResult), httpHeaders, BAD_REQUEST, webRequest);
 
         // Then
-        assertThat(responseEntity).isNotNull();
-        assertThat(responseEntity.getBody()).isInstanceOf(ErrorResponse.class);
+        assertErrorInResponse((ResponseEntity) responseEntity, BAD_REQUEST, VALIDATION_ERROR_MESSAGE);
         ErrorResponse errorResponse = (ErrorResponse) responseEntity.getBody();
         assertThat(errorResponse.getRequestId()).isEqualTo(REQUEST_ID);
-        assertThat(errorResponse.getMessage()).isEqualTo(VALIDATION_ERROR_MESSAGE);
         List<ErrorResponse.FieldError> fieldErrors = errorResponse.getFieldErrors();
         assertThat(fieldErrors.size()).isEqualTo(2);
         assertFieldError(fieldErrors.get(0), "object1", ERROR_MESSAGE_1);
@@ -102,6 +102,7 @@ class ErrorHandlerTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     void shouldExtractDetailFromHttpMessageNotReadableException() {
         // Given
         InvalidFormatException cause = mock(InvalidFormatException.class);
@@ -115,17 +116,11 @@ class ErrorHandlerTest {
         given(requestContext.getRequestId()).willReturn(REQUEST_ID);
 
         // When
-        ResponseEntity<Object> responseEntity = handler.handleHttpMessageNotReadable(ex, httpHeaders, HttpStatus.BAD_REQUEST, webRequest);
+        ResponseEntity<Object> responseEntity = handler.handleHttpMessageNotReadable(ex, httpHeaders, BAD_REQUEST, webRequest);
 
         // Then
-        assertThat(responseEntity).isNotNull();
-        assertThat(responseEntity.getBody()).isInstanceOf(ErrorResponse.class);
-        ErrorResponse errorResponse = (ErrorResponse) responseEntity.getBody();
-        assertThat(errorResponse.getRequestId()).isEqualTo(REQUEST_ID);
-        assertThat(errorResponse.getMessage()).isEqualTo(UNREADABLE_ERROR_MESSAGE);
-        List<ErrorResponse.FieldError> fieldErrors = errorResponse.getFieldErrors();
-        assertThat(fieldErrors.size()).isEqualTo(1);
-        assertFieldError(fieldErrors.get(0), "myComponent.myProperty", "'my invalid date' could not be parsed as a LocalDate");
+        assertRequestCouldNotBeParsedErrorResponse((ResponseEntity) responseEntity,
+                "myComponent.myProperty", "'my invalid date' could not be parsed as a LocalDate");
     }
 
     @Test
@@ -138,7 +133,7 @@ class ErrorHandlerTest {
         given(requestContext.getRequestId()).willReturn(REQUEST_ID);
 
         // When
-        ResponseEntity<Object> responseEntity = handler.handleHttpMessageNotReadable(ex, httpHeaders, HttpStatus.BAD_REQUEST, webRequest);
+        ResponseEntity<Object> responseEntity = handler.handleHttpMessageNotReadable(ex, httpHeaders, BAD_REQUEST, webRequest);
 
         // Then
         assertThat(responseEntity).isNotNull();
@@ -146,11 +141,6 @@ class ErrorHandlerTest {
         ErrorResponse errorResponse = (ErrorResponse) responseEntity.getBody();
         assertThat(errorResponse.getRequestId()).isEqualTo(REQUEST_ID);
         assertThat(errorResponse.getFieldErrors()).isNull();
-    }
-
-    private void assertFieldError(ErrorResponse.FieldError fieldError, String field, String errorMessage) {
-        assertThat(fieldError.getField()).isEqualTo(field);
-        assertThat(fieldError.getMessage()).isEqualTo(errorMessage);
     }
 
 }
