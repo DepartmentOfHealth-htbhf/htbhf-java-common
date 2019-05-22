@@ -27,13 +27,14 @@ import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static uk.gov.dhsc.htbhf.errorhandler.ExceptionDetailGenerator.constructExceptionDetail;
 
 /**
  * Global error handler used to provide centralized exception handling for Spring MVC exceptions
  * and return more contextual responses in the form of {@link ErrorResponse} objects.
  */
 @ControllerAdvice
-<span class="fc" id="L36">@Slf4j</span>
+<span class="fc" id="L37">@Slf4j</span>
 @RequiredArgsConstructor
 public class ErrorHandler extends ResponseEntityExceptionHandler {
 
@@ -48,39 +49,39 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
                                                                HttpStatus status,
                                                                WebRequest request) {
 
-<span class="nc" id="L51">        ErrorResponse errorResponse = convertAndLogBindingResult(exception.getBindingResult());</span>
-<span class="nc" id="L52">        return handleExceptionInternal(exception, errorResponse, headers, BAD_REQUEST, request);</span>
+<span class="nc" id="L52">        ErrorResponse errorResponse = convertAndLogBindingResult(exception.getBindingResult());</span>
+<span class="nc" id="L53">        return handleExceptionInternal(exception, errorResponse, headers, BAD_REQUEST, request);</span>
     }
 
     @Override
     public ResponseEntity&lt;Object&gt; handleBindException(BindException exception, HttpHeaders headers, HttpStatus status, WebRequest request) {
-<span class="fc" id="L57">        ErrorResponse errorResponse = convertAndLogBindingResult(exception.getBindingResult());</span>
-<span class="fc" id="L58">        return handleExceptionInternal(exception, errorResponse, headers, BAD_REQUEST, request);</span>
+<span class="fc" id="L58">        ErrorResponse errorResponse = convertAndLogBindingResult(exception.getBindingResult());</span>
+<span class="fc" id="L59">        return handleExceptionInternal(exception, errorResponse, headers, BAD_REQUEST, request);</span>
     }
 
     private ErrorResponse convertAndLogBindingResult(BindingResult bindingResult) {
-<span class="fc" id="L62">        final List&lt;ErrorResponse.FieldError&gt; errors = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L63">        bindingResult.getFieldErrors().forEach(error -&gt;</span>
-<span class="fc" id="L64">                errors.add(ErrorResponse.FieldError.builder()</span>
-<span class="fc" id="L65">                        .message(error.getDefaultMessage())</span>
-<span class="fc" id="L66">                        .field(error.getField())</span>
-<span class="fc" id="L67">                        .build()));</span>
-<span class="fc" id="L68">        bindingResult.getGlobalErrors().forEach(error -&gt;</span>
-<span class="fc" id="L69">                errors.add(ErrorResponse.FieldError.builder()</span>
-<span class="fc" id="L70">                        .message(error.getDefaultMessage())</span>
-<span class="fc" id="L71">                        .field(error.getObjectName())</span>
-<span class="fc" id="L72">                        .build()));</span>
+<span class="fc" id="L63">        final List&lt;ErrorResponse.FieldError&gt; errors = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L64">        bindingResult.getFieldErrors().forEach(error -&gt;</span>
+<span class="fc" id="L65">                errors.add(ErrorResponse.FieldError.builder()</span>
+<span class="fc" id="L66">                        .message(error.getDefaultMessage())</span>
+<span class="fc" id="L67">                        .field(error.getField())</span>
+<span class="fc" id="L68">                        .build()));</span>
+<span class="fc" id="L69">        bindingResult.getGlobalErrors().forEach(error -&gt;</span>
+<span class="fc" id="L70">                errors.add(ErrorResponse.FieldError.builder()</span>
+<span class="fc" id="L71">                        .message(error.getDefaultMessage())</span>
+<span class="fc" id="L72">                        .field(error.getObjectName())</span>
+<span class="fc" id="L73">                        .build()));</span>
 
-<span class="fc" id="L74">        RequestContext requestContext = requestContextHolder.get();</span>
-<span class="fc" id="L75">        log.warn(&quot;Binding error(s) during incoming {} request to {}: {}&quot;, requestContext.getMethod(), requestContext.getServletPath(), errors);</span>
+<span class="fc" id="L75">        RequestContext requestContext = requestContextHolder.get();</span>
+<span class="fc" id="L76">        log.warn(&quot;Binding error(s) during incoming {} request to {}: {}&quot;, requestContext.getMethod(), requestContext.getServletPath(), errors);</span>
 
-<span class="fc" id="L77">        return ErrorResponse.builder()</span>
-<span class="fc" id="L78">                .fieldErrors(errors)</span>
-<span class="fc" id="L79">                .requestId(requestContext.getRequestId())</span>
-<span class="fc" id="L80">                .status(BAD_REQUEST.value())</span>
-<span class="fc" id="L81">                .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))</span>
-<span class="fc" id="L82">                .message(VALIDATION_ERROR_MESSAGE)</span>
-<span class="fc" id="L83">                .build();</span>
+<span class="fc" id="L78">        return ErrorResponse.builder()</span>
+<span class="fc" id="L79">                .fieldErrors(errors)</span>
+<span class="fc" id="L80">                .requestId(requestContext.getRequestId())</span>
+<span class="fc" id="L81">                .status(BAD_REQUEST.value())</span>
+<span class="fc" id="L82">                .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))</span>
+<span class="fc" id="L83">                .message(VALIDATION_ERROR_MESSAGE)</span>
+<span class="fc" id="L84">                .build();</span>
     }
 
     @Override
@@ -88,82 +89,61 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
                                                                   HttpHeaders headers,
                                                                   HttpStatus status,
                                                                   WebRequest request) {
-<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (ex.getCause() instanceof InvalidFormatException) {</span>
-<span class="fc" id="L92">            InvalidFormatException cause = (InvalidFormatException) ex.getCause();</span>
-<span class="fc" id="L93">            String path = cause.getPath().stream().map(JsonMappingException.Reference::getFieldName).collect(Collectors.joining(&quot;.&quot;));</span>
-<span class="fc" id="L94">            ErrorResponse.FieldError fieldError = ErrorResponse.FieldError.builder()</span>
-<span class="fc" id="L95">                    .message(String.format(&quot;'%s' could not be parsed as a %s&quot;, cause.getValue(), cause.getTargetType().getSimpleName()))</span>
-<span class="fc" id="L96">                    .field(path)</span>
-<span class="fc" id="L97">                    .build();</span>
-<span class="fc" id="L98">            RequestContext requestContext = requestContextHolder.get();</span>
-<span class="fc" id="L99">            ErrorResponse response = ErrorResponse.builder()</span>
-<span class="fc" id="L100">                    .fieldErrors(Collections.singletonList(fieldError))</span>
-<span class="fc" id="L101">                    .requestId(requestContext.getRequestId())</span>
-<span class="fc" id="L102">                    .status(BAD_REQUEST.value())</span>
-<span class="fc" id="L103">                    .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))</span>
-<span class="fc" id="L104">                    .message(UNREADABLE_ERROR_MESSAGE)</span>
-<span class="fc" id="L105">                    .build();</span>
-<span class="fc" id="L106">            return handleExceptionInternal(ex, response, headers, BAD_REQUEST, request);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if (ex.getCause() instanceof InvalidFormatException) {</span>
+<span class="fc" id="L93">            InvalidFormatException cause = (InvalidFormatException) ex.getCause();</span>
+<span class="fc" id="L94">            String path = cause.getPath().stream().map(JsonMappingException.Reference::getFieldName).collect(Collectors.joining(&quot;.&quot;));</span>
+<span class="fc" id="L95">            ErrorResponse.FieldError fieldError = ErrorResponse.FieldError.builder()</span>
+<span class="fc" id="L96">                    .message(String.format(&quot;'%s' could not be parsed as a %s&quot;, cause.getValue(), cause.getTargetType().getSimpleName()))</span>
+<span class="fc" id="L97">                    .field(path)</span>
+<span class="fc" id="L98">                    .build();</span>
+<span class="fc" id="L99">            RequestContext requestContext = requestContextHolder.get();</span>
+<span class="fc" id="L100">            ErrorResponse response = ErrorResponse.builder()</span>
+<span class="fc" id="L101">                    .fieldErrors(Collections.singletonList(fieldError))</span>
+<span class="fc" id="L102">                    .requestId(requestContext.getRequestId())</span>
+<span class="fc" id="L103">                    .status(BAD_REQUEST.value())</span>
+<span class="fc" id="L104">                    .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))</span>
+<span class="fc" id="L105">                    .message(UNREADABLE_ERROR_MESSAGE)</span>
+<span class="fc" id="L106">                    .build();</span>
+<span class="fc" id="L107">            return handleExceptionInternal(ex, response, headers, BAD_REQUEST, request);</span>
         }
-<span class="fc" id="L108">        return super.handleHttpMessageNotReadable(ex, headers, status, request);</span>
+<span class="fc" id="L109">        return super.handleHttpMessageNotReadable(ex, headers, status, request);</span>
     }
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity&lt;Object&gt; handleOthers(Exception exception, WebRequest request) {
-<span class="nc" id="L113">        RequestContext requestContext = requestContextHolder.get();</span>
-<span class="nc" id="L114">        log.error(&quot;An error occurred during incoming {} request to {}: {}&quot;,</span>
-<span class="nc" id="L115">                requestContext.getMethod(),</span>
-<span class="nc" id="L116">                requestContext.getServletPath(),</span>
-<span class="nc" id="L117">                constructExceptionDetail(exception),</span>
+<span class="nc" id="L114">        RequestContext requestContext = requestContextHolder.get();</span>
+<span class="nc" id="L115">        log.error(&quot;An error occurred during incoming {} request to {}: {}&quot;,</span>
+<span class="nc" id="L116">                requestContext.getMethod(),</span>
+<span class="nc" id="L117">                requestContext.getServletPath(),</span>
+<span class="nc" id="L118">                constructExceptionDetail(exception),</span>
                 exception);
 
-<span class="nc" id="L120">        ErrorResponse body = ErrorResponse.builder()</span>
-<span class="nc" id="L121">                .requestId(requestContext.getRequestId())</span>
-<span class="nc" id="L122">                .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))</span>
-<span class="nc" id="L123">                .status(INTERNAL_SERVER_ERROR.value())</span>
-<span class="nc" id="L124">                .message(&quot;An internal server error occurred&quot;)</span>
-<span class="nc" id="L125">                .build();</span>
+<span class="nc" id="L121">        ErrorResponse body = ErrorResponse.builder()</span>
+<span class="nc" id="L122">                .requestId(requestContext.getRequestId())</span>
+<span class="nc" id="L123">                .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))</span>
+<span class="nc" id="L124">                .status(INTERNAL_SERVER_ERROR.value())</span>
+<span class="nc" id="L125">                .message(&quot;An internal server error occurred&quot;)</span>
+<span class="nc" id="L126">                .build();</span>
 
-<span class="nc" id="L127">        return handleExceptionInternal(exception, body, new HttpHeaders(), INTERNAL_SERVER_ERROR, request);</span>
+<span class="nc" id="L128">        return handleExceptionInternal(exception, body, new HttpHeaders(), INTERNAL_SERVER_ERROR, request);</span>
     }
 
     @Override
     protected ResponseEntity&lt;Object&gt; handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
-<span class="fc" id="L132">        Object response = body;</span>
-<span class="fc bfc" id="L133" title="All 2 branches covered.">        if (response == null) {</span>
-<span class="fc" id="L134">            RequestContext requestContext = requestContextHolder.get();</span>
-<span class="fc" id="L135">            log.warn(&quot;Handling {} during incoming {} request to {}: {}&quot;,</span>
-<span class="fc" id="L136">                    ex.getClass().getSimpleName(), requestContext.getMethod(), requestContext.getServletPath(), ex.getMessage());</span>
-<span class="fc" id="L137">            response = ErrorResponse.builder()</span>
-<span class="fc" id="L138">                    .requestId(requestContext.getRequestId())</span>
-<span class="fc" id="L139">                    .status(status.value())</span>
-<span class="fc" id="L140">                    .message(status.getReasonPhrase())</span>
-<span class="fc" id="L141">                    .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))</span>
-<span class="fc" id="L142">                    .build();</span>
+<span class="fc" id="L133">        Object response = body;</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        if (response == null) {</span>
+<span class="fc" id="L135">            RequestContext requestContext = requestContextHolder.get();</span>
+<span class="fc" id="L136">            log.warn(&quot;Handling {} during incoming {} request to {}: {}&quot;,</span>
+<span class="fc" id="L137">                    ex.getClass().getSimpleName(), requestContext.getMethod(), requestContext.getServletPath(), ex.getMessage());</span>
+<span class="fc" id="L138">            response = ErrorResponse.builder()</span>
+<span class="fc" id="L139">                    .requestId(requestContext.getRequestId())</span>
+<span class="fc" id="L140">                    .status(status.value())</span>
+<span class="fc" id="L141">                    .message(status.getReasonPhrase())</span>
+<span class="fc" id="L142">                    .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))</span>
+<span class="fc" id="L143">                    .build();</span>
         }
-<span class="fc" id="L144">        return super.handleExceptionInternal(ex, response, headers, status, request);</span>
+<span class="fc" id="L145">        return super.handleExceptionInternal(ex, response, headers, status, request);</span>
     }
 
-    protected String constructExceptionDetail(Exception exception) {
-<span class="fc" id="L148">        StringBuilder detail = new StringBuilder();</span>
-<span class="fc" id="L149">        Throwable ex = exception;</span>
-<span class="fc" id="L150">        detail.append(getThrowableDetail(ex));</span>
-<span class="fc bfc" id="L151" title="All 4 branches covered.">        while (ex.getCause() != null &amp;&amp; ex.getCause() != ex) {</span>
-<span class="fc" id="L152">            ex = ex.getCause();</span>
-<span class="fc" id="L153">            detail.append(&quot;, wraps: &quot;);</span>
-<span class="fc" id="L154">            detail.append(getThrowableDetail(ex));</span>
-        }
-<span class="fc" id="L156">        return detail.toString().replace(&quot;\n&quot;, &quot; &quot;);</span>
-    }
-
-    private String getThrowableDetail(Throwable t) {
-<span class="fc" id="L160">        StringBuilder detail = new StringBuilder();</span>
-<span class="fc" id="L161">        detail.append(t.getMessage());</span>
-<span class="fc" id="L162">        StackTraceElement[] trace = t.getStackTrace();</span>
-<span class="fc bfc" id="L163" title="All 4 branches covered.">        if (trace != null &amp;&amp; trace.length &gt; 0) {</span>
-<span class="fc" id="L164">            detail.append(&quot; (at &quot; + trace[0] + &quot;)&quot;);</span>
-        }
-<span class="fc" id="L166">        return detail.toString();</span>
-    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

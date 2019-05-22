@@ -2,6 +2,8 @@
 <checkstyle version="8.15">
 <file name="/home/travis/build/DepartmentOfHealth-htbhf/htbhf-java-common/common_rest/src/test/java/uk/gov/dhsc/htbhf/errorhandler/ErrorHandlerTest.java">
 </file>
+<file name="/home/travis/build/DepartmentOfHealth-htbhf/htbhf-java-common/common_rest/src/test/java/uk/gov/dhsc/htbhf/errorhandler/ExceptionDetailGeneratorTest.java">
+</file>
 <file name="/home/travis/build/DepartmentOfHealth-htbhf/htbhf-java-common/common_rest/src/test/java/uk/gov/dhsc/htbhf/requestcontext/HeaderInterceptorTest.java">
 </file>
 <file name="/home/travis/build/DepartmentOfHealth-htbhf/htbhf-java-common/common_rest/src/test/java/uk/gov/dhsc/htbhf/requestcontext/RequestContextHolderTest.java">
