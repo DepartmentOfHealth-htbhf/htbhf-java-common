@@ -27,6 +27,9 @@ import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static uk.gov.dhsc.htbhf.errorhandler.ErrorMessage.INTERNAL_SERVER_ERROR_MESSAGE;
+import static uk.gov.dhsc.htbhf.errorhandler.ErrorMessage.UNREADABLE_ERROR_MESSAGE;
+import static uk.gov.dhsc.htbhf.errorhandler.ErrorMessage.VALIDATION_ERROR_MESSAGE;
 import static uk.gov.dhsc.htbhf.errorhandler.ExceptionDetailGenerator.constructExceptionDetail;
 
 /**
@@ -37,9 +40,6 @@ import static uk.gov.dhsc.htbhf.errorhandler.ExceptionDetailGenerator.constructE
 @Slf4j
 @RequiredArgsConstructor
 public class ErrorHandler extends ResponseEntityExceptionHandler {
-
-    public static final String VALIDATION_ERROR_MESSAGE = "There were validation issues with the request.";
-    public static final String UNREADABLE_ERROR_MESSAGE = "The request could not be parsed.";
 
     private final RequestContextHolder requestContextHolder;
 
@@ -122,7 +122,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
                 .requestId(requestContext.getRequestId())
                 .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
                 .status(INTERNAL_SERVER_ERROR.value())
-                .message("An internal server error occurred")
+                .message(INTERNAL_SERVER_ERROR_MESSAGE)
                 .build();
 
         return handleExceptionInternal(exception, body, new HttpHeaders(), INTERNAL_SERVER_ERROR, request);
