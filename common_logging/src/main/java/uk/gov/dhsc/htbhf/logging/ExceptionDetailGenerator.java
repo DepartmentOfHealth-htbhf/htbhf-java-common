@@ -1,4 +1,4 @@
-package uk.gov.dhsc.htbhf.errorhandler;
+package uk.gov.dhsc.htbhf.logging;
 
 public class ExceptionDetailGenerator {
 

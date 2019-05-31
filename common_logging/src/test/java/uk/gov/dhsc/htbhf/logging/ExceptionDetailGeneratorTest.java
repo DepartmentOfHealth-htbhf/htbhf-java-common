@@ -1,11 +1,11 @@
-package uk.gov.dhsc.htbhf.errorhandler;
+package uk.gov.dhsc.htbhf.logging;
 
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-import static uk.gov.dhsc.htbhf.errorhandler.ExceptionDetailGenerator.constructExceptionDetail;
+import static uk.gov.dhsc.htbhf.logging.ExceptionDetailGenerator.constructExceptionDetail;
 
 class ExceptionDetailGeneratorTest {
 
