@@ -10,8 +10,6 @@
 </file>
 <file name="/home/travis/build/DepartmentOfHealth-htbhf/htbhf-java-common/common_rest/src/main/java/uk/gov/dhsc/htbhf/errorhandler/ErrorResponse.java">
 </file>
-<file name="/home/travis/build/DepartmentOfHealth-htbhf/htbhf-java-common/common_rest/src/main/java/uk/gov/dhsc/htbhf/errorhandler/ExceptionDetailGenerator.java">
-</file>
 <file name="/home/travis/build/DepartmentOfHealth-htbhf/htbhf-java-common/common_rest/src/main/java/uk/gov/dhsc/htbhf/requestcontext/HeaderInterceptor.java">
 </file>
 <file name="/home/travis/build/DepartmentOfHealth-htbhf/htbhf-java-common/common_rest/src/main/java/uk/gov/dhsc/htbhf/requestcontext/MDCWrapper.java">

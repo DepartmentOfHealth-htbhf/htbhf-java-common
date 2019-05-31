@@ -30,7 +30,7 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static uk.gov.dhsc.htbhf.errorhandler.ErrorMessage.INTERNAL_SERVER_ERROR_MESSAGE;
 import static uk.gov.dhsc.htbhf.errorhandler.ErrorMessage.UNREADABLE_ERROR_MESSAGE;
 import static uk.gov.dhsc.htbhf.errorhandler.ErrorMessage.VALIDATION_ERROR_MESSAGE;
-import static uk.gov.dhsc.htbhf.errorhandler.ExceptionDetailGenerator.constructExceptionDetail;
+import static uk.gov.dhsc.htbhf.logging.ExceptionDetailGenerator.constructExceptionDetail;
 
 /**
  * Global error handler used to provide centralized exception handling for Spring MVC exceptions
