@@ -5,7 +5,7 @@ public class ExceptionDetailGenerator {
     /**
      * Generates a single line Exception stack trace detail to aid viewing all the information available in a single
      * line when viewed in Logit.
-     * @param exception The exception to build a String from
+     * @param exception The exception used to build a string
      * @return The built String.
      */
     public static String constructExceptionDetail(Exception exception) {
