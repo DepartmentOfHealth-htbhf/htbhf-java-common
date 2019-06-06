@@ -35,6 +35,8 @@ public class CloudDBConfiguration extends AbstractCloudConfig {
      * cloud foundry will using default settings which sets the maximum pool size to 4.
      * See https://cloud.spring.io/spring-cloud-connectors/spring-cloud-spring-service-connector.html and
      * https://github.com/cloudfoundry/java-buildpack-auto-reconfiguration
+     *
+     * @return the configured datasource
      */
     @Bean
     public DataSource dataSource() {
