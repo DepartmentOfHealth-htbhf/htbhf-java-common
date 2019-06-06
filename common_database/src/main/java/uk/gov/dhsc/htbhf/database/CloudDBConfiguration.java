@@ -17,6 +17,9 @@ import javax.sql.DataSource;
 @Profile("cloud")
 public class CloudDBConfiguration extends AbstractCloudConfig {
 
+    @Value("${postgres.service.id}")
+    private String serviceId;
+
     @Value("${spring.datasource.hikari.connectionTimeout}")
     private Integer connectionTimeout;
 
@@ -26,8 +29,6 @@ public class CloudDBConfiguration extends AbstractCloudConfig {
     @Value("${spring.datasource.hikari.maximum-pool-size}")
     private Integer maximumPoolSize;
 
-    @Value("${postgres.service.id}")
-    private String serviceId;
 
     /**
      * Create our own datasource with {@link org.springframework.cloud.service.PooledServiceConnectorConfig.PoolConfig}, otherwise
