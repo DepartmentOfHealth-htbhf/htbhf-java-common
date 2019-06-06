@@ -35,3 +35,9 @@ Contains common test utilities which include:
 
 - The ability to test and download Swagger for a project
 - Common assertions for checking validation `ConstraintViolation`s.
+
+## Common Database Module
+
+Provides a database configuration used when deployed to cloud foundry.
+
+[See README for more information](./common_database/README.md)
