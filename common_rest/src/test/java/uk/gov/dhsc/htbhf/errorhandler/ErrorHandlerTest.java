@@ -40,6 +40,8 @@ class ErrorHandlerTest {
     private static final String REQUEST_ID = "myRequestId";
     private static final String ERROR_MESSAGE_1 = "error1";
     private static final String ERROR_MESSAGE_2 = "error2";
+    private static final String REQUEST_CONTEXT_METHOD = "createOrUpdateClaim";
+    private static final String REQUEST_CONTEXT_SERVLET_PATH = "/v2/claims";
 
     @Mock
     BindingResult bindingResult;
@@ -62,8 +64,7 @@ class ErrorHandlerTest {
         FieldError fieldError1 = new FieldError("objectName", "field1", ERROR_MESSAGE_1);
         FieldError fieldError2 = new FieldError("objectName", "field2", ERROR_MESSAGE_2);
         given(bindingResult.getFieldErrors()).willReturn(asList(fieldError1, fieldError2));
-        given(requestContextHolder.get()).willReturn(requestContext);
-        given(requestContext.getRequestId()).willReturn(REQUEST_ID);
+        setupMockRequestContext();
 
         // When
         ResponseEntity<Object> responseEntity = handler.handleBindException(new BindException(bindingResult), httpHeaders, BAD_REQUEST, webRequest);
@@ -85,8 +86,7 @@ class ErrorHandlerTest {
         ObjectError globalError1 = new ObjectError("object1", ERROR_MESSAGE_1);
         ObjectError globalError2 = new ObjectError("object2", ERROR_MESSAGE_2);
         given(bindingResult.getGlobalErrors()).willReturn(asList(globalError1, globalError2));
-        given(requestContextHolder.get()).willReturn(requestContext);
-        given(requestContext.getRequestId()).willReturn(REQUEST_ID);
+        setupMockRequestContext();
 
         // When
         ResponseEntity<Object> responseEntity = handler.handleBindException(new BindException(bindingResult), httpHeaders, BAD_REQUEST, webRequest);
@@ -129,8 +129,7 @@ class ErrorHandlerTest {
         HttpMessageNotReadableException ex = new HttpMessageNotReadableException("myMessage",
                 new RuntimeException(),
                 new MockHttpInputMessage("This is an error".getBytes(Charset.defaultCharset())));
-        given(requestContextHolder.get()).willReturn(requestContext);
-        given(requestContext.getRequestId()).willReturn(REQUEST_ID);
+        setupMockRequestContext();
 
         // When
         ResponseEntity<Object> responseEntity = handler.handleHttpMessageNotReadable(ex, httpHeaders, BAD_REQUEST, webRequest);
@@ -141,6 +140,13 @@ class ErrorHandlerTest {
         ErrorResponse errorResponse = (ErrorResponse) responseEntity.getBody();
         assertThat(errorResponse.getRequestId()).isEqualTo(REQUEST_ID);
         assertThat(errorResponse.getFieldErrors()).isNull();
+    }
+
+    private void setupMockRequestContext() {
+        given(requestContextHolder.get()).willReturn(requestContext);
+        given(requestContext.getRequestId()).willReturn(REQUEST_ID);
+        given(requestContext.getMethod()).willReturn(REQUEST_CONTEXT_METHOD);
+        given(requestContext.getServletPath()).willReturn(REQUEST_CONTEXT_SERVLET_PATH);
     }
 
 }
