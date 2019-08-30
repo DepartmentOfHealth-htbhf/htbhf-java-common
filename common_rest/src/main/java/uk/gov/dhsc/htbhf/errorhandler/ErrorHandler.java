@@ -73,7 +73,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
                         .build()));
 
         RequestContext requestContext = requestContextHolder.get();
-        log.warn("Binding error(s) during incoming {} request to {}: {}", requestContext.getMethod(), requestContext.getServletPath(), errors);
+        log.error("Binding error(s) during incoming {} request to {}: {}", requestContext.getMethod(), requestContext.getServletPath(), errors);
 
         return ErrorResponse.builder()
                 .fieldErrors(errors)
@@ -133,7 +133,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
         Object response = body;
         if (response == null) {
             RequestContext requestContext = requestContextHolder.get();
-            log.warn("Handling {} during incoming {} request to {}: {}",
+            log.error("Handling {} during incoming {} request to {}: {}",
                     ex.getClass().getSimpleName(), requestContext.getMethod(), requestContext.getServletPath(), ex.getMessage());
             response = ErrorResponse.builder()
                     .requestId(requestContext.getRequestId())
