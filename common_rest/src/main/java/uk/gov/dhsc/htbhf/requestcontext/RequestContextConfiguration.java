@@ -1,5 +1,6 @@
 package uk.gov.dhsc.htbhf.requestcontext;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -66,7 +67,6 @@ public class RequestContextConfiguration {
         return converter;
     }
 
-    @Bean
     public ObjectMapper objectMapper() {
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
@@ -74,10 +74,10 @@ public class RequestContextConfiguration {
         javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ISO_LOCAL_DATE));
         javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ISO_LOCAL_DATE));
 
-        ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules();
-        objectMapper.registerModule(javaTimeModule);
-
-        return objectMapper;
+        return new ObjectMapper()
+                .findAndRegisterModules()
+                .registerModule(javaTimeModule)
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     @Bean
