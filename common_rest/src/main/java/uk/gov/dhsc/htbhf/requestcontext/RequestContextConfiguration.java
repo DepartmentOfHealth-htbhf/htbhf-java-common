@@ -1,7 +1,11 @@
 package uk.gov.dhsc.htbhf.requestcontext;
 
+import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -68,16 +72,27 @@ public class RequestContextConfiguration {
     }
 
     public ObjectMapper objectMapper() {
+        // This ObjectMapper is not spring-managed, but we want to give it the same settings
+        // see also: https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto-customize-the-jackson-objectmapper
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ISO_LOCAL_DATE));
         javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ISO_LOCAL_DATE));
 
-        return new ObjectMapper()
+        JsonFactory factory = JsonFactory.builder()
+                // Change per-factory setting to prevent use of `String.intern()` on symbols
+                .disable(JsonFactory.Feature.INTERN_FIELD_NAMES)
+                .build();
+
+        return JsonMapper.builder(factory)
+                .configure(MapperFeature.DEFAULT_VIEW_INCLUSION, false)
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+                .build()
                 .findAndRegisterModules()
-                .registerModule(javaTimeModule)
-                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                .registerModule(javaTimeModule);
+
     }
 
     @Bean
