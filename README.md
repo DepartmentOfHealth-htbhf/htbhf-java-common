@@ -9,6 +9,15 @@ repositories {
 }
 ```
 
+To publish to your local maven repository, run
+
+```
+./gradlew clean build publishToMavenLocal
+```
+
+Then to use the locally published version from another project,
+simply replace `latest.release` with the actual release number.
+
 ## Common Rest Module
 
 Provides formatted error responses and adds the request id and session id to the MDC for logging purposes.
