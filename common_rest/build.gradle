@@ -1,7 +1,6 @@
 buildscript {
     ext {
         springFoxVersion = '2.9.2'
-        jacksonVersion = '2.10.0'
     }
 
     dependencies {

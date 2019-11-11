@@ -50,3 +50,9 @@ Contains common test utilities which include:
 Provides a database configuration used when deployed to cloud foundry.
 
 [See README for more information](./common_database/README.md)
+
+## DWP API Module
+
+Provides common request and response objects for making requests to DWP.
+
+[See README for more information](./common_dwp_api/README.md)
