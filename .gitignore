@@ -21,3 +21,4 @@ manifest/src
 common_rest/out/
 common_test/out/
 common_logging/out/
+common_dwp_api/out/

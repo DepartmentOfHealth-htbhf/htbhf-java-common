@@ -3,8 +3,10 @@ include "htbhf-common-rest"
 include "htbhf-common-test"
 include "htbhf-common-logging"
 include "htbhf-common-database"
+include "htbhf-common-dwp-api"
 
 project(":htbhf-common-rest").projectDir = file("common_rest")
 project(":htbhf-common-test").projectDir = file("common_test")
 project(":htbhf-common-logging").projectDir = file("common_logging")
 project(":htbhf-common-database").projectDir = file("common_database")
+project(":htbhf-common-dwp-api").projectDir = file("common_dwp_api")
