@@ -9,6 +9,9 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Response object containing the result of the identity matching and eligibility process.
+ */
 @Data
 @Builder
 @AllArgsConstructor(onConstructor_ = {@JsonCreator})
