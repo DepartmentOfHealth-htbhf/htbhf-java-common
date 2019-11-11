@@ -56,3 +56,9 @@ Provides a database configuration used when deployed to cloud foundry.
 Provides common request and response objects for making requests to DWP.
 
 [See README for more information](./common_dwp_api/README.md)
+
+## DWP API Test Module
+
+Provides common test data factory objects for testing the DWP API.
+
+[See README for more information](./common_dwp_api_test/README.md)

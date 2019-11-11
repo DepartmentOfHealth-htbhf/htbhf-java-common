@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 import static uk.gov.dhsc.htbhf.dwp.testhelper.TestConstants.*;
 
-
+@SuppressWarnings("PMD.TooManyMethods")
 public class PersonDTOV2TestDataFactory {
 
     public static PersonDTOV2 aValidPersonDTOV2() {
