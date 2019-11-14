@@ -1,6 +1,7 @@
 package uk.gov.dhsc.htbhf.dwp.model.v2;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -49,4 +50,14 @@ public class IdentityAndEligibilityResponse {
 
     @JsonProperty("identityStatus")
     private final IdentityOutcome identityStatus;
+
+    /**
+     * Determine whether the eligibility outcome is considered eligible or not.
+     *
+     * @return Whether the eligibility outcome is considered eligible or not.
+     */
+    @JsonIgnore
+    public boolean isNotEligible() {
+        return EligibilityOutcome.CONFIRMED != eligibilityStatus;
+    }
 }
