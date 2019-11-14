@@ -12,19 +12,7 @@ import static uk.gov.dhsc.htbhf.dwp.testhelper.TestConstants.NO_HOUSEHOLD_IDENTI
 public class IdentityAndEligibilityResponseTestDataFactory {
 
     public static IdentityAndEligibilityResponse anIdentityMatchFailedResponse() {
-        return IdentityAndEligibilityResponse.builder()
-                .identityStatus(IdentityOutcome.NOT_MATCHED)
-                .eligibilityStatus(EligibilityOutcome.NOT_SET)
-                .qualifyingBenefits(QualifyingBenefits.NOT_SET)
-                .mobilePhoneMatch(VerificationOutcome.NOT_SET)
-                .emailAddressMatch(VerificationOutcome.NOT_SET)
-                .addressLine1Match(VerificationOutcome.NOT_SET)
-                .postcodeMatch(VerificationOutcome.NOT_SET)
-                .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
-                .householdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
-                .dobOfChildrenUnder4(emptyList())
-                .deathVerificationFlag(DeathVerificationFlag.N_A)
-                .build();
+        return defaultBuilderWithIdentityNotMatchedValues().build();
     }
 
     public static IdentityAndEligibilityResponse anIdentityMatchedEligibilityNotConfirmedResponse() {
@@ -116,6 +104,21 @@ public class IdentityAndEligibilityResponseTestDataFactory {
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .dobOfChildrenUnder4(childrenDobs)
                 .build();
+    }
+
+    public static IdentityAndEligibilityResponse.IdentityAndEligibilityResponseBuilder defaultBuilderWithIdentityNotMatchedValues() {
+        return IdentityAndEligibilityResponse.builder()
+                .identityStatus(IdentityOutcome.NOT_MATCHED)
+                .eligibilityStatus(EligibilityOutcome.NOT_SET)
+                .qualifyingBenefits(QualifyingBenefits.NOT_SET)
+                .mobilePhoneMatch(VerificationOutcome.NOT_SET)
+                .emailAddressMatch(VerificationOutcome.NOT_SET)
+                .addressLine1Match(VerificationOutcome.NOT_SET)
+                .postcodeMatch(VerificationOutcome.NOT_SET)
+                .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
+                .householdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .dobOfChildrenUnder4(emptyList())
+                .deathVerificationFlag(DeathVerificationFlag.N_A);
     }
 
 }
