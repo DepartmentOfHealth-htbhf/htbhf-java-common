@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Value;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,8 +12,8 @@ import java.util.List;
 /**
  * Response object containing the result of the identity matching and eligibility process.
  */
-@Data
-@Builder
+@Value
+@Builder(toBuilder = true)
 @AllArgsConstructor(onConstructor_ = {@JsonCreator})
 public class IdentityAndEligibilityResponse {
 
@@ -48,5 +48,5 @@ public class IdentityAndEligibilityResponse {
     private final List<LocalDate> dobOfChildrenUnder4;
 
     @JsonProperty("identityStatus")
-    private IdentityOutcome identityStatus;
+    private final IdentityOutcome identityStatus;
 }
