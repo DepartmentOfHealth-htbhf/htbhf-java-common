@@ -32,6 +32,7 @@ public final class TestConstants {
     public static final String SIMPSONS_ADDRESS_LINE_1 = "742 Evergreen Terrace";
     public static final String SIMPSONS_ADDRESS_LINE_2 = "Mystery Spot";
     public static final String SIMPSONS_TOWN = "Springfield";
+    public static final String SIMPSONS_COUNTY = "Borough";
     public static final String SIMPSONS_POSTCODE = "AA1 1AA";
     //Dates of birth
     public static final String HOMER_DATE_OF_BIRTH_STRING = "1985-12-31";
@@ -54,7 +55,7 @@ public final class TestConstants {
     public static final List<LocalDate> SINGLE_SIX_MONTH_OLD = singletonList(EXACTLY_SIX_MONTH_OLD);
     public static final List<LocalDate> TWO_CHILDREN_UNDER_ONE = List.of(EXACTLY_SIX_MONTH_OLD, EXACTLY_SIX_MONTH_OLD);
     public static final List<LocalDate> TWO_CHILDREN = asList(EXACTLY_SIX_MONTH_OLD, EXACTLY_THREE_YEAR_OLD);
-    public static final List<LocalDate> TWO_CHILDREN_BETWEEN_ONE_AND_FOUR = List.of(BART_DOB, EXACTLY_THREE_YEAR_OLD);
+    public static final List<LocalDate> TWO_CHILDREN_BETWEEN_ONE_AND_FOUR = List.of(LISA_DOB, EXACTLY_THREE_YEAR_OLD);
     public static final List<LocalDate> SINGLE_THREE_YEAR_OLD = singletonList(EXACTLY_THREE_YEAR_OLD);
     public static final List<LocalDate> ONE_CHILD_FOUR_YEARS_OLD = singletonList(BART_DOB);
     public static final List<LocalDate> ONE_CHILD_UNDER_ONE_AND_ONE_CHILD_BETWEEN_ONE_AND_FOUR = List.of(EXACTLY_SIX_MONTH_OLD, EXACTLY_THREE_YEAR_OLD);
