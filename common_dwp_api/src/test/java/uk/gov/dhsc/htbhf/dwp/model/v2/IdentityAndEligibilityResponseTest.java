@@ -10,9 +10,15 @@ import static uk.gov.dhsc.htbhf.dwp.testhelper.v2.IdentityAndEligibilityResponse
 class IdentityAndEligibilityResponseTest {
 
     @Test
-    void shouldBeEligibleForConfirmedEligibilityOutcome() {
+    void shouldNotBeIneligibleForConfirmedEligibilityOutcome() {
         IdentityAndEligibilityResponse response = anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches();
         assertThat(response.isNotEligible()).isFalse();
+    }
+
+    @Test
+    void shouldBeEligibleForConfirmedEligibilityOutcome() {
+        IdentityAndEligibilityResponse response = anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches();
+        assertThat(response.isEligible()).isTrue();
     }
 
     @Test
@@ -22,14 +28,32 @@ class IdentityAndEligibilityResponseTest {
     }
 
     @Test
+    void shouldNotBeEligibleForNotSetEligibilityOutcome() {
+        IdentityAndEligibilityResponse response = anIdentityMatchFailedResponse();
+        assertThat(response.isEligible()).isFalse();
+    }
+
+    @Test
     void shouldBeIneligibleForNotConfirmedEligibilityOutcome() {
         IdentityAndEligibilityResponse response = anIdentityMatchedEligibilityNotConfirmedResponse();
         assertThat(response.isNotEligible()).isTrue();
     }
 
     @Test
+    void shouldNotBeEligibleForNotConfirmedEligibilityOutcome() {
+        IdentityAndEligibilityResponse response = anIdentityMatchedEligibilityNotConfirmedResponse();
+        assertThat(response.isEligible()).isFalse();
+    }
+
+    @Test
     void shouldBeIneligibleEligibilityOutcomeNotSet() {
         IdentityAndEligibilityResponse response = IdentityAndEligibilityResponse.builder().build();
         assertThat(response.isNotEligible()).isTrue();
+    }
+
+    @Test
+    void shouldNotBeEligibleEligibilityOutcomeNotSet() {
+        IdentityAndEligibilityResponse response = IdentityAndEligibilityResponse.builder().build();
+        assertThat(response.isEligible()).isFalse();
     }
 }

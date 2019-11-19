@@ -52,12 +52,22 @@ public class IdentityAndEligibilityResponse {
     private final IdentityOutcome identityStatus;
 
     /**
-     * Determine whether the eligibility outcome is considered eligible or not.
+     * Determine whether the eligibility outcome is considered not eligible.
      *
-     * @return Whether the eligibility outcome is considered eligible or not.
+     * @return Whether the eligibility outcome is considered not eligible.
      */
     @JsonIgnore
     public boolean isNotEligible() {
-        return EligibilityOutcome.CONFIRMED != eligibilityStatus;
+        return !isEligible();
+    }
+
+    /**
+     * Determine whether the eligibility outcome is considered eligible.
+     *
+     * @return Whether the eligibility outcome is considered eligible.
+     */
+    @JsonIgnore
+    public boolean isEligible() {
+        return EligibilityOutcome.CONFIRMED == eligibilityStatus;
     }
 }
