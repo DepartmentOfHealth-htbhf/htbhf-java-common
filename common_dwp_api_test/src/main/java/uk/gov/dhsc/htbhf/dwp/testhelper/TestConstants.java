@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 
 public final class TestConstants {
@@ -42,13 +43,24 @@ public final class TestConstants {
     public static final LocalDate LISA_DOB = LocalDate.now().minusMonths(24);
     public static final LocalDate BART_DOB = LocalDate.now().minusMonths(48);
     public static final LocalDate SIX_MONTH_OLD = LocalDate.now().minusMonths(6).withDayOfMonth(1);
+    public static final LocalDate EXACTLY_SIX_MONTH_OLD = MAGGIE_DATE_OF_BIRTH;
     public static final LocalDate THREE_YEAR_OLD = LocalDate.now().minusYears(3).withDayOfMonth(1);
+    public static final LocalDate EXACTLY_THREE_YEAR_OLD = LocalDate.now().minusYears(3);
+    public static final LocalDate NEARLY_FOUR_YEAR_OLD = LocalDate.now().minusYears(4).plusWeeks(2);
     public static final LocalDate FIVE_YEAR_OLD = LocalDate.now().minusYears(5);
     public static final LocalDate TWENTY_YEAR_OLD = LocalDate.now().minusYears(20);
-    public static final List<LocalDate> TWO_CHILDREN = asList(SIX_MONTH_OLD, THREE_YEAR_OLD);
-    public static final List<LocalDate> SINGLE_THREE_YEAR_OLD = singletonList(THREE_YEAR_OLD);
-    public static final List<LocalDate> SINGLE_SIX_MONTH_OLD = singletonList(SIX_MONTH_OLD);
+    //List of dates of birth
+    public static final List<LocalDate> NO_CHILDREN = emptyList();
+    public static final List<LocalDate> SINGLE_SIX_MONTH_OLD = singletonList(EXACTLY_SIX_MONTH_OLD);
+    public static final List<LocalDate> TWO_CHILDREN_UNDER_ONE = List.of(EXACTLY_SIX_MONTH_OLD, EXACTLY_SIX_MONTH_OLD);
+    public static final List<LocalDate> TWO_CHILDREN = asList(EXACTLY_SIX_MONTH_OLD, EXACTLY_THREE_YEAR_OLD);
+    public static final List<LocalDate> TWO_CHILDREN_BETWEEN_ONE_AND_FOUR = List.of(BART_DOB, EXACTLY_THREE_YEAR_OLD);
+    public static final List<LocalDate> SINGLE_THREE_YEAR_OLD = singletonList(EXACTLY_THREE_YEAR_OLD);
+    public static final List<LocalDate> ONE_CHILD_FOUR_YEARS_OLD = singletonList(BART_DOB);
+    public static final List<LocalDate> ONE_CHILD_UNDER_ONE_AND_ONE_CHILD_BETWEEN_ONE_AND_FOUR = List.of(EXACTLY_SIX_MONTH_OLD, EXACTLY_THREE_YEAR_OLD);
     public static final List<LocalDate> MAGGIE_AND_LISA_DOBS = List.of(MAGGIE_DATE_OF_BIRTH, LISA_DOB);
+    public static final List<LocalDate> SINGLE_NEARLY_FOUR_YEAR_OLD = singletonList(NEARLY_FOUR_YEAR_OLD);
+    public static final List<LocalDate> SINGLE_FIVE_YEAR_OLD = singletonList(FIVE_YEAR_OLD);
     //Miscellaneous
     public static final LocalDate ELIGIBLE_END_DATE = LocalDate.parse("2019-03-01");
     public static final LocalDate ELIGIBLE_START_DATE = LocalDate.parse("2019-02-14");
@@ -56,5 +68,7 @@ public final class TestConstants {
     public static final int UC_MONTHLY_INCOME_THRESHOLD_IN_PENCE = 40800;
     public static final String SIMPSON_UC_HOUSEHOLD_IDENTIFIER = "ucHouseholdIdentifier";
     public static final String SIMPSON_LEGACY_HOUSEHOLD_IDENTIFIER = "legacyHouseholdIdentifier";
+    public static final String DWP_HOUSEHOLD_IDENTIFIER = "dwpHousehold1";
+    public static final String HMRC_HOUSEHOLD_IDENTIFIER = "hmrcHousehold1";
     public static final String NO_HOUSEHOLD_IDENTIFIER_PROVIDED = "";
 }
