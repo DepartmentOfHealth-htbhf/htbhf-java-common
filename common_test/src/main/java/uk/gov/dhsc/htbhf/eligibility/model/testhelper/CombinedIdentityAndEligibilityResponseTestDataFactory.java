@@ -1,24 +1,25 @@
-package uk.gov.dhsc.htbhf.dwp.testhelper.v2;
+package uk.gov.dhsc.htbhf.eligibility.model.testhelper;
 
 import uk.gov.dhsc.htbhf.dwp.model.v2.*;
+import uk.gov.dhsc.htbhf.eligibility.model.CombinedIdentityAndEligibilityResponse;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
-import static uk.gov.dhsc.htbhf.dwp.testhelper.TestConstants.DWP_HOUSEHOLD_IDENTIFIER;
-import static uk.gov.dhsc.htbhf.dwp.testhelper.TestConstants.MAGGIE_AND_LISA_DOBS;
-import static uk.gov.dhsc.htbhf.dwp.testhelper.TestConstants.NO_HOUSEHOLD_IDENTIFIER_PROVIDED;
+import static uk.gov.dhsc.htbhf.TestConstants.DWP_HOUSEHOLD_IDENTIFIER;
+import static uk.gov.dhsc.htbhf.TestConstants.HMRC_HOUSEHOLD_IDENTIFIER;
+import static uk.gov.dhsc.htbhf.TestConstants.MAGGIE_AND_LISA_DOBS;
+import static uk.gov.dhsc.htbhf.TestConstants.NO_HOUSEHOLD_IDENTIFIER_PROVIDED;
 
-@SuppressWarnings("PMD.TooManyMethods")
-public class IdentityAndEligibilityResponseTestDataFactory {
+public class CombinedIdentityAndEligibilityResponseTestDataFactory {
 
-    public static IdentityAndEligibilityResponse anIdentityMatchFailedResponse() {
+    public static CombinedIdentityAndEligibilityResponse anIdentityMatchFailedResponse() {
         return defaultBuilderWithIdentityNotMatchedValues().build();
     }
 
-    public static IdentityAndEligibilityResponse anIdentityMatchedEligibilityNotConfirmedResponse() {
-        return IdentityAndEligibilityResponse.builder()
+    public static CombinedIdentityAndEligibilityResponse anIdentityMatchedEligibilityNotConfirmedResponse() {
+        return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(EligibilityOutcome.NOT_CONFIRMED)
                 .qualifyingBenefits(QualifyingBenefits.NOT_SET)
@@ -27,14 +28,15 @@ public class IdentityAndEligibilityResponseTestDataFactory {
                 .addressLine1Match(VerificationOutcome.NOT_SET)
                 .postcodeMatch(VerificationOutcome.NOT_SET)
                 .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
-                .householdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .hrmcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(emptyList())
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .build();
     }
 
-    public static IdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedPostcodeNotMatchedResponse() {
-        return IdentityAndEligibilityResponse.builder()
+    public static CombinedIdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedPostcodeNotMatchedResponse() {
+        return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(EligibilityOutcome.CONFIRMED)
                 .qualifyingBenefits(QualifyingBenefits.NOT_SET)
@@ -43,14 +45,15 @@ public class IdentityAndEligibilityResponseTestDataFactory {
                 .addressLine1Match(VerificationOutcome.MATCHED)
                 .postcodeMatch(VerificationOutcome.NOT_MATCHED)
                 .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
-                .householdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .hrmcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(emptyList())
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .build();
     }
 
-    public static IdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedAddressNotMatchedResponse() {
-        return IdentityAndEligibilityResponse.builder()
+    public static CombinedIdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedAddressNotMatchedResponse() {
+        return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(EligibilityOutcome.CONFIRMED)
                 .qualifyingBenefits(QualifyingBenefits.NOT_SET)
@@ -59,16 +62,17 @@ public class IdentityAndEligibilityResponseTestDataFactory {
                 .addressLine1Match(VerificationOutcome.NOT_MATCHED)
                 .postcodeMatch(VerificationOutcome.MATCHED)
                 .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
-                .householdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .hrmcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(emptyList())
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .build();
     }
 
-    public static IdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedUCResponseWithMatches(VerificationOutcome mobileVerification,
-                                                                                                            VerificationOutcome emailVerification,
-                                                                                                            List<LocalDate> childrenDobs) {
-        return IdentityAndEligibilityResponse.builder()
+    public static CombinedIdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedUCResponseWithMatches(VerificationOutcome mobileVerification,
+                                                                                                                    VerificationOutcome emailVerification,
+                                                                                                                    List<LocalDate> childrenDobs) {
+        return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(EligibilityOutcome.CONFIRMED)
                 .qualifyingBenefits(QualifyingBenefits.UNIVERSAL_CREDIT)
@@ -77,23 +81,19 @@ public class IdentityAndEligibilityResponseTestDataFactory {
                 .addressLine1Match(VerificationOutcome.MATCHED)
                 .postcodeMatch(VerificationOutcome.MATCHED)
                 .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
-                .householdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .dwpHouseholdIdentifier(DWP_HOUSEHOLD_IDENTIFIER)
+                .hrmcHouseholdIdentifier(HMRC_HOUSEHOLD_IDENTIFIER)
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .dobOfChildrenUnder4(childrenDobs)
                 .build();
     }
 
-    public static IdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches() {
-        return anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches(VerificationOutcome.NOT_SUPPLIED, MAGGIE_AND_LISA_DOBS);
+    public static CombinedIdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches() {
+        return anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches(MAGGIE_AND_LISA_DOBS);
     }
 
-    public static IdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches(List<LocalDate> childrenDobs) {
-        return anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches(VerificationOutcome.NOT_SUPPLIED, childrenDobs);
-    }
-
-    public static IdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches(VerificationOutcome pregnantChildDOBMatch,
-                                                                                                               List<LocalDate> childrenDobs) {
-        return IdentityAndEligibilityResponse.builder()
+    public static CombinedIdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches(List<LocalDate> childrenDobs) {
+        return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(EligibilityOutcome.CONFIRMED)
                 .qualifyingBenefits(QualifyingBenefits.UNIVERSAL_CREDIT)
@@ -101,15 +101,16 @@ public class IdentityAndEligibilityResponseTestDataFactory {
                 .emailAddressMatch(VerificationOutcome.MATCHED)
                 .addressLine1Match(VerificationOutcome.MATCHED)
                 .postcodeMatch(VerificationOutcome.MATCHED)
-                .pregnantChildDOBMatch(pregnantChildDOBMatch)
-                .householdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .pregnantChildDOBMatch(VerificationOutcome.NOT_SUPPLIED)
+                .dwpHouseholdIdentifier(DWP_HOUSEHOLD_IDENTIFIER)
+                .hrmcHouseholdIdentifier(HMRC_HOUSEHOLD_IDENTIFIER)
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .dobOfChildrenUnder4(childrenDobs)
                 .build();
     }
 
-    public static IdentityAndEligibilityResponse.IdentityAndEligibilityResponseBuilder defaultBuilderWithIdentityNotMatchedValues() {
-        return IdentityAndEligibilityResponse.builder()
+    public static CombinedIdentityAndEligibilityResponse.CombinedIdentityAndEligibilityResponseBuilder defaultBuilderWithIdentityNotMatchedValues() {
+        return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.NOT_MATCHED)
                 .eligibilityStatus(EligibilityOutcome.NOT_SET)
                 .qualifyingBenefits(QualifyingBenefits.NOT_SET)
@@ -118,25 +119,10 @@ public class IdentityAndEligibilityResponseTestDataFactory {
                 .addressLine1Match(VerificationOutcome.NOT_SET)
                 .postcodeMatch(VerificationOutcome.NOT_SET)
                 .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
-                .householdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .hrmcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(emptyList())
                 .deathVerificationFlag(DeathVerificationFlag.N_A);
-    }
-
-    public static IdentityAndEligibilityResponse anAllMatchedEligibilityConfirmedUCResponseWithHouseholdIdentifier() {
-        return addHouseholdIdentifier(anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches(), DWP_HOUSEHOLD_IDENTIFIER);
-    }
-
-    public static IdentityAndEligibilityResponse anAllMatchedEligibilityConfirmedUCResponseWithHouseholdIdentifier(List<LocalDate> dateOfBirthOfChildren,
-                                                                                                                   String householdIdentifier) {
-        return addHouseholdIdentifier(anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches(dateOfBirthOfChildren),
-                householdIdentifier);
-    }
-
-    public static IdentityAndEligibilityResponse addHouseholdIdentifier(IdentityAndEligibilityResponse originalResponse, String householdIdentifier) {
-        return originalResponse.toBuilder()
-                .householdIdentifier(householdIdentifier)
-                .build();
     }
 
 }
