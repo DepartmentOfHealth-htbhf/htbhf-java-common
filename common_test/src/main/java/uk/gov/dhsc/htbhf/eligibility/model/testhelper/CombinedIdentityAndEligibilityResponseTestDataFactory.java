@@ -29,7 +29,7 @@ public class CombinedIdentityAndEligibilityResponseTestDataFactory {
                 .postcodeMatch(VerificationOutcome.NOT_SET)
                 .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
                 .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
-                .hrmcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .hmrcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(emptyList())
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .build();
@@ -46,7 +46,7 @@ public class CombinedIdentityAndEligibilityResponseTestDataFactory {
                 .postcodeMatch(VerificationOutcome.NOT_MATCHED)
                 .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
                 .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
-                .hrmcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .hmrcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(emptyList())
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .build();
@@ -63,7 +63,7 @@ public class CombinedIdentityAndEligibilityResponseTestDataFactory {
                 .postcodeMatch(VerificationOutcome.MATCHED)
                 .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
                 .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
-                .hrmcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .hmrcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(emptyList())
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .build();
@@ -82,7 +82,7 @@ public class CombinedIdentityAndEligibilityResponseTestDataFactory {
                 .postcodeMatch(VerificationOutcome.MATCHED)
                 .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
                 .dwpHouseholdIdentifier(DWP_HOUSEHOLD_IDENTIFIER)
-                .hrmcHouseholdIdentifier(HMRC_HOUSEHOLD_IDENTIFIER)
+                .hmrcHouseholdIdentifier(HMRC_HOUSEHOLD_IDENTIFIER)
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .dobOfChildrenUnder4(childrenDobs)
                 .build();
@@ -103,7 +103,7 @@ public class CombinedIdentityAndEligibilityResponseTestDataFactory {
                 .postcodeMatch(VerificationOutcome.MATCHED)
                 .pregnantChildDOBMatch(VerificationOutcome.NOT_SUPPLIED)
                 .dwpHouseholdIdentifier(DWP_HOUSEHOLD_IDENTIFIER)
-                .hrmcHouseholdIdentifier(HMRC_HOUSEHOLD_IDENTIFIER)
+                .hmrcHouseholdIdentifier(HMRC_HOUSEHOLD_IDENTIFIER)
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .dobOfChildrenUnder4(childrenDobs)
                 .build();
@@ -120,7 +120,7 @@ public class CombinedIdentityAndEligibilityResponseTestDataFactory {
                 .postcodeMatch(VerificationOutcome.NOT_SET)
                 .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
                 .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
-                .hrmcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .hmrcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(emptyList())
                 .deathVerificationFlag(DeathVerificationFlag.N_A);
     }

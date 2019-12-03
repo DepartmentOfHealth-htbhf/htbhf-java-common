@@ -48,7 +48,7 @@ public class CombinedIdentityAndEligibilityResponse {
     private final String dwpHouseholdIdentifier;
 
     @JsonProperty("hmrcHouseholdIdentifier")
-    private final String hrmcHouseholdIdentifier;
+    private final String hmrcHouseholdIdentifier;
 
     @JsonProperty("dobOfChildrenUnder4")
     private final List<LocalDate> dobOfChildrenUnder4;
