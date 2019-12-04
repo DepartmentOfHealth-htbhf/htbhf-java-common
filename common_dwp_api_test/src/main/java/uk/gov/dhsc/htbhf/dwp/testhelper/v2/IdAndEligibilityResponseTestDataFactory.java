@@ -6,18 +6,18 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
-import static uk.gov.dhsc.htbhf.dwp.testhelper.TestConstants.DWP_HOUSEHOLD_IDENTIFIER;
-import static uk.gov.dhsc.htbhf.dwp.testhelper.TestConstants.MAGGIE_AND_LISA_DOBS;
-import static uk.gov.dhsc.htbhf.dwp.testhelper.TestConstants.NO_HOUSEHOLD_IDENTIFIER_PROVIDED;
+import static uk.gov.dhsc.htbhf.TestConstants.DWP_HOUSEHOLD_IDENTIFIER;
+import static uk.gov.dhsc.htbhf.TestConstants.MAGGIE_AND_LISA_DOBS;
+import static uk.gov.dhsc.htbhf.TestConstants.NO_HOUSEHOLD_IDENTIFIER_PROVIDED;
 
 @SuppressWarnings("PMD.TooManyMethods")
-public class IdentityAndEligibilityResponseTestDataFactory {
+public class IdAndEligibilityResponseTestDataFactory {
 
-    public static IdentityAndEligibilityResponse anIdentityMatchFailedResponse() {
+    public static IdentityAndEligibilityResponse anIdMatchFailedResponse() {
         return defaultBuilderWithIdentityNotMatchedValues().build();
     }
 
-    public static IdentityAndEligibilityResponse anIdentityMatchedEligibilityNotConfirmedResponse() {
+    public static IdentityAndEligibilityResponse anIdMatchedEligibilityNotConfirmedResponse() {
         return IdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(EligibilityOutcome.NOT_CONFIRMED)
@@ -33,7 +33,7 @@ public class IdentityAndEligibilityResponseTestDataFactory {
                 .build();
     }
 
-    public static IdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedPostcodeNotMatchedResponse() {
+    public static IdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedPostcodeNotMatchedResponse() {
         return IdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(EligibilityOutcome.CONFIRMED)
@@ -49,7 +49,7 @@ public class IdentityAndEligibilityResponseTestDataFactory {
                 .build();
     }
 
-    public static IdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedAddressNotMatchedResponse() {
+    public static IdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedAddressNotMatchedResponse() {
         return IdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(EligibilityOutcome.CONFIRMED)
@@ -65,9 +65,9 @@ public class IdentityAndEligibilityResponseTestDataFactory {
                 .build();
     }
 
-    public static IdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedUCResponseWithMatches(VerificationOutcome mobileVerification,
-                                                                                                            VerificationOutcome emailVerification,
-                                                                                                            List<LocalDate> childrenDobs) {
+    public static IdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedUCResponseWithMatches(VerificationOutcome mobileVerification,
+                                                                                                      VerificationOutcome emailVerification,
+                                                                                                      List<LocalDate> childrenDobs) {
         return IdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(EligibilityOutcome.CONFIRMED)
@@ -83,16 +83,20 @@ public class IdentityAndEligibilityResponseTestDataFactory {
                 .build();
     }
 
-    public static IdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches() {
-        return anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches(VerificationOutcome.NOT_SUPPLIED, MAGGIE_AND_LISA_DOBS);
+    public static IdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedUCResponseWithAllMatches() {
+        return anIdMatchedEligibilityConfirmedUCResponseWithAllMatches(VerificationOutcome.NOT_SUPPLIED, MAGGIE_AND_LISA_DOBS);
     }
 
-    public static IdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches(List<LocalDate> childrenDobs) {
-        return anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches(VerificationOutcome.NOT_SUPPLIED, childrenDobs);
+    public static IdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedUCResponseWithAllMatches(List<LocalDate> childrenDobs) {
+        return anIdMatchedEligibilityConfirmedUCResponseWithAllMatches(VerificationOutcome.NOT_SUPPLIED, childrenDobs);
     }
 
-    public static IdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches(VerificationOutcome pregnantChildDOBMatch,
-                                                                                                               List<LocalDate> childrenDobs) {
+    public static IdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedUCResponseWithAllMatches(VerificationOutcome pregnantChildDOBMatch) {
+        return anIdMatchedEligibilityConfirmedUCResponseWithAllMatches(pregnantChildDOBMatch, MAGGIE_AND_LISA_DOBS);
+    }
+
+    public static IdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedUCResponseWithAllMatches(VerificationOutcome pregnantChildDOBMatch,
+                                                                                                         List<LocalDate> childrenDobs) {
         return IdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(EligibilityOutcome.CONFIRMED)
@@ -123,13 +127,13 @@ public class IdentityAndEligibilityResponseTestDataFactory {
                 .deathVerificationFlag(DeathVerificationFlag.N_A);
     }
 
-    public static IdentityAndEligibilityResponse anAllMatchedEligibilityConfirmedUCResponseWithHouseholdIdentifier() {
-        return addHouseholdIdentifier(anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches(), DWP_HOUSEHOLD_IDENTIFIER);
+    public static IdentityAndEligibilityResponse anAllMatchedEligibilityConfirmedUCResponseWithHouseholdId() {
+        return addHouseholdIdentifier(anIdMatchedEligibilityConfirmedUCResponseWithAllMatches(), DWP_HOUSEHOLD_IDENTIFIER);
     }
 
-    public static IdentityAndEligibilityResponse anAllMatchedEligibilityConfirmedUCResponseWithHouseholdIdentifier(List<LocalDate> dateOfBirthOfChildren,
-                                                                                                                   String householdIdentifier) {
-        return addHouseholdIdentifier(anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches(dateOfBirthOfChildren),
+    public static IdentityAndEligibilityResponse anAllMatchedEligibilityConfirmedUCResponseWithHouseholdId(List<LocalDate> dateOfBirthOfChildren,
+                                                                                                           String householdIdentifier) {
+        return addHouseholdIdentifier(anIdMatchedEligibilityConfirmedUCResponseWithAllMatches(dateOfBirthOfChildren),
                 householdIdentifier);
     }
 

@@ -4,7 +4,7 @@ import uk.gov.dhsc.htbhf.dwp.model.v2.PersonDTOV2;
 
 import java.time.LocalDate;
 
-import static uk.gov.dhsc.htbhf.dwp.testhelper.TestConstants.*;
+import static uk.gov.dhsc.htbhf.TestConstants.*;
 
 @SuppressWarnings("PMD.TooManyMethods")
 public class PersonDTOV2TestDataFactory {
