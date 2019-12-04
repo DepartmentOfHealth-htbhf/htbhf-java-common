@@ -3,45 +3,45 @@ package uk.gov.dhsc.htbhf.dwp.model.v2;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.dhsc.htbhf.dwp.testhelper.v2.IdentityAndEligibilityResponseTestDataFactory.anIdentityMatchFailedResponse;
-import static uk.gov.dhsc.htbhf.dwp.testhelper.v2.IdentityAndEligibilityResponseTestDataFactory.anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches;
-import static uk.gov.dhsc.htbhf.dwp.testhelper.v2.IdentityAndEligibilityResponseTestDataFactory.anIdentityMatchedEligibilityNotConfirmedResponse;
+import static uk.gov.dhsc.htbhf.dwp.testhelper.v2.IdAndEligibilityResponseTestDataFactory.anIdMatchFailedResponse;
+import static uk.gov.dhsc.htbhf.dwp.testhelper.v2.IdAndEligibilityResponseTestDataFactory.anIdMatchedEligibilityConfirmedUCResponseWithAllMatches;
+import static uk.gov.dhsc.htbhf.dwp.testhelper.v2.IdAndEligibilityResponseTestDataFactory.anIdMatchedEligibilityNotConfirmedResponse;
 
 class IdentityAndEligibilityResponseTest {
 
     @Test
     void shouldNotBeIneligibleForConfirmedEligibilityOutcome() {
-        IdentityAndEligibilityResponse response = anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches();
+        IdentityAndEligibilityResponse response = anIdMatchedEligibilityConfirmedUCResponseWithAllMatches();
         assertThat(response.isNotEligible()).isFalse();
     }
 
     @Test
     void shouldBeEligibleForConfirmedEligibilityOutcome() {
-        IdentityAndEligibilityResponse response = anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches();
+        IdentityAndEligibilityResponse response = anIdMatchedEligibilityConfirmedUCResponseWithAllMatches();
         assertThat(response.isEligible()).isTrue();
     }
 
     @Test
     void shouldBeIneligibleForNotSetEligibilityOutcome() {
-        IdentityAndEligibilityResponse response = anIdentityMatchFailedResponse();
+        IdentityAndEligibilityResponse response = anIdMatchFailedResponse();
         assertThat(response.isNotEligible()).isTrue();
     }
 
     @Test
     void shouldNotBeEligibleForNotSetEligibilityOutcome() {
-        IdentityAndEligibilityResponse response = anIdentityMatchFailedResponse();
+        IdentityAndEligibilityResponse response = anIdMatchFailedResponse();
         assertThat(response.isEligible()).isFalse();
     }
 
     @Test
     void shouldBeIneligibleForNotConfirmedEligibilityOutcome() {
-        IdentityAndEligibilityResponse response = anIdentityMatchedEligibilityNotConfirmedResponse();
+        IdentityAndEligibilityResponse response = anIdMatchedEligibilityNotConfirmedResponse();
         assertThat(response.isNotEligible()).isTrue();
     }
 
     @Test
     void shouldNotBeEligibleForNotConfirmedEligibilityOutcome() {
-        IdentityAndEligibilityResponse response = anIdentityMatchedEligibilityNotConfirmedResponse();
+        IdentityAndEligibilityResponse response = anIdMatchedEligibilityNotConfirmedResponse();
         assertThat(response.isEligible()).isFalse();
     }
 

@@ -5,7 +5,7 @@ import uk.gov.dhsc.htbhf.dwp.model.v2.PersonDTOV2;
 
 import java.time.LocalDate;
 
-import static uk.gov.dhsc.htbhf.dwp.testhelper.TestConstants.UC_MONTHLY_INCOME_THRESHOLD_IN_PENCE;
+import static uk.gov.dhsc.htbhf.TestConstants.UC_MONTHLY_INCOME_THRESHOLD_IN_PENCE;
 import static uk.gov.dhsc.htbhf.dwp.testhelper.v2.PersonDTOV2TestDataFactory.aValidPersonDTOV2;
 
 

@@ -12,13 +12,13 @@ import static uk.gov.dhsc.htbhf.TestConstants.HMRC_HOUSEHOLD_IDENTIFIER;
 import static uk.gov.dhsc.htbhf.TestConstants.MAGGIE_AND_LISA_DOBS;
 import static uk.gov.dhsc.htbhf.TestConstants.NO_HOUSEHOLD_IDENTIFIER_PROVIDED;
 
-public class CombinedIdentityAndEligibilityResponseTestDataFactory {
+public class CombinedIdAndEligibilityResponseTestDataFactory {
 
-    public static CombinedIdentityAndEligibilityResponse anIdentityMatchFailedResponse() {
+    public static CombinedIdentityAndEligibilityResponse anIdMatchFailedResponse() {
         return defaultBuilderWithIdentityNotMatchedValues().build();
     }
 
-    public static CombinedIdentityAndEligibilityResponse anIdentityMatchedEligibilityNotConfirmedResponse() {
+    public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityNotConfirmedResponse() {
         return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(EligibilityOutcome.NOT_CONFIRMED)
@@ -35,7 +35,7 @@ public class CombinedIdentityAndEligibilityResponseTestDataFactory {
                 .build();
     }
 
-    public static CombinedIdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedPostcodeNotMatchedResponse() {
+    public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedPostcodeNotMatchedResponse() {
         return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(EligibilityOutcome.CONFIRMED)
@@ -52,7 +52,7 @@ public class CombinedIdentityAndEligibilityResponseTestDataFactory {
                 .build();
     }
 
-    public static CombinedIdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedAddressNotMatchedResponse() {
+    public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedAddressNotMatchedResponse() {
         return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(EligibilityOutcome.CONFIRMED)
@@ -69,9 +69,9 @@ public class CombinedIdentityAndEligibilityResponseTestDataFactory {
                 .build();
     }
 
-    public static CombinedIdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedUCResponseWithMatches(VerificationOutcome mobileVerification,
-                                                                                                                    VerificationOutcome emailVerification,
-                                                                                                                    List<LocalDate> childrenDobs) {
+    public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedUCResponseWithMatches(VerificationOutcome mobileVerification,
+                                                                                                              VerificationOutcome emailVerification,
+                                                                                                              List<LocalDate> childrenDobs) {
         return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(EligibilityOutcome.CONFIRMED)
@@ -88,11 +88,11 @@ public class CombinedIdentityAndEligibilityResponseTestDataFactory {
                 .build();
     }
 
-    public static CombinedIdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches() {
-        return anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches(MAGGIE_AND_LISA_DOBS);
+    public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedUCResponseWithAllMatches() {
+        return anIdMatchedEligibilityConfirmedUCResponseWithAllMatches(MAGGIE_AND_LISA_DOBS);
     }
 
-    public static CombinedIdentityAndEligibilityResponse anIdentityMatchedEligibilityConfirmedUCResponseWithAllMatches(List<LocalDate> childrenDobs) {
+    public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedUCResponseWithAllMatches(List<LocalDate> childrenDobs) {
         return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(EligibilityOutcome.CONFIRMED)

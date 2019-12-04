@@ -6,7 +6,7 @@ import org.springframework.http.HttpHeaders;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static uk.gov.dhsc.htbhf.dwp.testhelper.TestConstants.*;
+import static uk.gov.dhsc.htbhf.TestConstants.*;
 
 public class HttpRequestTestDataFactory {
 
