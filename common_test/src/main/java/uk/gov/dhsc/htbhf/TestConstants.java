@@ -57,6 +57,7 @@ public class TestConstants {
     public static final List<LocalDate> SINGLE_SIX_MONTH_OLD = singletonList(EXACTLY_SIX_MONTH_OLD);
     public static final List<LocalDate> TWO_CHILDREN_UNDER_ONE = List.of(EXACTLY_SIX_MONTH_OLD, EXACTLY_SIX_MONTH_OLD);
     public static final List<LocalDate> TWO_CHILDREN = asList(EXACTLY_SIX_MONTH_OLD, EXACTLY_THREE_YEAR_OLD);
+    public static final List<LocalDate> TWO_CHILDREN_BORN_AT_START_OF_MONTH = asList(SIX_MONTH_OLD, THREE_YEAR_OLD);
     public static final List<LocalDate> TWO_CHILDREN_BETWEEN_ONE_AND_FOUR = List.of(LISA_DATE_OF_BIRTH, EXACTLY_THREE_YEAR_OLD);
     public static final List<LocalDate> SINGLE_THREE_YEAR_OLD = singletonList(EXACTLY_THREE_YEAR_OLD);
     public static final List<LocalDate> ONE_CHILD_FOUR_YEARS_OLD = singletonList(BART_DATE_OF_BIRTH);
