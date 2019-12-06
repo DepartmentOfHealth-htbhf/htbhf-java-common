@@ -10,6 +10,7 @@ public enum QualifyingBenefits {
     INCOME_SUPPORT,
     JOBSEEKERS_ALLOWANCE,
     PENSION_CREDIT,
+    CHILD_TAX_CREDIT,
     NOT_SET;
 
     @JsonValue
