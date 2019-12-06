@@ -23,3 +23,9 @@ common_test/out/
 common_logging/out/
 common_dwp_api/out/
 common_dwp_api_test/out/
+
+### Eclipse ###
+**/.settings/
+**/.classpath
+**/.project
+**/bin
