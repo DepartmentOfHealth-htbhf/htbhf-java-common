@@ -1,65 +1,65 @@
-package uk.gov.dhsc.htbhf.dwp.testhelper.v2;
+package uk.gov.dhsc.htbhf.dwp.testhelper;
 
-import uk.gov.dhsc.htbhf.dwp.model.v2.PersonDTOV2;
+import uk.gov.dhsc.htbhf.dwp.model.PersonDTO;
 
 import java.time.LocalDate;
 
 import static uk.gov.dhsc.htbhf.TestConstants.*;
 
 @SuppressWarnings("PMD.TooManyMethods")
-public class PersonDTOV2TestDataFactory {
+public class PersonDTOTestDataFactory {
 
-    public static PersonDTOV2 aValidPersonDTOV2() {
+    public static PersonDTO aValidPersonDTO() {
         return validPersonBuilder().build();
     }
 
-    public static PersonDTOV2 aPersonDTOV2WithSurname(String surname) {
+    public static PersonDTO aPersonDTOWithSurname(String surname) {
         return validPersonBuilder().surname(surname).build();
     }
 
-    public static PersonDTOV2 aPersonDTOV2WithNino(String nino) {
+    public static PersonDTO aPersonDTOWithNino(String nino) {
         return validPersonBuilder().nino(nino).build();
     }
 
-    public static PersonDTOV2 aPersonDTOV2WithSurnameAndNino(String surname, String nino) {
+    public static PersonDTO aPersonDTOWithSurnameAndNino(String surname, String nino) {
         return validPersonBuilder().surname(surname).nino(nino).build();
     }
 
-    public static PersonDTOV2 aPersonDTOV2WithSurnameAndMobile(String surname, String mobile) {
+    public static PersonDTO aPersonDTOWithSurnameAndMobile(String surname, String mobile) {
         return validPersonBuilder().surname(surname).mobilePhoneNumber(mobile).build();
     }
 
-    public static PersonDTOV2 aPersonDTOV2WithSurnameAndEmail(String surname, String email) {
+    public static PersonDTO aPersonDTOWithSurnameAndEmail(String surname, String email) {
         return validPersonBuilder().surname(surname).emailAddress(email).build();
     }
 
-    public static PersonDTOV2 aPersonDTOV2WithPostcode(String postcode) {
+    public static PersonDTO aPersonDTOWithPostcode(String postcode) {
         return validPersonBuilder().postcode(postcode).build();
     }
 
-    public static PersonDTOV2 aPersonDTOV2WithEmailAddress(String emailAddress) {
+    public static PersonDTO aPersonDTOWithEmailAddress(String emailAddress) {
         return validPersonBuilder().emailAddress(emailAddress).build();
     }
 
-    public static PersonDTOV2 aPersonDTOV2WithMobilePhoneNumber(String mobilePhoneNumber) {
+    public static PersonDTO aPersonDTOWithMobilePhoneNumber(String mobilePhoneNumber) {
         return validPersonBuilder().mobilePhoneNumber(mobilePhoneNumber).build();
     }
 
-    public static PersonDTOV2 aPersonDTOV2WithDateOfBirth(LocalDate dateOfBirth) {
+    public static PersonDTO aPersonDTOWithDateOfBirth(LocalDate dateOfBirth) {
         return validPersonBuilder().dateOfBirth(dateOfBirth).build();
     }
 
-    public static PersonDTOV2 aPersonDTOV2WithPregnantDependantDob(LocalDate dateOfBirth) {
+    public static PersonDTO aPersonDTOWithPregnantDependantDob(LocalDate dateOfBirth) {
         return validPersonBuilder().pregnantDependentDob(dateOfBirth).build();
     }
 
-    public static PersonDTOV2 aPersonDTOV2WithAddressLine1(String addressLine1) {
+    public static PersonDTO aPersonDTOWithAddressLine1(String addressLine1) {
         return validPersonBuilder().addressLine1(addressLine1).build();
     }
 
-    public static PersonDTOV2 aValidPersonDTOV2WithMandatoryFieldsOnly() {
-        return PersonDTOV2.builder()
-                .nino(HOMER_NINO_V2)
+    public static PersonDTO aValidPersonDTOWithMandatoryFieldsOnly() {
+        return PersonDTO.builder()
+                .nino(HOMER_NINO)
                 .surname(SIMPSON_SURNAME)
                 .addressLine1(SIMPSONS_ADDRESS_LINE_1)
                 .postcode(SIMPSONS_POSTCODE)
@@ -67,9 +67,9 @@ public class PersonDTOV2TestDataFactory {
                 .build();
     }
 
-    private static PersonDTOV2.PersonDTOV2Builder validPersonBuilder() {
-        return PersonDTOV2.builder()
-                .nino(HOMER_NINO_V2)
+    private static PersonDTO.PersonDTOBuilder validPersonBuilder() {
+        return PersonDTO.builder()
+                .nino(HOMER_NINO)
                 .surname(SIMPSON_SURNAME)
                 .addressLine1(SIMPSONS_ADDRESS_LINE_1)
                 .postcode(SIMPSONS_POSTCODE)

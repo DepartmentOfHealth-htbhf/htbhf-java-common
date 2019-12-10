@@ -1,4 +1,4 @@
-package uk.gov.dhsc.htbhf.dwp.model.v2;
+package uk.gov.dhsc.htbhf.dwp.model;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,35 +10,35 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 
 import static uk.gov.dhsc.htbhf.assertions.ConstraintViolationAssert.assertThat;
-import static uk.gov.dhsc.htbhf.dwp.testhelper.v2.PersonDTOV2TestDataFactory.*;
+import static uk.gov.dhsc.htbhf.dwp.testhelper.PersonDTOTestDataFactory.*;
 
-class PersonDTOV2Test extends AbstractValidationTest {
+class PersonDTOTest extends AbstractValidationTest {
 
     @Test
     void shouldSuccessfullyValidatePersonWithMandatoryFieldsOnly() {
-        PersonDTOV2 personDTOV2 = aValidPersonDTOV2WithMandatoryFieldsOnly();
-        Set<ConstraintViolation<PersonDTOV2>> violations = validator.validate(personDTOV2);
+        PersonDTO personDTO = aValidPersonDTOWithMandatoryFieldsOnly();
+        Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
         assertThat(violations).hasNoViolations();
     }
 
     @Test
     void shouldSuccessfullyValidatePersonWithAllFields() {
-        PersonDTOV2 personDTOV2 = aValidPersonDTOV2();
-        Set<ConstraintViolation<PersonDTOV2>> violations = validator.validate(personDTOV2);
+        PersonDTO personDTO = aValidPersonDTO();
+        Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
         assertThat(violations).hasNoViolations();
     }
 
     @Test
     void shouldFailValidationWithMissingSurname() {
-        PersonDTOV2 personDTOV2 = aPersonDTOV2WithSurname(null);
-        Set<ConstraintViolation<PersonDTOV2>> violations = validator.validate(personDTOV2);
+        PersonDTO personDTO = aPersonDTOWithSurname(null);
+        Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
         assertThat(violations).hasSingleConstraintViolation("must not be null", "surname");
     }
 
     @Test
     void shouldFailValidationWithMissingNino() {
-        PersonDTOV2 personDTOV2 = aPersonDTOV2WithNino(null);
-        Set<ConstraintViolation<PersonDTOV2>> violations = validator.validate(personDTOV2);
+        PersonDTO personDTO = aPersonDTOWithNino(null);
+        Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
         assertThat(violations).hasSingleConstraintViolation("must not be null", "nino");
     }
 
@@ -53,30 +53,30 @@ class PersonDTOV2Test extends AbstractValidationTest {
             "ZZ999999D"
     })
     void shouldFailValidationWithInvalidNino(String nino) {
-        PersonDTOV2 personDTOV2 = aPersonDTOV2WithNino(nino);
-        Set<ConstraintViolation<PersonDTOV2>> violations = validator.validate(personDTOV2);
+        PersonDTO personDTO = aPersonDTOWithNino(nino);
+        Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
         assertThat(violations).hasSingleConstraintViolation(
                 "must match \"^(?!BG|GB|NK|KN|TN|NT|ZZ)[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z](\\d{6})[A-D]$\"", "nino");
     }
 
     @Test
     void shouldFailValidationWithMissingDateOfBirth() {
-        PersonDTOV2 personDTOV2 = aPersonDTOV2WithDateOfBirth(null);
-        Set<ConstraintViolation<PersonDTOV2>> violations = validator.validate(personDTOV2);
+        PersonDTO personDTO = aPersonDTOWithDateOfBirth(null);
+        Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
         assertThat(violations).hasSingleConstraintViolation("must not be null", "dateOfBirth");
     }
 
     @Test
     void shouldFailValidationWithDateOfBirthInFuture() {
-        PersonDTOV2 personDTOV2 = aPersonDTOV2WithDateOfBirth(LocalDate.now().plusYears(1));
-        Set<ConstraintViolation<PersonDTOV2>> violations = validator.validate(personDTOV2);
+        PersonDTO personDTO = aPersonDTOWithDateOfBirth(LocalDate.now().plusYears(1));
+        Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
         assertThat(violations).hasSingleConstraintViolation("must be a past date", "dateOfBirth");
     }
 
     @Test
     void shouldFailValidationWithMissingAddressLine1() {
-        PersonDTOV2 personDTOV2 = aPersonDTOV2WithAddressLine1(null);
-        Set<ConstraintViolation<PersonDTOV2>> violations = validator.validate(personDTOV2);
+        PersonDTO personDTO = aPersonDTOWithAddressLine1(null);
+        Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
         assertThat(violations).hasSingleConstraintViolation("must not be null", "addressLine1");
     }
 
@@ -88,8 +88,8 @@ class PersonDTOV2Test extends AbstractValidationTest {
             "11AA21",
     })
     void shouldFailValidationWithInvalidPostcode(String postcode) {
-        PersonDTOV2 personDTOV2 = aPersonDTOV2WithPostcode(postcode);
-        Set<ConstraintViolation<PersonDTOV2>> violations = validator.validate(personDTOV2);
+        PersonDTO personDTO = aPersonDTOWithPostcode(postcode);
+        Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
         assertThat(violations).hasSingleConstraintViolation(
                 "must match \"^(GIR ?0AA|[A-PR-UWYZ]([0-9]{1,2}|([A-HK-Y][0-9]([0-9ABEHMNPRV-Y])?)|[0-9][A-HJKPS-UW]) ?[0-9][ABD-HJLNP-UW-Z]{2})$\"",
                 "postcode");
@@ -97,8 +97,8 @@ class PersonDTOV2Test extends AbstractValidationTest {
 
     @Test
     void shouldFailValidationWithMissingPostcode() {
-        PersonDTOV2 personDTOV2 = aPersonDTOV2WithPostcode(null);
-        Set<ConstraintViolation<PersonDTOV2>> violations = validator.validate(personDTOV2);
+        PersonDTO personDTO = aPersonDTOWithPostcode(null);
+        Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
         assertThat(violations).hasSingleConstraintViolation("must not be null", "postcode");
     }
 
@@ -109,8 +109,8 @@ class PersonDTOV2Test extends AbstractValidationTest {
             "@domain.com"
     })
     void shouldFailValidationWithInvalidEmailAddress(String emailAddress) {
-        PersonDTOV2 personDTOV2 = aPersonDTOV2WithEmailAddress(emailAddress);
-        Set<ConstraintViolation<PersonDTOV2>> violations = validator.validate(personDTOV2);
+        PersonDTO personDTO = aPersonDTOWithEmailAddress(emailAddress);
+        Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
         assertThat(violations).hasSingleConstraintViolation(
                 "must match \"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$)\"",
                 "emailAddress");
@@ -123,8 +123,8 @@ class PersonDTOV2Test extends AbstractValidationTest {
             "@domain.com"
     })
     void shouldFailValidationWithInvalidMobilePhoneNumber(String mobilePhoneNumber) {
-        PersonDTOV2 personDTOV2 = aPersonDTOV2WithMobilePhoneNumber(mobilePhoneNumber);
-        Set<ConstraintViolation<PersonDTOV2>> violations = validator.validate(personDTOV2);
+        PersonDTO personDTO = aPersonDTOWithMobilePhoneNumber(mobilePhoneNumber);
+        Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
         assertThat(violations).hasSingleConstraintViolation(
                 "must match \"^\\+44\\d{9,10}$\"",
                 "mobilePhoneNumber");
@@ -132,8 +132,8 @@ class PersonDTOV2Test extends AbstractValidationTest {
 
     @Test
     void shouldFailValidationWithPregnantDependantDobInFuture() {
-        PersonDTOV2 personDTOV2 = aPersonDTOV2WithPregnantDependantDob(LocalDate.now().plusYears(1));
-        Set<ConstraintViolation<PersonDTOV2>> violations = validator.validate(personDTOV2);
+        PersonDTO personDTO = aPersonDTOWithPregnantDependantDob(LocalDate.now().plusYears(1));
+        Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
         assertThat(violations).hasSingleConstraintViolation("must be a past date", "pregnantDependentDob");
     }
 

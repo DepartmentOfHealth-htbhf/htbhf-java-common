@@ -1,4 +1,4 @@
-package uk.gov.dhsc.htbhf.dwp.model.v2;
+package uk.gov.dhsc.htbhf.dwp.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,12 +13,12 @@ import javax.validation.constraints.NotNull;
 @Data
 @Builder
 @AllArgsConstructor(onConstructor_ = {@JsonCreator})
-public class DWPEligibilityRequestV2 {
+public class DWPEligibilityRequest {
 
     @NotNull
     @Valid
     @JsonProperty("person")
-    private PersonDTOV2 person;
+    private PersonDTO person;
 
     @NotNull
     @JsonProperty("eligibilityEndDate")

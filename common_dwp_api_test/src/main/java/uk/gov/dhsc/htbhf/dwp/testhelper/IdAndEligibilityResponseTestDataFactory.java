@@ -1,6 +1,6 @@
-package uk.gov.dhsc.htbhf.dwp.testhelper.v2;
+package uk.gov.dhsc.htbhf.dwp.testhelper;
 
-import uk.gov.dhsc.htbhf.dwp.model.v2.*;
+import uk.gov.dhsc.htbhf.dwp.model.*;
 
 import java.time.LocalDate;
 import java.util.List;
