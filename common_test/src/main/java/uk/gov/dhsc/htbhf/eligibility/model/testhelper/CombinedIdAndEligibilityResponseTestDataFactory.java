@@ -111,6 +111,14 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
                 .build();
     }
 
+    public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedUCResponseWithAllMatches(List<LocalDate> childrenDobs,
+                                                                                                                 EligibilityOutcome eligibilityOutcome) {
+        return defaultBuilderWithEligibilityConfirmedUCResponseWithAllMatches()
+                .dobOfChildrenUnder4(childrenDobs)
+                .eligibilityStatus(eligibilityOutcome)
+                .build();
+    }
+
     private static CombinedIdentityAndEligibilityResponse.CombinedIdentityAndEligibilityResponseBuilder defaultBuilderWithIdentityNotMatchedValues() {
         return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.NOT_MATCHED)
