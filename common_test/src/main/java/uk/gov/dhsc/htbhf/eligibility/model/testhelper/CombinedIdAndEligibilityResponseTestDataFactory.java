@@ -111,12 +111,29 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
                 .build();
     }
 
-    public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedUCResponseWithAllMatches(List<LocalDate> childrenDobs,
-                                                                                                                 EligibilityOutcome eligibilityOutcome) {
-        return defaultBuilderWithEligibilityConfirmedUCResponseWithAllMatches()
-                .dobOfChildrenUnder4(childrenDobs)
-                .eligibilityStatus(eligibilityOutcome)
-                .build();
+    /**
+     * Creates a {@link CombinedIdentityAndEligibilityResponse} with values based on the passed in eligibility outcome.
+     * An eligibility outcome of CONFIRMED will create a response with id matched and all other matches set to CONFIRMED,
+     * NOT_CONFIRMED will create a response with id matched and all other matches set to NOT_CONFIRMED,
+     * NOT_SET will create a response with id not matched and all other matches set to NOT_SET.
+     * Note, the children's date of births are only set if the eligibility outcome is CONFIRMED.
+     *
+     * @param childrenDobs the children's dates of birth
+     * @param eligibilityOutcome the eligibility outcome
+     * @return a {@link CombinedIdentityAndEligibilityResponse}
+     */
+    public static CombinedIdentityAndEligibilityResponse aCombinedIdentityAndEligibilityResponse(List<LocalDate> childrenDobs,
+                                                                                                 EligibilityOutcome eligibilityOutcome) {
+        switch (eligibilityOutcome) {
+            case CONFIRMED:
+                return anIdMatchedEligibilityConfirmedUCResponseWithAllMatches(childrenDobs);
+            case NOT_CONFIRMED:
+                return anIdMatchedEligibilityNotConfirmedResponse();
+            case NOT_SET:
+                return anIdMatchFailedResponse();
+            default:
+                throw new IllegalArgumentException("No response defined for eligibility outcome: " + eligibilityOutcome.name());
+        }
     }
 
     private static CombinedIdentityAndEligibilityResponse.CombinedIdentityAndEligibilityResponseBuilder defaultBuilderWithIdentityNotMatchedValues() {
