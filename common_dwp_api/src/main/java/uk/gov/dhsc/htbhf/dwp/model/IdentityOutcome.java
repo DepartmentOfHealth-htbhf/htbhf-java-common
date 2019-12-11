@@ -1,13 +1,12 @@
-package uk.gov.dhsc.htbhf.dwp.model.v2;
+package uk.gov.dhsc.htbhf.dwp.model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Locale;
 
-public enum EligibilityOutcome {
-    CONFIRMED,
-    NOT_CONFIRMED,
-    NOT_SET;
+public enum IdentityOutcome {
+    MATCHED,
+    NOT_MATCHED;
 
     @JsonValue
     public String getResponseValue() {

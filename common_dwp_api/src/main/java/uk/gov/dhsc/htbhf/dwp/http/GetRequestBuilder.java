@@ -1,14 +1,14 @@
-package uk.gov.dhsc.htbhf.dwp.http.v2;
+package uk.gov.dhsc.htbhf.dwp.http;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import uk.gov.dhsc.htbhf.dwp.model.v2.DWPEligibilityRequestV2;
-import uk.gov.dhsc.htbhf.dwp.model.v2.PersonDTOV2;
+import uk.gov.dhsc.htbhf.dwp.model.DWPEligibilityRequest;
+import uk.gov.dhsc.htbhf.dwp.model.PersonDTO;
 
 import java.time.LocalDate;
 
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
-import static uk.gov.dhsc.htbhf.dwp.http.v2.HeaderName.*;
+import static uk.gov.dhsc.htbhf.dwp.http.HeaderName.*;
 
 /**
  * Utility used to build up a GET request with headers for calling the DWP API.
@@ -23,8 +23,8 @@ public class GetRequestBuilder {
      * @param eligibilityRequest The request to take values from and add as headers to the request.
      * @return The built HTTP entity.
      */
-    public HttpEntity buildRequestWithHeaders(DWPEligibilityRequestV2 eligibilityRequest) {
-        PersonDTOV2 person = eligibilityRequest.getPerson();
+    public HttpEntity buildRequestWithHeaders(DWPEligibilityRequest eligibilityRequest) {
+        PersonDTO person = eligibilityRequest.getPerson();
         HttpHeaders httpHeaders = new HttpHeaders();
         addHeaderIfNotNull(httpHeaders, SURNAME, person.getSurname());
         addHeaderIfNotNull(httpHeaders, NINO, person.getNino());

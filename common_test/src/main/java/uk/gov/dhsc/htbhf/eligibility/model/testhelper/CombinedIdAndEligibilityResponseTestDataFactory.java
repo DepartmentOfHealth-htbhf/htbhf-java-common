@@ -1,6 +1,6 @@
 package uk.gov.dhsc.htbhf.eligibility.model.testhelper;
 
-import uk.gov.dhsc.htbhf.dwp.model.v2.*;
+import uk.gov.dhsc.htbhf.dwp.model.*;
 import uk.gov.dhsc.htbhf.eligibility.model.CombinedIdentityAndEligibilityResponse;
 
 import java.time.LocalDate;

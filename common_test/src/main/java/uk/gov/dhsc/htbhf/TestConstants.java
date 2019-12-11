@@ -24,10 +24,8 @@ public class TestConstants {
     public static final String HOMER_MOBILE = "+447700900000";
     public static final String MARGE_MOBILE = "+447700900001";
     //NINOs
-    public static final String MARGE_NINO = "EB123456D";
-    public static final String HOMER_NINO_V1 = "EE123456C";
-    public static final String HOMER_NINO_V2 = "MC123456C";
-    public static final String MARGE_NINO_V2 = "MC123456A";
+    public static final String HOMER_NINO = "MC123456C";
+    public static final String MARGE_NINO = "MC123456A";
     //Address
     public static final String SIMPSONS_ADDRESS_LINE_1 = "742 Evergreen Terrace";
     public static final String SIMPSONS_ADDRESS_LINE_2 = "Mystery Spot";

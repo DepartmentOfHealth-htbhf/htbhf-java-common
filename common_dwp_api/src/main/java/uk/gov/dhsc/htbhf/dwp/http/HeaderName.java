@@ -1,4 +1,4 @@
-package uk.gov.dhsc.htbhf.dwp.http.v2;
+package uk.gov.dhsc.htbhf.dwp.http;
 
 public enum HeaderName {
     SURNAME("surname"),

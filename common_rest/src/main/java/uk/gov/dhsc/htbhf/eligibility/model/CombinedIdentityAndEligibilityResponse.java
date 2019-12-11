@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
-import uk.gov.dhsc.htbhf.dwp.model.v2.*;
+import uk.gov.dhsc.htbhf.dwp.model.*;
 
 import java.time.LocalDate;
 import java.util.List;

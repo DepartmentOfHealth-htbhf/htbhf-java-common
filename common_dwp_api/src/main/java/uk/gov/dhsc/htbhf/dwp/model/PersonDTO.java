@@ -1,4 +1,4 @@
-package uk.gov.dhsc.htbhf.dwp.model.v2;
+package uk.gov.dhsc.htbhf.dwp.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,7 +14,7 @@ import javax.validation.constraints.Pattern;
 @Data
 @Builder
 @AllArgsConstructor(onConstructor_ = {@JsonCreator})
-public class PersonDTOV2 {
+public class PersonDTO {
 
     @NotNull
     @JsonProperty("surname")

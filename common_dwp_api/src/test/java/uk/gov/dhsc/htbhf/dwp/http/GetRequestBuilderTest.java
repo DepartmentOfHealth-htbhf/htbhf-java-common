@@ -1,19 +1,19 @@
-package uk.gov.dhsc.htbhf.dwp.http.v2;
+package uk.gov.dhsc.htbhf.dwp.http;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import uk.gov.dhsc.htbhf.dwp.model.v2.DWPEligibilityRequestV2;
-import uk.gov.dhsc.htbhf.dwp.model.v2.PersonDTOV2;
-import uk.gov.dhsc.htbhf.dwp.testhelper.v2.PersonDTOV2TestDataFactory;
+import uk.gov.dhsc.htbhf.dwp.model.DWPEligibilityRequest;
+import uk.gov.dhsc.htbhf.dwp.model.PersonDTO;
+import uk.gov.dhsc.htbhf.dwp.testhelper.PersonDTOTestDataFactory;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.gov.dhsc.htbhf.TestConstants.*;
-import static uk.gov.dhsc.htbhf.dwp.testhelper.v2.DWPEligibilityRequestV2TestDataFactory.aValidDWPEligibilityRequestV2;
-import static uk.gov.dhsc.htbhf.dwp.testhelper.v2.DWPEligibilityRequestV2TestDataFactory.aValidDWPEligibilityRequestV2WithPerson;
+import static uk.gov.dhsc.htbhf.dwp.testhelper.DWPEligibilityRequestTestDataFactory.aValidDWPEligibilityRequest;
+import static uk.gov.dhsc.htbhf.dwp.testhelper.DWPEligibilityRequestTestDataFactory.aValidDWPEligibilityRequestWithPerson;
 
 class GetRequestBuilderTest {
 
@@ -22,7 +22,7 @@ class GetRequestBuilderTest {
     @Test
     void buildRequestWithHeaders() {
         //Given
-        DWPEligibilityRequestV2 request = aValidDWPEligibilityRequestV2();
+        DWPEligibilityRequest request = aValidDWPEligibilityRequest();
         //When
         HttpEntity httpEntity = builder.buildRequestWithHeaders(request);
         //Then
@@ -37,8 +37,8 @@ class GetRequestBuilderTest {
     @Test
     void buildRequestWithMissingHeader() {
         //Given
-        PersonDTOV2 person = PersonDTOV2TestDataFactory.aPersonDTOV2WithEmailAddress(null);
-        DWPEligibilityRequestV2 request = aValidDWPEligibilityRequestV2WithPerson(person);
+        PersonDTO person = PersonDTOTestDataFactory.aPersonDTOWithEmailAddress(null);
+        DWPEligibilityRequest request = aValidDWPEligibilityRequestWithPerson(person);
         //When
         HttpEntity httpEntity = builder.buildRequestWithHeaders(request);
         //Then
@@ -53,8 +53,8 @@ class GetRequestBuilderTest {
     @Test
     void buildRequestWithMissingDateHeader() {
         //Given
-        PersonDTOV2 person = PersonDTOV2TestDataFactory.aPersonDTOV2WithPregnantDependantDob(null);
-        DWPEligibilityRequestV2 request = aValidDWPEligibilityRequestV2WithPerson(person);
+        PersonDTO person = PersonDTOTestDataFactory.aPersonDTOWithPregnantDependantDob(null);
+        DWPEligibilityRequest request = aValidDWPEligibilityRequestWithPerson(person);
         //When
         HttpEntity httpEntity = builder.buildRequestWithHeaders(request);
         //Then
@@ -70,7 +70,7 @@ class GetRequestBuilderTest {
         LocalDate eligibilityEndDate = LocalDate.now().plusDays(28);
         String eligibilityEndDateString = DateTimeFormatter.ISO_LOCAL_DATE.format(eligibilityEndDate);
         assertThat(headers.getFirst("surname")).isEqualTo(SIMPSON_SURNAME);
-        assertThat(headers.getFirst("nino")).isEqualTo(HOMER_NINO_V2);
+        assertThat(headers.getFirst("nino")).isEqualTo(HOMER_NINO);
         assertThat(headers.getFirst("dateOfBirth")).isEqualTo(HOMER_DATE_OF_BIRTH_STRING);
         assertThat(headers.getFirst("eligibilityEndDate")).isEqualTo(eligibilityEndDateString);
         assertThat(headers.getFirst("addressLine1")).isEqualTo(SIMPSONS_ADDRESS_LINE_1);

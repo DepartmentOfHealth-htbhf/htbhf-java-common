@@ -1,4 +1,4 @@
-package uk.gov.dhsc.htbhf.dwp.testhelper.v2;
+package uk.gov.dhsc.htbhf.dwp.testhelper;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,7 +11,7 @@ import static uk.gov.dhsc.htbhf.TestConstants.*;
 public class HttpRequestTestDataFactory {
 
     public static HttpEntity<Void> aValidEligibilityHttpEntity() {
-        return buildHttpEntityWithNino(HOMER_NINO_V2, SIMPSON_SURNAME);
+        return buildHttpEntityWithNino(HOMER_NINO, SIMPSON_SURNAME);
     }
 
     public static HttpEntity<Void> anEligibilityHttpEntityWithNinoAndSurname(String nino, String surname) {
