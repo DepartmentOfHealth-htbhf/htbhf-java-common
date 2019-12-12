@@ -17,12 +17,7 @@ manifest/src
 *.iws
 *.iml
 *.ipr
-/out/
-common_rest/out/
-common_test/out/
-common_logging/out/
-common_dwp_api/out/
-common_dwp_api_test/out/
+**/out/
 
 ### Eclipse ###
 **/.settings/
