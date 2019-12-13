@@ -19,6 +19,10 @@ public class ChildDobGenerator {
      * ({@link #CHILDREN_UNDER_ONE_NINO_POSITION} and {@link #CHILDREN_UNDER_FOUR_NINO_POSITION}).
      * The number of children under one is given in the first numeric digit and is subtracted from the total number of children under 4
      * (the second numeric digit) to determine the number of three-year-olds.
+     * Note that the number of under 4's (in the second digit) is a total - it includes the number of under 1's.
+     * Note also that if more U1's are specified than U4's then the number of U1's is overridden by the number of U4's.
+     * Thus AA130000A will result in one child under 1 and two children between 1-3 (for a total of 3 children),
+     * while AA310000A will result in a single child under 1 (the total number of children under 4 overrides the number of children under 1).
      *
      * @param nino the NINO used to derive the desired number and ages of children.
      * @return a list of dates of birth - either six months or three years old.
@@ -31,9 +35,10 @@ public class ChildDobGenerator {
 
     /**
      * Creates a list of dates of birth. All dates are either the first of the month six months ago (for under 1's),
-     * or the first of the month three years ago (for under 4's).
+     * or the first of the month three years ago (for under 4's). If more children under one are specified than children under 4
+     * then the number of children under 4 is used for both values.
      *
-     * @param numberOfChildrenUnderOne  the number of six-month old dates to include in the response
+     * @param numberOfChildrenUnderOne  the number of six-month old dates to include in the response.
      * @param numberOfChildrenUnderFour the total number of children. The number of three year olds is derived by subtracting the number of children under
      *                                  one from this.
      * @return a list of dates of birth - either six months or three years old.
