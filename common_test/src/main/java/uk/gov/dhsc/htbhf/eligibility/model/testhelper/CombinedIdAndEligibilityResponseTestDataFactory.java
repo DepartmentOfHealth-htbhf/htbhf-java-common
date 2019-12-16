@@ -70,6 +70,23 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
                 .build();
     }
 
+    public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedFullAddressNotMatchedResponse() {
+        return CombinedIdentityAndEligibilityResponse.builder()
+                .identityStatus(IdentityOutcome.MATCHED)
+                .eligibilityStatus(EligibilityOutcome.CONFIRMED)
+                .qualifyingBenefits(QualifyingBenefits.NOT_SET)
+                .mobilePhoneMatch(VerificationOutcome.NOT_SET)
+                .emailAddressMatch(VerificationOutcome.NOT_SET)
+                .addressLine1Match(VerificationOutcome.NOT_MATCHED)
+                .postcodeMatch(VerificationOutcome.NOT_MATCHED)
+                .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
+                .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .hmrcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .dobOfChildrenUnder4(emptyList())
+                .deathVerificationFlag(DeathVerificationFlag.N_A)
+                .build();
+    }
+
     public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedUCResponseWithMatches(VerificationOutcome mobileVerification,
                                                                                                               VerificationOutcome emailVerification,
                                                                                                               List<LocalDate> childrenDobs) {
