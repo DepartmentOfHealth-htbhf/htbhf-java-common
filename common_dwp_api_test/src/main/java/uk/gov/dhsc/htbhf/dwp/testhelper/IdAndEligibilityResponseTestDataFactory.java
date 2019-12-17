@@ -49,7 +49,7 @@ public class IdAndEligibilityResponseTestDataFactory {
                 .build();
     }
 
-    public static IdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedAddressNotMatchedResponse() {
+    public static IdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedAddressLine1NotMatchedResponse() {
         return IdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(EligibilityOutcome.CONFIRMED)
@@ -58,6 +58,22 @@ public class IdAndEligibilityResponseTestDataFactory {
                 .emailAddressMatch(VerificationOutcome.NOT_SET)
                 .addressLine1Match(VerificationOutcome.NOT_MATCHED)
                 .postcodeMatch(VerificationOutcome.MATCHED)
+                .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
+                .householdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
+                .dobOfChildrenUnder4(emptyList())
+                .deathVerificationFlag(DeathVerificationFlag.N_A)
+                .build();
+    }
+
+    public static IdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedFullAddressNotMatchedResponse() {
+        return IdentityAndEligibilityResponse.builder()
+                .identityStatus(IdentityOutcome.MATCHED)
+                .eligibilityStatus(EligibilityOutcome.CONFIRMED)
+                .qualifyingBenefits(QualifyingBenefits.NOT_SET)
+                .mobilePhoneMatch(VerificationOutcome.NOT_SET)
+                .emailAddressMatch(VerificationOutcome.NOT_SET)
+                .addressLine1Match(VerificationOutcome.NOT_MATCHED)
+                .postcodeMatch(VerificationOutcome.NOT_MATCHED)
                 .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
                 .householdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(emptyList())

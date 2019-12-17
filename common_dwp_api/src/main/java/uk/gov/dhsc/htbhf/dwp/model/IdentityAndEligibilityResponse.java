@@ -70,4 +70,24 @@ public class IdentityAndEligibilityResponse {
     public boolean isEligible() {
         return EligibilityOutcome.CONFIRMED == eligibilityStatus;
     }
+
+    /**
+     * Determine whether the address is fully matched or not.
+     *
+     * @return Whether the address is fully matched or not.
+     */
+    @JsonIgnore
+    public boolean isAddressMatched() {
+        return VerificationOutcome.MATCHED == addressLine1Match && VerificationOutcome.MATCHED == postcodeMatch;
+    }
+
+    /**
+     * Determine whether the address is mismatched or not.
+     *
+     * @return Whether the address is mismatched or not.
+     */
+    @JsonIgnore
+    public boolean isAddressMismatch() {
+        return !isAddressMatched();
+    }
 }
