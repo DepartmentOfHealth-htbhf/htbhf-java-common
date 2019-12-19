@@ -94,7 +94,7 @@ public class IdAndEligibilityResponseTestDataFactory {
                 .qualifyingBenefits(QualifyingBenefits.UNIVERSAL_CREDIT)
                 .householdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
-                .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
+                .pregnantChildDOBMatch(VerificationOutcome.NOT_SUPPLIED)
                 .dobOfChildrenUnder4(childrenDobs)
                 .build();
     }
