@@ -44,7 +44,7 @@ public class IdAndEligibilityResponseTestDataFactory {
                 .qualifyingBenefits(QualifyingBenefits.UNIVERSAL_CREDIT)
                 .householdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(MAGGIE_AND_LISA_DOBS)
-                .pregnantChildDOBMatch(VerificationOutcome.NOT_SUPPLIED)
+                .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .build();
     }
@@ -60,7 +60,7 @@ public class IdAndEligibilityResponseTestDataFactory {
                 .qualifyingBenefits(QualifyingBenefits.UNIVERSAL_CREDIT)
                 .householdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(MAGGIE_AND_LISA_DOBS)
-                .pregnantChildDOBMatch(VerificationOutcome.NOT_SUPPLIED)
+                .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .build();
     }
@@ -76,7 +76,7 @@ public class IdAndEligibilityResponseTestDataFactory {
                 .qualifyingBenefits(QualifyingBenefits.UNIVERSAL_CREDIT)
                 .householdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(MAGGIE_AND_LISA_DOBS)
-                .pregnantChildDOBMatch(VerificationOutcome.NOT_SUPPLIED)
+                .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .build();
     }
@@ -94,7 +94,7 @@ public class IdAndEligibilityResponseTestDataFactory {
                 .qualifyingBenefits(QualifyingBenefits.UNIVERSAL_CREDIT)
                 .householdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
-                .pregnantChildDOBMatch(VerificationOutcome.NOT_SUPPLIED)
+                .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
                 .dobOfChildrenUnder4(childrenDobs)
                 .build();
     }
