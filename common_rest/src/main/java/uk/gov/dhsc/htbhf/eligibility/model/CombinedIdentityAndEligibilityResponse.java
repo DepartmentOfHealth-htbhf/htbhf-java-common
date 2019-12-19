@@ -20,6 +20,9 @@ import java.util.List;
 @AllArgsConstructor(onConstructor_ = {@JsonCreator})
 public class CombinedIdentityAndEligibilityResponse {
 
+    @JsonProperty("identityStatus")
+    private final IdentityOutcome identityStatus;
+
     @JsonProperty("eligibilityStatus")
     private final EligibilityOutcome eligibilityStatus;
 
@@ -53,8 +56,6 @@ public class CombinedIdentityAndEligibilityResponse {
     @JsonProperty("dobOfChildrenUnder4")
     private final List<LocalDate> dobOfChildrenUnder4;
 
-    @JsonProperty("identityStatus")
-    private final IdentityOutcome identityStatus;
 
     /**
      * Determine whether the eligibility outcome is considered not eligible.
@@ -74,6 +75,16 @@ public class CombinedIdentityAndEligibilityResponse {
     @JsonIgnore
     public boolean isEligible() {
         return EligibilityOutcome.CONFIRMED == eligibilityStatus;
+    }
+
+    /**
+     * Determine whether the email and mobile phone are both matched.
+     *
+     * @return true if both mobilePhoneMatch and emailAddressMatch are {@link VerificationOutcome#MATCHED}, false otherwise.
+     */
+    @JsonIgnore
+    public boolean isEmailAndPhoneMatched() {
+        return mobilePhoneMatch == VerificationOutcome.MATCHED && emailAddressMatch == VerificationOutcome.MATCHED;
     }
 
 }
