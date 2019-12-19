@@ -87,6 +87,18 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
                 .build();
     }
 
+    public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedEmailNotMatchedResponse() {
+        return anIdMatchedEligibilityConfirmedUCResponseWithMatches(VerificationOutcome.MATCHED, VerificationOutcome.NOT_MATCHED, MAGGIE_AND_LISA_DOBS);
+    }
+
+    public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedPhoneNotMatchedResponse() {
+        return anIdMatchedEligibilityConfirmedUCResponseWithMatches(VerificationOutcome.NOT_MATCHED, VerificationOutcome.MATCHED, MAGGIE_AND_LISA_DOBS);
+    }
+
+    public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedEmailAndPhoneNotMatchedResponse() {
+        return anIdMatchedEligibilityConfirmedUCResponseWithMatches(VerificationOutcome.NOT_MATCHED, VerificationOutcome.NOT_MATCHED, MAGGIE_AND_LISA_DOBS);
+    }
+
     public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedUCResponseWithMatches(VerificationOutcome mobileVerification,
                                                                                                               VerificationOutcome emailVerification,
                                                                                                               List<LocalDate> childrenDobs) {
