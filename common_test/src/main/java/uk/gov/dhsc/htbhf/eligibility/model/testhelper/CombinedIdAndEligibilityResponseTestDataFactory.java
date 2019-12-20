@@ -113,7 +113,7 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
                 .dwpHouseholdIdentifier(DWP_HOUSEHOLD_IDENTIFIER)
                 .hmrcHouseholdIdentifier(HMRC_HOUSEHOLD_IDENTIFIER)
                 .dobOfChildrenUnder4(childrenDobs)
-                .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
+                .pregnantChildDOBMatch(VerificationOutcome.NOT_SUPPLIED)
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .build();
     }
