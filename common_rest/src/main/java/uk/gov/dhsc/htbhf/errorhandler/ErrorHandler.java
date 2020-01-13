@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import uk.gov.dhsc.htbhf.database.exception.EntityNotFoundException;
 import uk.gov.dhsc.htbhf.requestcontext.RequestContext;
 import uk.gov.dhsc.htbhf.requestcontext.RequestContextHolder;
 
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static uk.gov.dhsc.htbhf.errorhandler.ErrorMessage.INTERNAL_SERVER_ERROR_MESSAGE;
 import static uk.gov.dhsc.htbhf.errorhandler.ErrorMessage.UNREADABLE_ERROR_MESSAGE;
 import static uk.gov.dhsc.htbhf.errorhandler.ErrorMessage.VALIDATION_ERROR_MESSAGE;
@@ -39,6 +41,7 @@ import static uk.gov.dhsc.htbhf.logging.ExceptionDetailGenerator.constructExcept
 @ControllerAdvice
 @Slf4j
 @RequiredArgsConstructor
+@SuppressWarnings("PMD.ExcessiveImports")
 public class ErrorHandler extends ResponseEntityExceptionHandler {
 
     private final RequestContextHolder requestContextHolder;
@@ -126,6 +129,18 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
                 .build();
 
         return handleExceptionInternal(exception, body, new HttpHeaders(), INTERNAL_SERVER_ERROR, request);
+    }
+
+    @ExceptionHandler({EntityNotFoundException.class})
+    public ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException exception, WebRequest request) {
+        RequestContext requestContext = requestContextHolder.get();
+        ErrorResponse response = ErrorResponse.builder()
+                .requestId(requestContext.getRequestId())
+                .status(NOT_FOUND.value())
+                .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
+                .message(exception.getMessage())
+                .build();
+        return handleExceptionInternal(exception, response, new HttpHeaders(), NOT_FOUND, request);
     }
 
     @Override
