@@ -16,12 +16,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.context.request.WebRequest;
+import uk.gov.dhsc.htbhf.database.exception.EntityNotFoundException;
 import uk.gov.dhsc.htbhf.requestcontext.RequestContext;
 import uk.gov.dhsc.htbhf.requestcontext.RequestContextHolder;
 
 import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -139,6 +141,26 @@ class ErrorHandlerTest {
         assertThat(responseEntity.getBody()).isInstanceOf(ErrorResponse.class);
         ErrorResponse errorResponse = (ErrorResponse) responseEntity.getBody();
         assertThat(errorResponse.getRequestId()).isEqualTo(REQUEST_ID);
+        assertThat(errorResponse.getFieldErrors()).isNull();
+    }
+
+    @Test
+    void shouldHandleEntityNotFoundException() {
+        // Given
+        String message = "Unable to find claim with id; " + UUID.randomUUID().toString();
+        EntityNotFoundException exception = new EntityNotFoundException(message);
+        given(requestContextHolder.get()).willReturn(requestContext);
+        given(requestContext.getRequestId()).willReturn(REQUEST_ID);
+
+        //When
+        ResponseEntity<Object> responseEntity = handler.handleEntityNotFound(exception, webRequest);
+
+        //Then
+        assertThat(responseEntity).isNotNull();
+        assertThat(responseEntity.getBody()).isInstanceOf(ErrorResponse.class);
+        ErrorResponse errorResponse = (ErrorResponse) responseEntity.getBody();
+        assertThat(errorResponse.getRequestId()).isEqualTo(REQUEST_ID);
+        assertThat(errorResponse.getMessage()).isEqualTo(message);
         assertThat(errorResponse.getFieldErrors()).isNull();
     }
 
