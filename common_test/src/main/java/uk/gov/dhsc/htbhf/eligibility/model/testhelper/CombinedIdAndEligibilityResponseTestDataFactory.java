@@ -4,6 +4,7 @@ import uk.gov.dhsc.htbhf.dwp.model.*;
 import uk.gov.dhsc.htbhf.eligibility.model.CombinedIdentityAndEligibilityResponse;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -147,7 +148,7 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
      * NOT_SET will create a response with id not matched and all other matches set to NOT_SET.
      * Note, the children's date of births are only set if the eligibility outcome is CONFIRMED.
      *
-     * @param childrenDobs the children's dates of birth
+     * @param childrenDobs       the children's dates of birth
      * @param eligibilityOutcome the eligibility outcome
      * @return a {@link CombinedIdentityAndEligibilityResponse}
      */
@@ -163,6 +164,20 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
             default:
                 throw new IllegalArgumentException("No response defined for eligibility outcome: " + eligibilityOutcome.name());
         }
+    }
+
+    public static CombinedIdentityAndEligibilityResponse aCombinedIdentityAndEligibilityResponseWithOverride(EligibilityOutcome overrideEligibilityStatus) {
+        return CombinedIdentityAndEligibilityResponse.builder()
+                .identityStatus(IdentityOutcome.MATCHED)
+                .eligibilityStatus(overrideEligibilityStatus)
+                .addressLine1Match(VerificationOutcome.NOT_SET)
+                .deathVerificationFlag(DeathVerificationFlag.N_A)
+                .dobOfChildrenUnder4(Collections.emptyList())
+                .emailAddressMatch(VerificationOutcome.NOT_SET)
+                .mobilePhoneMatch(VerificationOutcome.NOT_SET)
+                .postcodeMatch(VerificationOutcome.NOT_SET)
+                .pregnantChildDOBMatch(VerificationOutcome.MATCHED)
+                .build();
     }
 
     private static CombinedIdentityAndEligibilityResponse.CombinedIdentityAndEligibilityResponseBuilder defaultBuilderWithIdentityNotMatchedValues() {
