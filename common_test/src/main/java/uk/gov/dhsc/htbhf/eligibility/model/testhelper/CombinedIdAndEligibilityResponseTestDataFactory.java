@@ -170,12 +170,12 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
         return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(overrideEligibilityStatus)
-                .addressLine1Match(VerificationOutcome.NOT_SET)
+                .addressLine1Match(VerificationOutcome.MATCHED)
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .dobOfChildrenUnder4(Collections.emptyList())
-                .emailAddressMatch(VerificationOutcome.NOT_SET)
-                .mobilePhoneMatch(VerificationOutcome.NOT_SET)
-                .postcodeMatch(VerificationOutcome.NOT_SET)
+                .emailAddressMatch(VerificationOutcome.MATCHED)
+                .mobilePhoneMatch(VerificationOutcome.MATCHED)
+                .postcodeMatch(VerificationOutcome.MATCHED)
                 .pregnantChildDOBMatch(VerificationOutcome.MATCHED)
                 .build();
     }
