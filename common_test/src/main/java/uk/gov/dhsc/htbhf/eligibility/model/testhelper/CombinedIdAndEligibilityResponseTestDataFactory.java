@@ -166,7 +166,9 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
         }
     }
 
-    public static CombinedIdentityAndEligibilityResponse aCombinedIdentityAndEligibilityResponseWithOverride(EligibilityOutcome overrideEligibilityStatus, List<LocalDate> childrenDob) {
+    public static CombinedIdentityAndEligibilityResponse aCombinedIdentityAndEligibilityResponseWithOverride(
+            EligibilityOutcome overrideEligibilityStatus,
+            List<LocalDate> childrenDob) {
         VerificationOutcome matchOutcome = overrideEligibilityStatus == EligibilityOutcome.CONFIRMED
                 ? VerificationOutcome.MATCHED
                 : VerificationOutcome.NOT_SET;
