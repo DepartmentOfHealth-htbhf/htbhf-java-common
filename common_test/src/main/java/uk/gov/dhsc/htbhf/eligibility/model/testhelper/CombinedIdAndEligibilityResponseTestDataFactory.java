@@ -4,7 +4,6 @@ import uk.gov.dhsc.htbhf.dwp.model.*;
 import uk.gov.dhsc.htbhf.eligibility.model.CombinedIdentityAndEligibilityResponse;
 
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
