@@ -4,7 +4,6 @@ import uk.gov.dhsc.htbhf.dwp.model.*;
 import uk.gov.dhsc.htbhf.eligibility.model.CombinedIdentityAndEligibilityResponse;
 
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -166,14 +165,16 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
         }
     }
 
-    public static CombinedIdentityAndEligibilityResponse aCombinedIdentityAndEligibilityResponseWithOverride(EligibilityOutcome overrideEligibilityStatus) {
+    public static CombinedIdentityAndEligibilityResponse aCombinedIdentityAndEligibilityResponseWithOverride(
+            EligibilityOutcome overrideEligibilityStatus,
+            List<LocalDate> childrenDob) {
         VerificationOutcome matchOutcome = overrideEligibilityStatus == EligibilityOutcome.CONFIRMED
                 ? VerificationOutcome.MATCHED
                 : VerificationOutcome.NOT_SET;
         return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(overrideEligibilityStatus)
-                .dobOfChildrenUnder4(Collections.emptyList())
+                .dobOfChildrenUnder4(childrenDob)
                 .pregnantChildDOBMatch(matchOutcome)
                 .addressLine1Match(matchOutcome)
                 .emailAddressMatch(matchOutcome)
