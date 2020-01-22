@@ -1,16 +1,6 @@
 package uk.gov.dhsc.htbhf.requestcontext;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -18,12 +8,11 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 import uk.gov.dhsc.htbhf.requestcontext.aop.RequestContextAdvisor;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static uk.gov.dhsc.htbhf.ObjectMapperFactory.configureObjectMapper;
 
 /**
  * Configuration class to be used to setup the required beans to setup the request scoped
@@ -74,25 +63,7 @@ public class RequestContextConfiguration {
     public ObjectMapper objectMapper() {
         // This ObjectMapper is not spring-managed, but we want to give it the same settings
         // see also: https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto-customize-the-jackson-objectmapper
-        JavaTimeModule javaTimeModule = new JavaTimeModule();
-        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-        javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ISO_LOCAL_DATE));
-        javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ISO_LOCAL_DATE));
-
-        JsonFactory factory = JsonFactory.builder()
-                // Change per-factory setting to prevent use of `String.intern()` on symbols
-                .disable(JsonFactory.Feature.INTERN_FIELD_NAMES)
-                .build();
-
-        return JsonMapper.builder(factory)
-                .configure(MapperFeature.DEFAULT_VIEW_INCLUSION, false)
-                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-                .build()
-                .findAndRegisterModules()
-                .registerModule(javaTimeModule);
-
+        return configureObjectMapper();
     }
 
     @Bean
