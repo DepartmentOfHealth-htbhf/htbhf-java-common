@@ -26,6 +26,7 @@ public class TestConstants {
     //NINOs
     public static final String HOMER_NINO = "MC123456C";
     public static final String MARGE_NINO = "MC123456A";
+    public static final String NED_NINO = "CM654321B";
     //Address
     public static final String SIMPSONS_ADDRESS_LINE_1 = "742 Evergreen Terrace";
     public static final String SIMPSONS_ADDRESS_LINE_2 = "Mystery Spot";
