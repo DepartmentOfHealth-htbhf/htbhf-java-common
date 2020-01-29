@@ -7,10 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
-import static uk.gov.dhsc.htbhf.TestConstants.DWP_HOUSEHOLD_IDENTIFIER;
-import static uk.gov.dhsc.htbhf.TestConstants.HMRC_HOUSEHOLD_IDENTIFIER;
-import static uk.gov.dhsc.htbhf.TestConstants.MAGGIE_AND_LISA_DOBS;
-import static uk.gov.dhsc.htbhf.TestConstants.NO_HOUSEHOLD_IDENTIFIER_PROVIDED;
+import static uk.gov.dhsc.htbhf.TestConstants.*;
 
 @SuppressWarnings("PMD.TooManyMethods")
 public class CombinedIdAndEligibilityResponseTestDataFactory {
@@ -171,6 +168,17 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
         VerificationOutcome matchOutcome = overrideEligibilityStatus == EligibilityOutcome.CONFIRMED
                 ? VerificationOutcome.MATCHED
                 : VerificationOutcome.NOT_SET;
+        return getCombinedIdentityAndEligibilityResponseWithOverride(overrideEligibilityStatus, childrenDob, matchOutcome).build();
+    }
+
+    public static CombinedIdentityAndEligibilityResponse aCombinedIdentityAndEligibilityResponseWithOverrideUnder18AndNoChildren() {
+        return getCombinedIdentityAndEligibilityResponseWithOverride(EligibilityOutcome.CONFIRMED, NO_CHILDREN, VerificationOutcome.MATCHED)
+                .qualifyingBenefits(QualifyingBenefits.UNDER_18).build();
+    }
+
+    private static CombinedIdentityAndEligibilityResponse.CombinedIdentityAndEligibilityResponseBuilder getCombinedIdentityAndEligibilityResponseWithOverride(
+            EligibilityOutcome overrideEligibilityStatus,
+            List<LocalDate> childrenDob, VerificationOutcome matchOutcome) {
         return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
                 .eligibilityStatus(overrideEligibilityStatus)
@@ -180,8 +188,7 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
                 .emailAddressMatch(matchOutcome)
                 .mobilePhoneMatch(matchOutcome)
                 .postcodeMatch(matchOutcome)
-                .deathVerificationFlag(DeathVerificationFlag.N_A)
-                .build();
+                .deathVerificationFlag(DeathVerificationFlag.N_A);
     }
 
     private static CombinedIdentityAndEligibilityResponse.CombinedIdentityAndEligibilityResponseBuilder defaultBuilderWithIdentityNotMatchedValues() {
