@@ -8,12 +8,6 @@ import java.util.List;
 
 import static java.util.Collections.emptyList;
 import static uk.gov.dhsc.htbhf.TestConstants.*;
-import static uk.gov.dhsc.htbhf.dwp.model.EligibilityOutcome.CONFIRMED;
-import static uk.gov.dhsc.htbhf.dwp.model.EligibilityOutcome.NOT_CONFIRMED;
-import static uk.gov.dhsc.htbhf.dwp.model.QualifyingBenefits.UNDER_18;
-import static uk.gov.dhsc.htbhf.dwp.model.VerificationOutcome.MATCHED;
-import static uk.gov.dhsc.htbhf.dwp.model.VerificationOutcome.NOT_SET;
-import static uk.gov.dhsc.htbhf.dwp.model.VerificationOutcome.NOT_SUPPLIED;
 
 @SuppressWarnings("PMD.TooManyMethods")
 public class CombinedIdAndEligibilityResponseTestDataFactory {
@@ -25,16 +19,16 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
     public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityNotConfirmedResponse() {
         return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
-                .eligibilityStatus(NOT_CONFIRMED)
-                .addressLine1Match(NOT_SET)
-                .postcodeMatch(NOT_SET)
-                .mobilePhoneMatch(NOT_SET)
-                .emailAddressMatch(NOT_SET)
+                .eligibilityStatus(EligibilityOutcome.NOT_CONFIRMED)
+                .addressLine1Match(VerificationOutcome.NOT_SET)
+                .postcodeMatch(VerificationOutcome.NOT_SET)
+                .mobilePhoneMatch(VerificationOutcome.NOT_SET)
+                .emailAddressMatch(VerificationOutcome.NOT_SET)
                 .qualifyingBenefits(QualifyingBenefits.NOT_SET)
                 .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .hmrcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(emptyList())
-                .pregnantChildDOBMatch(NOT_SET)
+                .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .build();
     }
@@ -42,16 +36,16 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
     public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedPostcodeNotMatchedResponse() {
         return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
-                .eligibilityStatus(CONFIRMED)
-                .addressLine1Match(MATCHED)
+                .eligibilityStatus(EligibilityOutcome.CONFIRMED)
+                .addressLine1Match(VerificationOutcome.MATCHED)
                 .postcodeMatch(VerificationOutcome.NOT_MATCHED)
                 .qualifyingBenefits(QualifyingBenefits.UNIVERSAL_CREDIT)
-                .mobilePhoneMatch(MATCHED)
-                .emailAddressMatch(MATCHED)
+                .mobilePhoneMatch(VerificationOutcome.MATCHED)
+                .emailAddressMatch(VerificationOutcome.MATCHED)
                 .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .hmrcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(MAGGIE_AND_LISA_DOBS)
-                .pregnantChildDOBMatch(NOT_SUPPLIED)
+                .pregnantChildDOBMatch(VerificationOutcome.NOT_SUPPLIED)
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .build();
     }
@@ -59,16 +53,16 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
     public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedAddressNotMatchedResponse() {
         return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
-                .eligibilityStatus(CONFIRMED)
+                .eligibilityStatus(EligibilityOutcome.CONFIRMED)
                 .addressLine1Match(VerificationOutcome.NOT_MATCHED)
-                .postcodeMatch(MATCHED)
-                .mobilePhoneMatch(MATCHED)
-                .emailAddressMatch(MATCHED)
+                .postcodeMatch(VerificationOutcome.MATCHED)
+                .mobilePhoneMatch(VerificationOutcome.MATCHED)
+                .emailAddressMatch(VerificationOutcome.MATCHED)
                 .qualifyingBenefits(QualifyingBenefits.UNIVERSAL_CREDIT)
                 .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .hmrcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(MAGGIE_AND_LISA_DOBS)
-                .pregnantChildDOBMatch(NOT_SUPPLIED)
+                .pregnantChildDOBMatch(VerificationOutcome.NOT_SUPPLIED)
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .build();
     }
@@ -76,26 +70,26 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
     public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedFullAddressNotMatchedResponse() {
         return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
-                .eligibilityStatus(CONFIRMED)
+                .eligibilityStatus(EligibilityOutcome.CONFIRMED)
                 .addressLine1Match(VerificationOutcome.NOT_MATCHED)
                 .postcodeMatch(VerificationOutcome.NOT_MATCHED)
-                .mobilePhoneMatch(MATCHED)
-                .emailAddressMatch(MATCHED)
+                .mobilePhoneMatch(VerificationOutcome.MATCHED)
+                .emailAddressMatch(VerificationOutcome.MATCHED)
                 .qualifyingBenefits(QualifyingBenefits.UNIVERSAL_CREDIT)
                 .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .hmrcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(MAGGIE_AND_LISA_DOBS)
-                .pregnantChildDOBMatch(NOT_SUPPLIED)
+                .pregnantChildDOBMatch(VerificationOutcome.NOT_SUPPLIED)
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .build();
     }
 
     public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedEmailNotMatchedResponse() {
-        return anIdMatchedEligibilityConfirmedUCResponseWithMatches(MATCHED, VerificationOutcome.NOT_MATCHED, MAGGIE_AND_LISA_DOBS);
+        return anIdMatchedEligibilityConfirmedUCResponseWithMatches(VerificationOutcome.MATCHED, VerificationOutcome.NOT_MATCHED, MAGGIE_AND_LISA_DOBS);
     }
 
     public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedPhoneNotMatchedResponse() {
-        return anIdMatchedEligibilityConfirmedUCResponseWithMatches(VerificationOutcome.NOT_MATCHED, MATCHED, MAGGIE_AND_LISA_DOBS);
+        return anIdMatchedEligibilityConfirmedUCResponseWithMatches(VerificationOutcome.NOT_MATCHED, VerificationOutcome.MATCHED, MAGGIE_AND_LISA_DOBS);
     }
 
     public static CombinedIdentityAndEligibilityResponse anIdMatchedEligibilityConfirmedEmailAndPhoneNotMatchedResponse() {
@@ -107,16 +101,16 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
                                                                                                               List<LocalDate> childrenDobs) {
         return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
-                .eligibilityStatus(CONFIRMED)
-                .addressLine1Match(MATCHED)
-                .postcodeMatch(MATCHED)
+                .eligibilityStatus(EligibilityOutcome.CONFIRMED)
+                .addressLine1Match(VerificationOutcome.MATCHED)
+                .postcodeMatch(VerificationOutcome.MATCHED)
                 .mobilePhoneMatch(mobileVerification)
                 .emailAddressMatch(emailVerification)
                 .qualifyingBenefits(QualifyingBenefits.UNIVERSAL_CREDIT)
                 .dwpHouseholdIdentifier(DWP_HOUSEHOLD_IDENTIFIER)
                 .hmrcHouseholdIdentifier(HMRC_HOUSEHOLD_IDENTIFIER)
                 .dobOfChildrenUnder4(childrenDobs)
-                .pregnantChildDOBMatch(NOT_SUPPLIED)
+                .pregnantChildDOBMatch(VerificationOutcome.NOT_SUPPLIED)
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .build();
     }
@@ -171,15 +165,15 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
     public static CombinedIdentityAndEligibilityResponse aCombinedIdentityAndEligibilityResponseWithOverride(
             EligibilityOutcome overrideEligibilityStatus,
             List<LocalDate> childrenDob) {
-        VerificationOutcome matchOutcome = overrideEligibilityStatus == CONFIRMED
-                ? MATCHED
-                : NOT_SET;
+        VerificationOutcome matchOutcome = overrideEligibilityStatus == EligibilityOutcome.CONFIRMED
+                ? VerificationOutcome.MATCHED
+                : VerificationOutcome.NOT_SET;
         return getCombinedIdentityAndEligibilityResponseWithOverride(overrideEligibilityStatus, childrenDob, matchOutcome).build();
     }
 
     public static CombinedIdentityAndEligibilityResponse aCombinedIdentityAndEligibilityResponseWithOverrideUnder18AndNoChildren() {
-        return getCombinedIdentityAndEligibilityResponseWithOverride(CONFIRMED, NO_CHILDREN, MATCHED)
-                .qualifyingBenefits(UNDER_18).build();
+        return getCombinedIdentityAndEligibilityResponseWithOverride(EligibilityOutcome.CONFIRMED, NO_CHILDREN, VerificationOutcome.MATCHED)
+                .qualifyingBenefits(QualifyingBenefits.UNDER_18).build();
     }
 
     private static CombinedIdentityAndEligibilityResponse.CombinedIdentityAndEligibilityResponseBuilder getCombinedIdentityAndEligibilityResponseWithOverride(
@@ -201,15 +195,15 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
         return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.NOT_MATCHED)
                 .eligibilityStatus(EligibilityOutcome.NOT_SET)
-                .addressLine1Match(NOT_SET)
-                .postcodeMatch(NOT_SET)
-                .mobilePhoneMatch(NOT_SET)
-                .emailAddressMatch(NOT_SET)
+                .addressLine1Match(VerificationOutcome.NOT_SET)
+                .postcodeMatch(VerificationOutcome.NOT_SET)
+                .mobilePhoneMatch(VerificationOutcome.NOT_SET)
+                .emailAddressMatch(VerificationOutcome.NOT_SET)
                 .qualifyingBenefits(QualifyingBenefits.NOT_SET)
                 .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .hmrcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(emptyList())
-                .pregnantChildDOBMatch(NOT_SET)
+                .pregnantChildDOBMatch(VerificationOutcome.NOT_SET)
                 .deathVerificationFlag(DeathVerificationFlag.N_A);
     }
 
@@ -217,15 +211,15 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
             defaultBuilderWithEligibilityConfirmedUCResponseWithAllMatches() {
         return CombinedIdentityAndEligibilityResponse.builder()
                 .identityStatus(IdentityOutcome.MATCHED)
-                .eligibilityStatus(CONFIRMED)
-                .addressLine1Match(MATCHED)
-                .postcodeMatch(MATCHED)
-                .mobilePhoneMatch(MATCHED)
-                .emailAddressMatch(MATCHED)
+                .eligibilityStatus(EligibilityOutcome.CONFIRMED)
+                .addressLine1Match(VerificationOutcome.MATCHED)
+                .postcodeMatch(VerificationOutcome.MATCHED)
+                .mobilePhoneMatch(VerificationOutcome.MATCHED)
+                .emailAddressMatch(VerificationOutcome.MATCHED)
                 .qualifyingBenefits(QualifyingBenefits.UNIVERSAL_CREDIT)
                 .dwpHouseholdIdentifier(DWP_HOUSEHOLD_IDENTIFIER)
                 .hmrcHouseholdIdentifier(HMRC_HOUSEHOLD_IDENTIFIER)
-                .pregnantChildDOBMatch(NOT_SUPPLIED)
+                .pregnantChildDOBMatch(VerificationOutcome.NOT_SUPPLIED)
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .dobOfChildrenUnder4(MAGGIE_AND_LISA_DOBS);
     }
