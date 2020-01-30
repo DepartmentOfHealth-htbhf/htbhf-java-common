@@ -173,7 +173,7 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
 
     public static CombinedIdentityAndEligibilityResponse aCombinedIdentityAndEligibilityResponseWithOverrideUnder18AndNoChildren() {
         return getCombinedIdentityAndEligibilityResponseWithOverride(EligibilityOutcome.CONFIRMED, NO_CHILDREN, VerificationOutcome.MATCHED)
-                .qualifyingBenefits(QualifyingBenefits.UNDER_18).build();
+                .qualifyingReason(QualifyingReason.UNDER_18).build();
     }
 
     private static CombinedIdentityAndEligibilityResponse.CombinedIdentityAndEligibilityResponseBuilder getCombinedIdentityAndEligibilityResponseWithOverride(

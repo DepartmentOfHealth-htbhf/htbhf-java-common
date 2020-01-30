@@ -56,6 +56,8 @@ public class CombinedIdentityAndEligibilityResponse {
     @JsonProperty("dobOfChildrenUnder4")
     private final List<LocalDate> dobOfChildrenUnder4;
 
+    @JsonProperty("qualifyingReason")
+    private final QualifyingReason qualifyingReason;
 
     /**
      * Determine whether the eligibility outcome is considered not eligible.
