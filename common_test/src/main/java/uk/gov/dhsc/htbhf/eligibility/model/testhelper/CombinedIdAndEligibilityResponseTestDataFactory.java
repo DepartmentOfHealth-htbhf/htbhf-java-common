@@ -25,7 +25,6 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
                 .mobilePhoneMatch(VerificationOutcome.NOT_SET)
                 .emailAddressMatch(VerificationOutcome.NOT_SET)
                 .qualifyingReason(QualifyingReason.NOT_SET)
-                .qualifyingBenefits(QualifyingBenefits.NOT_SET)
                 .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .hmrcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .dobOfChildrenUnder4(emptyList())
@@ -40,7 +39,6 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
                 .eligibilityStatus(EligibilityOutcome.CONFIRMED)
                 .addressLine1Match(VerificationOutcome.MATCHED)
                 .postcodeMatch(VerificationOutcome.NOT_MATCHED)
-                .qualifyingBenefits(QualifyingBenefits.UNIVERSAL_CREDIT)
                 .qualifyingReason(QualifyingReason.UNIVERSAL_CREDIT)
                 .mobilePhoneMatch(VerificationOutcome.MATCHED)
                 .emailAddressMatch(VerificationOutcome.MATCHED)
@@ -60,7 +58,6 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
                 .postcodeMatch(VerificationOutcome.MATCHED)
                 .mobilePhoneMatch(VerificationOutcome.MATCHED)
                 .emailAddressMatch(VerificationOutcome.MATCHED)
-                .qualifyingBenefits(QualifyingBenefits.UNIVERSAL_CREDIT)
                 .qualifyingReason(QualifyingReason.UNIVERSAL_CREDIT)
                 .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .hmrcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
@@ -78,7 +75,6 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
                 .postcodeMatch(VerificationOutcome.NOT_MATCHED)
                 .mobilePhoneMatch(VerificationOutcome.MATCHED)
                 .emailAddressMatch(VerificationOutcome.MATCHED)
-                .qualifyingBenefits(QualifyingBenefits.UNIVERSAL_CREDIT)
                 .qualifyingReason(QualifyingReason.UNIVERSAL_CREDIT)
                 .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .hmrcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
@@ -110,7 +106,6 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
                 .postcodeMatch(VerificationOutcome.MATCHED)
                 .mobilePhoneMatch(mobileVerification)
                 .emailAddressMatch(emailVerification)
-                .qualifyingBenefits(QualifyingBenefits.UNIVERSAL_CREDIT)
                 .qualifyingReason(QualifyingReason.UNIVERSAL_CREDIT)
                 .dwpHouseholdIdentifier(DWP_HOUSEHOLD_IDENTIFIER)
                 .hmrcHouseholdIdentifier(HMRC_HOUSEHOLD_IDENTIFIER)
@@ -204,7 +199,6 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
                 .postcodeMatch(VerificationOutcome.NOT_SET)
                 .mobilePhoneMatch(VerificationOutcome.NOT_SET)
                 .emailAddressMatch(VerificationOutcome.NOT_SET)
-                .qualifyingBenefits(QualifyingBenefits.NOT_SET)
                 .qualifyingReason(QualifyingReason.NOT_SET)
                 .dwpHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
                 .hmrcHouseholdIdentifier(NO_HOUSEHOLD_IDENTIFIER_PROVIDED)
@@ -222,7 +216,6 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
                 .postcodeMatch(VerificationOutcome.MATCHED)
                 .mobilePhoneMatch(VerificationOutcome.MATCHED)
                 .emailAddressMatch(VerificationOutcome.MATCHED)
-                .qualifyingBenefits(QualifyingBenefits.UNIVERSAL_CREDIT)
                 .qualifyingReason(QualifyingReason.UNIVERSAL_CREDIT)
                 .dwpHouseholdIdentifier(DWP_HOUSEHOLD_IDENTIFIER)
                 .hmrcHouseholdIdentifier(HMRC_HOUSEHOLD_IDENTIFIER)
@@ -230,5 +223,4 @@ public class CombinedIdAndEligibilityResponseTestDataFactory {
                 .deathVerificationFlag(DeathVerificationFlag.N_A)
                 .dobOfChildrenUnder4(MAGGIE_AND_LISA_DOBS);
     }
-
 }
