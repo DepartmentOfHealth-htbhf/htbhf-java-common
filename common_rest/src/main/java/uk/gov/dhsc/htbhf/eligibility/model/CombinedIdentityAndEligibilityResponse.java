@@ -44,8 +44,8 @@ public class CombinedIdentityAndEligibilityResponse {
     @JsonProperty("pregnantChildDOBMatch")
     private final VerificationOutcome pregnantChildDOBMatch;
 
-    @JsonProperty("qualifyingReason")
-    private final QualifyingReason qualifyingReason;
+    @JsonProperty("qualifyingBenefits")
+    private final QualifyingBenefits qualifyingBenefits;
 
     @JsonProperty("dwpHouseholdIdentifier")
     private final String dwpHouseholdIdentifier;
@@ -55,6 +55,9 @@ public class CombinedIdentityAndEligibilityResponse {
 
     @JsonProperty("dobOfChildrenUnder4")
     private final List<LocalDate> dobOfChildrenUnder4;
+
+    @JsonProperty("qualifyingReason")
+    private final QualifyingReason qualifyingReason;
 
     /**
      * Determine whether the eligibility outcome is considered not eligible.
