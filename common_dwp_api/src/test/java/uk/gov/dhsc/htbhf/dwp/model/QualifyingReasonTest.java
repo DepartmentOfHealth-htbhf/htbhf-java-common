@@ -14,6 +14,7 @@ class QualifyingReasonTest {
             "INCOME_SUPPORT, income_support",
             "JOBSEEKERS_ALLOWANCE, jobseekers_allowance",
             "PENSION_CREDIT, pension_credit",
+            "CHILD_TAX_CREDIT, child_tax_credit",
             "UNDER_18, under_18",
             "NOT_SET, not_set"
     })

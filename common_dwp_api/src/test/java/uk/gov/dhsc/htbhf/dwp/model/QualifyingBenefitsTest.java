@@ -14,6 +14,7 @@ class QualifyingBenefitsTest {
             "INCOME_SUPPORT, income_support",
             "JOBSEEKERS_ALLOWANCE, jobseekers_allowance",
             "PENSION_CREDIT, pension_credit",
+            "CHILD_TAX_CREDIT, child_tax_credit",
             "NOT_SET, not_set"
     })
     void shouldGetResponseValue(QualifyingBenefits qualifyingBenefits, String expectedResponseValue) {
