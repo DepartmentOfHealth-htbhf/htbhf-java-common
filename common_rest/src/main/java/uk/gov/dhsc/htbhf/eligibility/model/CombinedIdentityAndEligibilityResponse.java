@@ -44,9 +44,6 @@ public class CombinedIdentityAndEligibilityResponse {
     @JsonProperty("pregnantChildDOBMatch")
     private final VerificationOutcome pregnantChildDOBMatch;
 
-    @JsonProperty("qualifyingBenefits")
-    private final QualifyingBenefits qualifyingBenefits;
-
     @JsonProperty("dwpHouseholdIdentifier")
     private final String dwpHouseholdIdentifier;
 
