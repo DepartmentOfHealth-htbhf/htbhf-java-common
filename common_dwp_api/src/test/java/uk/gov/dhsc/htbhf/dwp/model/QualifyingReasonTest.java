@@ -5,7 +5,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class QualifyingBenefitsTest {
+class QualifyingReasonTest {
 
     @ParameterizedTest
     @CsvSource({
@@ -15,10 +15,10 @@ class QualifyingBenefitsTest {
             "JOBSEEKERS_ALLOWANCE, jobseekers_allowance",
             "PENSION_CREDIT, pension_credit",
             "CHILD_TAX_CREDIT, child_tax_credit",
+            "UNDER_18, under_18",
             "NOT_SET, not_set"
     })
-    void shouldGetResponseValue(QualifyingBenefits qualifyingBenefits, String expectedResponseValue) {
-        assertThat(qualifyingBenefits.getResponseValue()).isEqualTo(expectedResponseValue);
+    void shouldGetResponseValue(QualifyingReason qualifyingReason, String expectedResponseValue) {
+        assertThat(qualifyingReason.getResponseValue()).isEqualTo(expectedResponseValue);
     }
-
 }
