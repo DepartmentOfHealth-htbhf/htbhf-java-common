@@ -20,7 +20,6 @@ public class PersonDTO {
     @JsonProperty("surname")
     private final String surname;
 
-    @NotNull
     @Pattern(regexp = "^(?!BG|GB|NK|KN|TN|NT|ZZ)[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z](\\d{6})[A-D]$")
     @JsonProperty("nino")
     private final String nino;

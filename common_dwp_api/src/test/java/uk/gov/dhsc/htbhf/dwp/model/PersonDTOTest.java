@@ -1,5 +1,6 @@
 package uk.gov.dhsc.htbhf.dwp.model;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -35,11 +36,19 @@ class PersonDTOTest extends AbstractValidationTest {
         assertThat(violations).hasSingleConstraintViolation("must not be null", "surname");
     }
 
+    @Disabled("nino is optional for private beta and unique key is yet to be decided")
     @Test
     void shouldFailValidationWithMissingNino() {
         PersonDTO personDTO = aPersonDTOWithNino(null);
         Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
         assertThat(violations).hasSingleConstraintViolation("must not be null", "nino");
+    }
+
+    @Test
+    void shouldValidateWithMissingNino() {
+        PersonDTO personDTO = aPersonDTOWithNino(null);
+        Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
+        assertThat(violations).hasNoViolations();
     }
 
     @ParameterizedTest
