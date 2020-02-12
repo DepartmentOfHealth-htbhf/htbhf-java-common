@@ -45,7 +45,7 @@ class PersonDTOTest extends AbstractValidationTest {
     }
 
     @Test
-    void shouldValidationWithMissingNino() {
+    void shouldValidateWithMissingNino() {
         PersonDTO personDTO = aPersonDTOWithNino(null);
         Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
         assertThat(violations).hasNoViolations();
