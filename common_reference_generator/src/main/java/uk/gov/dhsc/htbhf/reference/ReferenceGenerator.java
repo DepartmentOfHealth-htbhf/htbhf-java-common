@@ -16,6 +16,9 @@ public class ReferenceGenerator {
      * @return generated reference.
      */
     public static String generateReference(final int size) {
+        if (size == 0) {
+            throw new IllegalArgumentException("Reference size can not be 0");
+        }
         final SecureRandom secureRandom = new SecureRandom();
         final byte[] bytes = new byte[size];
 

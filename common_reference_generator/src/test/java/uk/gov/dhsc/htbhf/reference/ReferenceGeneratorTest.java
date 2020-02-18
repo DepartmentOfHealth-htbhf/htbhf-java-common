@@ -23,7 +23,6 @@ class ReferenceGeneratorTest {
 
     private static Stream<Integer> referenceLengths() {
         return Stream.of(
-                0,
                 2,
                 5,
                 10
@@ -37,4 +36,10 @@ class ReferenceGeneratorTest {
         });
     }
 
+    @Test
+    public void testZeroSizeReferenceGenerator() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            ReferenceGenerator.generateReference(0);
+        });
+    }
 }
