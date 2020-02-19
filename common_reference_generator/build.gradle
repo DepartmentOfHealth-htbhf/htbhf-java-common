@@ -1,0 +1,108 @@
+buildscript {
+
+    dependencies {
+        // to fix an issue exposed by spotbugs 2.0.0: https://github.com/spotbugs/spotbugs-gradle-plugin/issues/120
+        classpath "com.google.guava:guava:${pluginGuavaVersion}"
+    }
+}
+
+plugins {
+    id 'io.franzbecker.gradle-lombok' version '1.14'
+    id "org.owasp.dependencycheck" version "4.0.0.1"
+    id "com.github.spotbugs" version "2.0.0"
+    id 'pmd'
+    id 'checkstyle'
+}
+
+apply plugin: 'java-library'
+
+lombok {
+    version = '1.18.4'
+    sha256 = ""
+}
+
+group = 'uk.gov.dhsc.htbhf'
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://dl.bintray.com/departmentofhealth-htbhf/maven"
+    }
+}
+
+
+dependencies {
+    implementation "com.google.code.findbugs:annotations:3.0.1"
+    implementation "javax.validation:validation-api:2.0.1.Final"
+    implementation "org.springframework:spring-web:${springVersion}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
+    testImplementation "org.junit.vintage:junit-vintage-engine:${junitVersion}"
+    testImplementation "org.assertj:assertj-core:3.11.1"
+
+    spotbugsPlugins "com.h3xstream.findsecbugs:findsecbugs-plugin:${spotbugsFindsecVersion}"
+}
+
+test {
+    useJUnitPlatform()
+    reports {
+        junitXml.enabled = false
+        html.enabled = true
+    }
+}
+
+
+test {
+    useJUnitPlatform()
+    reports {
+        junitXml.enabled = false
+        html.enabled = true
+    }
+}
+tasks.withType(com.github.spotbugs.SpotBugsTask) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
+checkstyle {
+    toolVersion "8.15"
+}
+
+pmdMain {
+    ignoreFailures = false
+    ruleSetFiles = files("../config/pmd/rulesets.xml")
+    ruleSets = [] // Remove built-in rule sets
+}
+pmdTest {
+    ignoreFailures = false
+    ruleSetFiles = files("../config/pmd/test-rulesets.xml")
+    ruleSets = [] // Remove built-in rule sets
+}
+spotbugsTest {
+    excludeFilter = file("../config/spotbugs/test-exclude.xml")
+}
+
+task delombok(type: io.franzbecker.gradle.lombok.task.DelombokTask, dependsOn: compileJava) {
+    ext.outputDir = file("$buildDir/delombok")
+    outputs.dir(outputDir)
+    classpath += sourceSets.main.runtimeClasspath
+    sourceSets.main.java.srcDirs.each {
+        inputs.dir(it)
+        args(it, "-d", outputDir)
+    }
+    doFirst {
+        outputDir.deleteDir()
+    }
+}
+
+javadoc {
+    dependsOn delombok
+    source = delombok.outputDir
+    failOnError = true
+}
