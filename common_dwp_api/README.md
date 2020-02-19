@@ -2,4 +2,4 @@
 
 This sub-module contains the common request and response objects used when calling DWP 
 endpoints. 
-This include unit tests, test data factory objects and test constants.
+This includes unit tests, test data factory objects and test constants.
