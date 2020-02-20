@@ -4,7 +4,7 @@ This sub-module contains logic to generate reference of 10 alphanumeric characte
 SecureRandom.
 
 Use below code snippet to generate reference : 
-String reference = ReferenceGenerator.generateReference(10); // 10 is size of reference 
+String reference = ReferenceGenerator.generateReference(10); // 10 is size of the reference 
 
 Expected format of reference will be mixed of numbers between 0 to 9 and A to Z depending on 
 the given size.
