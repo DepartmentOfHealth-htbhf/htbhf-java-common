@@ -45,7 +45,7 @@ jobs:
             source $BASH_ENV
       - run:
           name: release
-          command: ./gradlew ciPerformRelease -s -PskipComparePublications=true
+          command: ./gradlew -PskipComparePublications=true && ./gradlew ciPerformRelease -s
 
 workflows:
   version: 2
